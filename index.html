@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POWERED BY MOVIEZOO</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        /* Style for the watermark */
+        #watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Container to keep video and watermark together */
+        .video-container {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* Video full width */
+        video {
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container" id="video-container">
+    <video id="video" controls autoplay></video>
+    <div id="watermark">MovieZoo</div>
+</div>
+
+<div style="margin-top: 10px;">
+    <button id="fullscreen-btn">Toggle Fullscreen</button>
+    <select id="quality-select" style="margin-left: 10px;">
+        <option value="auto">Auto</option>
+    </select>
+</div>
+
+<script>
+    const video = document.getElementById('video');
+    const videoContainer = document.getElementById('video-container');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const qualitySelect = document.getElementById('quality-select');
+
+    // HLS setup with quality options
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource('https://prod-sports-hin-fa.jiocinema.com/hls/live/2100322/hd_akamai_iosmob_avc_hin_indvsnz_011124/master.m3u8');
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            // Populate quality options after manifest is loaded
+            hls.levels.forEach((level, index) => {
+                const qualityOption = document.createElement('option');
+                qualityOption.value = index;
+                qualityOption.text = `${level.height}p`; // e.g., 720p, 1080p
+                qualitySelect.appendChild(qualityOption);
+            });
+            video.play();
+        });
+
+        // Listen for quality selection change
+        qualitySelect.addEventListener('change', function() {
+            const quality = qualitySelect.value;
+            if (quality === "auto") {
+                hls.currentLevel = -1; // -1 sets to auto quality
+            } else {
+                hls.currentLevel = parseInt(quality, 10); // Set to selected quality level
+            }
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Safari fallback
+        video.src = 'https://prod-sports-hin-fa.jiocinema.com/hls/live/2100322/hd_akamai_iosmob_avc_hin_indvsnz_011124/master.m3u8';
+        video.addEventListener('loadedmetadata', function() {
+            video.play();
+        });
+    }
+
+    // Fullscreen toggle function for the container
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            if (videoContainer.requestFullscreen) {
+                videoContainer.requestFullscreen();
+            } else if (videoContainer.mozRequestFullScreen) { // Firefox
+                videoContainer.mozRequestFullScreen();
+            } else if (videoContainer.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                videoContainer.webkitRequestFullscreen();
+            } else if (videoContainer.msRequestFullscreen) { // IE/Edge
+                videoContainer.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    });
+    let threshold = 200;
+    setInterval(function() {
+        if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+            alert("Console inspection is disabled.");
+            window.location.href = "https://example.com"; // Redirect to another page
+        }
+    }, 1000);
+     document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Disable specific keyboard shortcuts for inspection tools
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "F12" || (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J")) || (event.ctrlKey && event.key === "U")) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>
