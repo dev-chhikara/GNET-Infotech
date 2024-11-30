@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNET-Infotech</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="assets/js/firebase-config.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="#">
+            <div class="navbar-left">
+                <img src="assets/img/logo.jpg" class="logo">
+                <span class="title">GNET-Infotech</span>
+            </div>
+        </a>
+        <div class="navbar-right">
+            <i class="fas fa-user" id="accountButton"></i>
+        </div>
+    </nav>
+    <div id="dialog-box" class="hidden"></div>
+    <div style="background-color: #f2f2f2;">
+        <div class="container">
+            <div class="image-section">
+                <img src="assets/img/laptop.png" alt="Premium Laptop" class="laptop-image">
+            </div>
+            <div class="text-section">
+                <h1>Premium Laptops</h1>
+                <p>at affordable rates</p>
+            </div>
+        </div>
+    </div>
+    <div class="stats-container">
+        <div class="stat-item">
+            <h3>1500+ <span>Happy Customers</span></h3>
+        </div>
+        <div class="stat-item">
+            <h3>350+ <span>Pincodes Delivered</span></h3>
+        </div>
+        <div class="stat-item">
+            <h3>4000+<span>Items in Stock</span></h3>
+        </div>
+    </div>
+    <div class="promo-section">
+        <div class="promo-image">
+            <img id="lapImageHome">
+        </div>
+        <div class="promo-content">
+            <h1>Trending Tech</h1>
+            <p id="lapPriceHome"></p>
+            <div class="laptop-details">
+                <h2 id="lapNameHome"></h2>
+                <h5 id="lapDetailsHome"></h5>
+                <button id="lapButtonHome" class="buy-now">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <div class="brands-section">
+        <h2>Popular Brands</h2>
+        <div class="brands-scroll-container">
+        </div>
+    </div>
+    <div class="trending-products-container"></div>
+    <script src="assets/js/trending-products.js" type="module"></script>
+    <script src="assets/js/theme.js" type="module"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/brands.js" type="module"></script>
+    <script src="assets/js/account.js" type="module"></script>
+</body>
+
+</html>
