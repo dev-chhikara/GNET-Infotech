@@ -1,88 +1,53 @@
-import { database } from "./firebase-config.js"; // Firebase configuration
 import { ref, get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { database } from './firebase-config.js';  // Assuming this file contains your Firebase config
 
-// Reference to the Firebase database where products are stored
-const productsRef = ref(database, "/Products");
 
-// Get the container where the products will be displayed
-const productsContainer = document.querySelector(".trending-products-container");
+const productsRef = ref(database, '/Products');
+const productContainer = document.getElementById('productContainer');
 
-// Fetch the products data from Firebase
-get(productsRef).then(snapshot => {
-  if (snapshot.exists()) {
-    const productsData = snapshot.val(); // Get all product data
+// Fetch and display the last 8 products from Firebase Realtime Database
+get(productsRef)
+    .then((snapshot) => {
+        productContainer.innerHTML = ''; // Clear previous content
+        const products = snapshot.val();
 
-    // Loop through each product and create custom HTML layout for trending products
-    Object.keys(productsData).forEach(productId => {
-      const product = productsData[productId];
+        if (products) {
+            // Get the keys (product IDs) and sort them in descending order to get the last 8 products
+            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)); // Sort in descending order
+            const limitedProductIds = sortedProductIds.slice(0, 8); // Get the last 8 product IDs
 
-      // Filter products with the "trending" tag
-      if (product.tag === "trending") {
-        const productName = product.name; // Get product name
-        const productImage = product.img; // Get product image URL
-        const productDescription = product.description; // Get product description
-        const productBrand = product.brand; // Get product brand name
-        const productPrice = product.price; // Get product price
+            limitedProductIds.forEach((productId) => {
+                const product = products[productId];
 
-        // Create product item container
-        const productItem = document.createElement("div");
-        productItem.classList.add("product-item");
+                // Create a product card
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
 
-        // Product image with hover effect
-        const imageContainer = document.createElement("div");
-        imageContainer.classList.add("product-image");
-        const img = document.createElement("img");
-        img.src = productImage;
-        img.alt = productName;
-        imageContainer.appendChild(img);
+                // Add onClick event to redirect to the product details page
+                productCard.addEventListener('click', () => {
+                    window.location.href = `/product-details?id=${productId}`;
+                });
 
-        // Product name below the image
-        const nameContainer = document.createElement("div");
-        nameContainer.classList.add("product-name");
-        nameContainer.textContent = productName;
+                // Check if the image URL exists and is valid
+                const imageUrl = product.img || ''; // If no image, it will be an empty string
+                const productImage = imageUrl ? `<img src="${imageUrl}" alt="${product.name}" class="product-image">` : '<div class="image-placeholder"></div>';
 
-        // Product description
-        const descriptionContainer = document.createElement("div");
-        descriptionContainer.classList.add("product-description");
-        descriptionContainer.textContent = productDescription;
+                // Set the innerHTML of the product card
+                productCard.innerHTML = `
+                    <div class="image-container">
+                        ${productImage}
+                    </div>
+                    <h3>${product.name}</h3>
+                    <h5>${product.price}</h5>
+                `;
 
-        // Brand and price container
-        const infoContainer = document.createElement("div");
-        infoContainer.classList.add("product-info");
-
-        const brand = document.createElement("span");
-        brand.classList.add("product-brand");
-        brand.textContent = productBrand;
-
-        const price = document.createElement("span");
-        price.classList.add("product-price");
-        price.textContent = `$${productPrice}`;
-
-        infoContainer.appendChild(brand);
-        infoContainer.appendChild(price);
-
-        // Buy Now Button
-        const buyNowButton = document.createElement("button");
-        buyNowButton.classList.add("buy-now-btn");
-        buyNowButton.textContent = "Buy Now";
-        buyNowButton.onclick = () => {
-          window.location.href = `/product-details?id=${productId}`;
-        };
-
-        // Append all elements to the product item container
-        productItem.appendChild(imageContainer);
-        productItem.appendChild(nameContainer); // Add product name below image
-        productItem.appendChild(descriptionContainer);
-        productItem.appendChild(infoContainer);
-        productItem.appendChild(buyNowButton);
-
-        // Append the product item to the products container
-        productsContainer.appendChild(productItem);
-      }
+                // Append the card to the container
+                productContainer.appendChild(productCard);
+            });
+        } else {
+            productContainer.innerHTML = '<p>No products found.</p>';
+        }
+    })
+    .catch((error) => {
+        console.error("Error fetching products:", error);
     });
-  } else {
-    console.log("No products found in the database.");
-  }
-}).catch(error => {
-  console.error("Error fetching data from Firebase:", error);
-});

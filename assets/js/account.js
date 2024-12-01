@@ -142,5 +142,3 @@ export function logout() {
     });
 }
 window.logout = logout;
-
-document.querySelector("#accountButton").addEventListener("click", checkLoginStatus); 

@@ -1,153 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login or Create Account</title>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-
-
-    <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
-            authDomain: "gnet-infotech.firebaseapp.com",
-            databaseURL: "https://gnet-infotech-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "gnet-infotech",
-            storageBucket: "gnet-infotech.firebasestorage.app",
-            messagingSenderId: "134910654750",
-            appId: "1:134910654750:web:faff248c0b9a1407d2f10f",
-            measurementId: "G-LGMZJPLV9P"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-    </script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f4f4f9;
-        }
-
-        .container {
-            max-width: 400px;
-            width: 100%;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .header {
-            background: #6200ea;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-            font-size: 1.5rem;
-        }
-
-        .form {
-            padding: 20px;
-        }
-
-        .form input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #6200ea;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .form button:hover {
-            background: #3700b3;
-        }
-
-        .form p {
-            text-align: center;
-        }
-
-        .form p a {
-            color: #6200ea;
-            text-decoration: none;
-        }
-    </style>
+    <title>Create Account</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <div class="container">
-        <div class="header">Login or Create Account</div>
-        <div class="form">
-            <form id="loginForm">
-                <input type="email" id="email" placeholder="Email Address" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an account? <a href="#" id="createAccountLink">Create one</a></p>
-        </div>        
-    </div>
-    <script>
-        const loginForm = document.getElementById('loginForm');
-        const createAccountLink = document.getElementById('createAccountLink');
-    
-        // Handle Login
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-    
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-    
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    alert('Login successful!');
-                    console.log('User:', userCredential.user);
-                    // Redirect or load account page
-                })
-                .catch((error) => {
-                    console.error('Error:', error.message);
-                    alert(error.message);
-                });
-        });
-    
-        // Handle Create Account
-        createAccountLink.addEventListener('click', (e) => {
-            e.preventDefault();
-    
-            const email = prompt('Enter your email:');
-            const password = prompt('Enter your password (6+ characters):');
-    
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    alert('Account created successfully!');
-                    console.log('New User:', userCredential.user);
-                })
-                .catch((error) => {
-                    console.error('Error:', error.message);
-                    alert(error.message);
-                });
-        });
-    </script>    
-</body>
+        <!-- Sidebar -->
+        <div class="mobile-menu">
+            <button id="menu-toggle">☰</button>
+        </div>
+        <nav class="sidebar">
+            <div class="logo">
+                <img style="height: 100px; width: 100px;" src="../assets/img/logo_png_white.png">
+                <p>GNET-INFOTECH</p>
+            </div>
+            <ul class="menu">
+                <li class="menu-item active">Account</li>
+                <li class="menu-item">Cart</li>
+                <li class="menu-item">Logout</li>
+            </ul>
+        </nav>
 
+        <!-- Account Section -->
+        <main class="account">
+            <div class="account-details">
+                <h1>Account</h1>
+                <div class="profile-pic">
+                    <img src="profile-placeholder.jpg" alt="Profile Picture">
+                </div>
+                <div class="user-info">
+                    <h2 id="username">John Doe</h2>
+                    <p id="mobile">+1234567890</p>
+                    <p id="email">user@example.com</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Menu -->
+        
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
 </html>
