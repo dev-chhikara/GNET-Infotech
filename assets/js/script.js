@@ -33,5 +33,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.getElementById('accountButton').addEventListener('click', function () {
-  window.location.href = '/login';
+  window.location.href = '/GNET-Infotech/login';
 });
