@@ -651,8 +651,38 @@ a {
   padding: 15px 10px;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
-  text-transform: capitalize;
+  text-decoration: none;
+  color: #fff;
+  background-color: #08082c; /* Tomato red color */
+  border-radius: 50px; /* Rounded corners */
+  border: 2px solid #08082c; /* Border to match the button color */
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(8, 8, 44, 0.3); /* Subtle shadow */
+  cursor: pointer;
+}
+
+/* Hover effect */
+.view-all-button:hover {
+  background-color: #fff; /* White background on hover */
+  color: #08082c; /* Change text color to match the button */
+  border: 2px solid #08082c;
+  transform: translateY(-4px); /* Lift the button */
+  box-shadow: 0 6px 15px rgba(8, 8, 44, 0.4);/* Enhance shadow */
+}
+
+/* Focus effect */
+.view-all-button:focus {
+  outline: none;
+  box-shadow: 0 6px 15px rgba(8, 8, 44, 0.3); /* Focus ring with soft shadow */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .view-all-button {
+      padding: 12px 25px;
+      font-size: 16px;
+  }
 }
 
 /* Product description */
