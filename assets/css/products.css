@@ -180,9 +180,9 @@ button:hover {
 .sort-menu-content ul li:hover {
     background-color: #f0f0f0;
 }
-/* Hide filter menu by default */
+
 .filter-menu {
-    display: none;  /* Ensure the filter menu is hidden on page load */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
