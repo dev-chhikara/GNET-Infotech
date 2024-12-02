@@ -47,42 +47,38 @@
         </div>
     </div>
 
+    <!-- Filter Full-Screen Menu -->
     <div id="filter-menu" class="filter-menu">
         <div class="filter-menu-content">
             <div class="filter-left">
                 <h3>Filters</h3>
+
                 <div class="filter-section">
                     <h4>Brands</h4>
                     <label><input type="checkbox" id="brand-lenovo"> Lenovo</label>
                     <label><input type="checkbox" id="brand-hp"> HP</label>
                     <label><input type="checkbox" id="brand-dell"> Dell</label>
                 </div>
-                <!-- <div class="filter-section">
+
+                <div class="filter-section">
                     <h4>Price Range</h4>
                     <label><input type="radio" name="price-range" id="price-10k-20k"> Rs 10k-20k</label>
                     <label><input type="radio" name="price-range" id="price-20k-30k"> Rs 20k-30k</label>
                     <label><input type="radio" name="price-range" id="price-30k-40k"> Rs 30k-40k</label>
                     <label><input type="radio" name="price-range" id="price-40k-above"> Rs 40k & Above</label>
-                </div> -->
+                </div>
+
                 <div class="filter-section">
-                    <h4>Category</h4>
+                    <h4>Purpose</h4>
                     <label><input type="checkbox" id="purpose-student"> Student</label>
                     <label><input type="checkbox" id="purpose-business"> Business</label>
                     <label><input type="checkbox" id="purpose-desktop"> Desktops</label>
                 </div>
+
                 <button class="apply-filter-btn" onclick="applyFilters()">Apply Filters</button>
-                <button class="apply-filter-btn" onclick="applyFilters()">Close</button>
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const filterMenu = document.querySelector(".filter-menu");
-            if (filterMenu) {
-                filterMenu.style.display = "none"; // Ensure it's hidden
-            }
-        });
-    </script>
     <div id="productContainer" class="product-container"></div>
     <footer>
         <div class="footer-container">
