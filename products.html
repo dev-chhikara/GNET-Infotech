@@ -79,6 +79,14 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const filterMenu = document.querySelector(".filter-menu");
+            if (filterMenu) {
+                filterMenu.style.display = "none"; // Ensure it's hidden
+            }
+        });
+    </script>
     <div id="productContainer" class="product-container"></div>
     <footer>
         <div class="footer-container">
