@@ -223,20 +223,20 @@ button:hover {
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 65px;
+  height: 65px;
   margin-right: 10px;
   object-fit: cover;
   border-radius: 15px;
 }
 
 .title {
-  font-size: 25px;
+  font-size: 30px;
   color: #000000;
   margin-left: 10px;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -265,13 +265,13 @@ a {
     margin: 0 10px;
   }
   .logo {
-    width: 35px;
+    width: 45px;
     margin-right: 0;
-    height: 35px;
+    height: 45px;
   }
   
   .title {
-    font-size: 15px;
+    font-size: 20px;
   }
 
 }
@@ -1026,4 +1026,89 @@ footer {
       margin-top: 10px;
   }
 }
+
+/* Container for the feature blocks */
+.features-containera {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto; /* Center the container */
+}
+
+
+/* Individual feature block */
+.featurea {
+  background: linear-gradient(to right, #0b233d, #344f6e);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  flex: 1 1 calc(33.33% - 20px); /* Three items per row */
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 300px;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Feature block icon styling */
+.icon {
+  font-size: 3rem; /* You can use an icon font library or an emoji */
+  margin-bottom: 10px;
+}
+
+/* Class for feature titles */
+.feature-title {
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Class for feature descriptions */
+.feature-description {
+  font-size: 1rem;
+  color: #d3d3d3;
+}
+
+/* Hover effect for feature blocks */
+.featurea:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* For small screens, stack all items vertically (1 per row) */
+@media (max-width: 511px) {
+  .featurea {
+      flex: 1 1 100%; /* Each item takes up 100% width (1 per row) */
+      max-width: 100%;
+  }
+}
+
+/* For medium screens (tablet and smaller desktops), 3 items in a row */
+@media (min-width: 512px) and (max-width: 1024px) {
+  .features-containera {
+      max-width: 90%; /* Container max-width is 90% */
+  }
+
+  .featurea {
+      flex: 1 1 calc(33.33% - 20px); /* Three items in a row */
+      max-width: 100%;
+  }
+}
+
+/* For large screens (large desktops and above), 3 items in a row and container at 80% width */
+@media (min-width: 1025px) {
+  .features-containera {
+      max-width: 80%; /* Container max-width is 80% */
+  }
+
+  .featurea {
+      flex: 1 1 calc(33.33% - 20px); /* Three items in a row */
+      max-width: 100%;
+  }
+}
+
+
 
