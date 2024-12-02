@@ -735,7 +735,7 @@ a.shop:hover {
   padding-bottom: 100%; /* This keeps a 1:1 aspect ratio */
   position: relative;
   overflow: hidden;
-  background-color: #f1f1f1; /* Light gray background if no image */
+  background-color: #ffffff; /* Light gray background if no image */
   border-radius: 8px;
 }
 
@@ -756,7 +756,7 @@ a.shop:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #dcdcdc; /* Placeholder background */
+  background-color: #ffffff; /* Placeholder background */
   border-radius: 8px;
 }
 
