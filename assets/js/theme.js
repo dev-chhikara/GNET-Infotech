@@ -76,15 +76,15 @@ onValue(homeCatRef, (snapshot) => {
     const idThree = dada.nameThree;
 
     catHomeButtonOne.addEventListener('click', () => {
-      window.location.href = `/GNET-Infotech/category?name=${idOne}`;
+      window.location.href = `/GNET-Infotech/products?category=${idOne}`;
     });
 
     catHomeButtonTwo.addEventListener('click', () => {
-      window.location.href = `/GNET-Infotech/category?name=${idTwo}`;
+      window.location.href = `/GNET-Infotech/products?category=${idTwo}`;
     });
 
     catHomeButtonThree.addEventListener('click', () => {
-      window.location.href = `/GNET-Infotech/category?name=${idThree}`;
+      window.location.href = `/GNET-Infotech/products?category=${idThree}`;
     });
 
 
