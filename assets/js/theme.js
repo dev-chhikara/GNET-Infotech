@@ -71,9 +71,9 @@ onValue(homeCatRef, (snapshot) => {
     catHomeNameTwo.textContent = dada.nameTwo || "";
     catHomeNameThree.textContent = dada.nameThree || "";
 
-    const idOne = dada.nameOne;
-    const idTwo = dada.nameTwo;
-    const idThree = dada.nameThree;
+    const idOne = dada.idOne;
+    const idTwo = dada.idTwo;
+    const idThree = dada.idThree;
 
     catHomeButtonOne.addEventListener('click', () => {
       window.location.href = `/GNET-Infotech/products?category=${idOne}`;
