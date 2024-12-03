@@ -77,15 +77,15 @@ onValue(homeCatRef, (snapshot) => {
     
 
     catHomeButtonOne.addEventListener('click', () => {
-      window.location.href = `/GNET-Infotech/products?category=${idOne}`;
+      window.location.href = `/products?category=${idOne}`;
     });
 
     catHomeButtonTwo.addEventListener('click', () => {
-      window.location.href = `/GNET-Infotech/products?category=${idTwo}`;
+      window.location.href = `/products?category=${idTwo}`;
     });
 
     catHomeButtonThree.addEventListener('click', () => {
-      window.location.href = `/GNET-Infotech/products?category=${idThree}`;
+      window.location.href = `/products?category=${idThree}`;
     });
 
 

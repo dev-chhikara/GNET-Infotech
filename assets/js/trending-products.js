@@ -25,7 +25,7 @@ get(productsRef)
 
                 // Add onClick event to redirect to the product details page
                 productCard.addEventListener('click', () => {
-                    window.location.href = `/GNET-Infotech/product-details?id=${productId}`;
+                    window.location.href = `/product-details?id=${productId}`;
                 });
 
                 // Check if the image URL exists and is valid

@@ -19,7 +19,7 @@ function createBrandElement(brandName, brandLogoUrl) {
 
     // Add click event to navigate to the category page
     brandItem.addEventListener("click", () => {
-        window.location.href = `/GNET-Infotech/products?brand=${encodeURIComponent(brandName)}`;
+        window.location.href = `/products?brand=${encodeURIComponent(brandName)}`;
     });
 
     brandItem.appendChild(brandLogo);
