@@ -74,6 +74,7 @@ onValue(homeCatRef, (snapshot) => {
     const idOne = dada.idOne;
     const idTwo = dada.idTwo;
     const idThree = dada.idThree;
+    
 
     catHomeButtonOne.addEventListener('click', () => {
       window.location.href = `/GNET-Infotech/products?category=${idOne}`;
