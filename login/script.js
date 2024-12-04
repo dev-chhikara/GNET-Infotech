@@ -1,30 +1,31 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js'; // Realtime Database imports
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
   authDomain: "gnet-infotech.firebaseapp.com",
-  databaseURL: "https://gnet-infotech-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: "https://gnet-infotech-default-rtdb.asia-southeast1.firebasedatabase.app", // Realtime Database URL
   projectId: "gnet-infotech",
   storageBucket: "gnet-infotech.firebasestorage.app",
   messagingSenderId: "134910654750",
   appId: "1:134910654750:web:faff248c0b9a1407d2f10f",
   measurementId: "G-LGMZJPLV9P"
 };
-const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    // DOM Elements
-    const loginSection = document.getElementById('login-section');
-    const userSection = document.getElementById('user-section');
-    const sendOtpBtn = document.getElementById('send-otp-btn');
-    const verifyOtpBtn = document.getElementById('verify-otp-btn');
-    const mobileInput = document.getElementById('mobile-input');
-    const otpSection = document.getElementById('otp-section');
-    const otpInput = document.getElementById('otp-input');
-    let confirmationResult; // Declare confirmationResult globally
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app); // Initialize Realtime Database
+
+// DOM Elements
+const loginSection = document.getElementById('login-section');
+const userSection = document.getElementById('user-section');
+const sendOtpBtn = document.getElementById('send-otp-btn');
+const verifyOtpBtn = document.getElementById('verify-otp-btn');
+const mobileInput = document.getElementById('mobile-input');
+const otpSection = document.getElementById('otp-section');
+const otpInput = document.getElementById('otp-input');
+let confirmationResult; // Declare confirmationResult globally
 
 // Send OTP
 sendOtpBtn.addEventListener('click', async () => {
@@ -36,19 +37,19 @@ sendOtpBtn.addEventListener('click', async () => {
 
   // Ensure Recaptcha is rendered inside the 'recaptcha-container'
   const appVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
-appVerifier.render().then(function() {
-  console.log("reCAPTCHA rendered successfully");
-  signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-    .then((result) => {
-      console.log("OTP sent successfully:", result);
-      confirmationResult = result;
-    })
-    .catch((error) => {
-      console.error("Error sending OTP:", error);
-    });
-}).catch(function (error) {
-  console.error("Error rendering reCAPTCHA:", error);
-});
+  appVerifier.render().then(function() {
+    console.log("reCAPTCHA rendered successfully");
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((result) => {
+        console.log("OTP sent successfully:", result);
+        confirmationResult = result;
+      })
+      .catch((error) => {
+        console.error("Error sending OTP:", error);
+      });
+  }).catch(function (error) {
+    console.error("Error rendering reCAPTCHA:", error);
+  });
 
   // Render the reCAPTCHA widget
   appVerifier.render().then(function () {
@@ -97,13 +98,13 @@ verifyOtpBtn.addEventListener('click', async () => {
     const userCredential = await signInWithCredential(auth, credential);
     const user = userCredential.user;
 
-    // Reference to Firestore user document
-    const userRef = doc(db, 'users', user.uid);
-    const userDoc = await getDoc(userRef);
+    // Reference to Realtime Database user node
+    const userRef = ref(db, 'users/' + user.uid); // Use Realtime Database path
+    const snapshot = await get(userRef);
 
-    if (!userDoc.exists()) {
-      // If user doesn't exist, create new document in Firestore
-      await setDoc(userRef, {
+    if (!snapshot.exists()) {
+      // If user doesn't exist, create new node in Realtime Database
+      await set(userRef, {
         name: "Name",
         email: "Email",
         mobile: user.phoneNumber,
@@ -118,7 +119,7 @@ verifyOtpBtn.addEventListener('click', async () => {
     userSection.style.display = 'block';
 
     // Populate user data
-    const userData = (await getDoc(userRef)).data();
+    const userData = snapshot.val(); // Get data from snapshot
     document.getElementById('user-name').textContent = userData.name;
     document.getElementById('user-mobile').textContent = userData.mobile;
     document.getElementById('user-email').textContent = userData.email;
