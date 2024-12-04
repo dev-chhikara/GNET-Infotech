@@ -35,9 +35,20 @@ sendOtpBtn.addEventListener('click', async () => {
   sendOtpBtn.disabled = true; // Disable the button to prevent multiple clicks
 
   // Ensure Recaptcha is rendered inside the 'recaptcha-container'
-  const appVerifier = new RecaptchaVerifier('recaptcha-container', {
-    size: 'invisible', // Or 'normal' to show the reCAPTCHA widget
-  }, auth);
+  const appVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+appVerifier.render().then(function() {
+  console.log("reCAPTCHA rendered successfully");
+  signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    .then((result) => {
+      console.log("OTP sent successfully:", result);
+      confirmationResult = result;
+    })
+    .catch((error) => {
+      console.error("Error sending OTP:", error);
+    });
+}).catch(function (error) {
+  console.error("Error rendering reCAPTCHA:", error);
+});
 
   // Render the reCAPTCHA widget
   appVerifier.render().then(function () {
