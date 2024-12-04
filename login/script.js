@@ -1,23 +1,21 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js'; // Realtime Database imports
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
-  authDomain: "gnet-infotech.firebaseapp.com",
-  databaseURL: "https://gnet-infotech-default-rtdb.asia-southeast1.firebasedatabase.app", // Realtime Database URL
-  projectId: "gnet-infotech",
-  storageBucket: "gnet-infotech.firebasestorage.app",
-  messagingSenderId: "134910654750",
-  appId: "1:134910654750:web:faff248c0b9a1407d2f10f",
-  measurementId: "G-LGMZJPLV9P"
+    apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
+    authDomain: "gnet-infotech.firebaseapp.com",
+    databaseURL: "https://gnet-infotech-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "gnet-infotech",
+    storageBucket: "gnet-infotech.firebasestorage.app",
+    messagingSenderId: "134910654750",
+    appId: "1:134910654750:web:faff248c0b9a1407d2f10f",
+    measurementId: "G-LGMZJPLV9P"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getDatabase(app); // Initialize Realtime Database
+const db = getFirestore(app);
 
-// DOM Elements
 const loginSection = document.getElementById('login-section');
 const userSection = document.getElementById('user-section');
 const sendOtpBtn = document.getElementById('send-otp-btn');
@@ -25,110 +23,111 @@ const verifyOtpBtn = document.getElementById('verify-otp-btn');
 const mobileInput = document.getElementById('mobile-input');
 const otpSection = document.getElementById('otp-section');
 const otpInput = document.getElementById('otp-input');
-let confirmationResult; // Declare confirmationResult globally
+const logoutBtn = document.getElementById('logout-btn');
+const ordersList = document.getElementById('orders-list');
+const cartList = document.getElementById('cart-list');
 
-// Send OTP
+let confirmationResult;
+
 sendOtpBtn.addEventListener('click', async () => {
-  const phoneNumber = `+91${mobileInput.value}`;
-
-  // Show the loading spinner while sending OTP
-  document.getElementById('loading-spinner').style.display = 'block';
-  sendOtpBtn.disabled = true; // Disable the button to prevent multiple clicks
-
-  // Ensure Recaptcha is rendered inside the 'recaptcha-container'
-  const appVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
-  appVerifier.render().then(function() {
-    console.log("reCAPTCHA rendered successfully");
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((result) => {
-        console.log("OTP sent successfully:", result);
-        confirmationResult = result;
-      })
-      .catch((error) => {
-        console.error("Error sending OTP:", error);
-      });
-  }).catch(function (error) {
-    console.error("Error rendering reCAPTCHA:", error);
-  });
-
-  // Render the reCAPTCHA widget
-  appVerifier.render().then(function () {
-    // When the widget is rendered, trigger the OTP request
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then(function (result) {
-        confirmationResult = result; // Store confirmationResult here
-        otpSection.style.display = 'block';  // Show OTP input
-
-        // Hide the loading spinner after OTP is sent
-        document.getElementById('loading-spinner').style.display = 'none';
-        sendOtpBtn.disabled = false; // Re-enable the button
-      })
-      .catch(function (error) {
-        console.error("Error sending OTP:", error);
-
-        // Hide the loading spinner in case of error
-        document.getElementById('loading-spinner').style.display = 'none';
-        sendOtpBtn.disabled = false; // Re-enable the button
-      });
-  }).catch(function (error) {
-    console.error("Error rendering reCAPTCHA:", error);
-
-    // Hide the loading spinner in case of error
-    document.getElementById('loading-spinner').style.display = 'none';
-    sendOtpBtn.disabled = false; // Re-enable the button
-  });
-});
-
-// Verify OTP
-verifyOtpBtn.addEventListener('click', async () => {
-  const otp = otpInput.value;
-
-  try {
-    if (!confirmationResult) {
-      console.error("No confirmation result available.");
-      return;
-    }
-
-    // Show loading spinner while verifying OTP
+    const phoneNumber = `+91${mobileInput.value}`;
     document.getElementById('loading-spinner').style.display = 'block';
-    verifyOtpBtn.disabled = true; // Disable the button
+    sendOtpBtn.disabled = true;
 
-    // Create credential using the verificationId and OTP
-    const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otp);
-    const userCredential = await signInWithCredential(auth, credential);
-    const user = userCredential.user;
-
-    // Reference to Realtime Database user node
-    const userRef = ref(db, 'users/' + user.uid); // Use Realtime Database path
-    const snapshot = await get(userRef);
-
-    if (!snapshot.exists()) {
-      // If user doesn't exist, create new node in Realtime Database
-      await set(userRef, {
-        name: "Name",
-        email: "Email",
-        mobile: user.phoneNumber,
-      });
-    }
-
-    // Hide loading spinner and show user section
-    document.getElementById('loading-spinner').style.display = 'none';
-    verifyOtpBtn.disabled = false; // Re-enable the button
-
-    loginSection.style.display = 'none';
-    userSection.style.display = 'block';
-
-    // Populate user data
-    const userData = snapshot.val(); // Get data from snapshot
-    document.getElementById('user-name').textContent = userData.name;
-    document.getElementById('user-mobile').textContent = userData.mobile;
-    document.getElementById('user-email').textContent = userData.email;
-
-  } catch (error) {
-    console.error("Error verifying OTP:", error);
-
-    // Hide the loading spinner if an error occurs
-    document.getElementById('loading-spinner').style.display = 'none';
-    verifyOtpBtn.disabled = false; // Re-enable the button
-  }
+    const appVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+    appVerifier.render().then(function () {
+        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+            .then((result) => {
+                confirmationResult = result;
+                otpSection.style.display = 'block';
+                document.getElementById('loading-spinner').style.display = 'none';
+                sendOtpBtn.disabled = false;
+            })
+            .catch((error) => {
+                console.error("Error sending OTP:", error);
+                document.getElementById('loading-spinner').style.display = 'none';
+                sendOtpBtn.disabled = false;
+            });
+    });
 });
+
+verifyOtpBtn.addEventListener('click', async () => {
+    const otp = otpInput.value;
+    try {
+        const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otp);
+        const userCredential = await signInWithCredential(auth, credential);
+        const user = userCredential.user;
+
+        const userRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userRef);
+        if (!userDoc.exists()) {
+            await setDoc(userRef, {
+                name: "Name",
+                email: "Email",
+                mobile: user.phoneNumber,
+            });
+        }
+
+        const userData = (await getDoc(userRef)).data();
+        document.getElementById('user-name').textContent = userData.name;
+        document.getElementById('user-mobile').textContent = userData.mobile;
+        document.getElementById('user-email').textContent = userData.email;
+
+        loginSection.style.display = 'none';
+        userSection.style.display = 'block';
+
+        loadOrders(user.uid);
+        loadCart(user.uid);
+    } catch (error) {
+        console.error("Error verifying OTP:", error);
+        document.getElementById('loading-spinner').style.display = 'none';
+        verifyOtpBtn.disabled = false;
+    }
+});
+
+logoutBtn.addEventListener('click', () => {
+    auth.signOut().then(() => {
+        loginSection.style.display = 'block';
+        userSection.style.display = 'none';
+    });
+});
+
+async function loadOrders(userId) {
+    const ordersRef = doc(db, 'users', userId);
+    const ordersDoc = await getDoc(ordersRef);
+    const orderIds = ordersDoc.data().orders.split(',');
+
+    for (const orderId of orderIds) {
+        const orderRef = doc(db, 'OrderDetails', orderId);
+        const orderDoc = await getDoc(orderRef);
+        const orderData = orderDoc.data();
+
+        const orderItem = document.createElement('div');
+        orderItem.innerHTML = `
+            <img src="${orderData.image}" alt="${orderData.name}" />
+            <p>${orderData.name}</p>
+            <p>Status: ${orderData.status}</p>
+        `;
+        ordersList.appendChild(orderItem);
+    }
+}
+
+async function loadCart(userId) {
+    const cartRef = doc(db, 'users', userId);
+    const cartDoc = await getDoc(cartRef);
+    const productIds = cartDoc.data().cart.split(',');
+
+    for (const productId of productIds) {
+        const productRef = doc(db, 'ProductDetails', productId);
+        const productDoc = await getDoc(productRef);
+        const productData = productDoc.data();
+
+        const cartItem = document.createElement('div');
+        cartItem.innerHTML = `
+            <img src="${productData.image}" alt="${productData.name}" />
+            <p>${productData.name}</p>
+            <p>Price: ${productData.price}</p>
+        `;
+        cartList.appendChild(cartItem);
+    }
+}

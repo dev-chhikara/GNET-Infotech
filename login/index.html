@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GNet-Infotech Login</title>
-  <link rel="icon" href="https://demo.gnetinfotech.com/assets/img/logo_thumb.png" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="logo">GNet-Infotech</div>
-    <ul class="nav-links">
-      <li><button id="account-btn">Account</button></li>
-      <li><button id="cart-btn" disabled>Cart</button></li>
-      <li><button id="logout-btn" disabled>Logout</button></li>
-    </ul>
-  </nav>
-
-  <!-- Main Content -->
-  <div id="main-content">
-    <div id="login-section">
-      <h1>Welcome to GNet-Infotech</h1>
-      <p>Enter your mobile number to log in:</p>
-      <input type="text" id="mobile-input" placeholder="Mobile Number (+91)" maxlength="10">
-      <button id="send-otp-btn">Send OTP</button>
-      <div id="otp-section" style="display: none;">
-        <p>Enter OTP:</p>
-        <input type="text" id="otp-input" placeholder="6-digit OTP">
-        <button id="verify-otp-btn">Verify OTP</button>
-        <div id="recaptcha-container"></div>
-      </div>
-    </div>
-
-    <div id="loading-spinner" style="display: none;">
-      <div class="spinner"></div>
-    </div>
-
-    <div id="user-section" style="display: none;">
-      <h1>Welcome, <span id="user-name">Name</span></h1>
-      <p>Mobile: <span id="user-mobile">+91XXXXXXXXXX</span> <button id="edit-mobile">Edit</button></p>
-      <p>Email: <span id="user-email">Email</span> <button id="edit-email">Edit</button></p>
-      <h2>Saved Addresses:</h2>
-      <ul id="saved-addresses"></ul>
-      <h2>Past Orders:</h2>
-      <ul id="past-orders"></ul>
-    </div>
+  <div id="nav-menu">
+      <button id="logout-btn">Logout</button>
   </div>
+
+  <!-- Login Section -->
+  <section id="login-section">
+      <h2>Login</h2>
+      <div>
+          <label for="mobile-input">Mobile Number</label>
+          <input type="text" id="mobile-input" placeholder="Enter mobile number" />
+          <div id="recaptcha-container"></div>
+          <button id="send-otp-btn">Send OTP</button>
+      </div>
+      <div id="otp-section" style="display: none;">
+          <label for="otp-input">OTP</label>
+          <input type="text" id="otp-input" placeholder="Enter OTP" />
+          <button id="verify-otp-btn">Verify OTP</button>
+      </div>
+      <div id="loading-spinner" style="display: none;">Loading...</div>
+  </section>
+
+  <!-- User Account Section -->
+  <section id="user-section" style="display: none;">
+      <h2>Welcome, <span id="user-name"></span></h2>
+      <p>Mobile: <span id="user-mobile"></span></p>
+      <p>Email: <span id="user-email"></span></p>
+
+      <!-- Recent Orders Section -->
+      <h3>Recent Orders</h3>
+      <div id="orders-list" class="horizontal-scroll"></div>
+
+      <!-- Cart Section -->
+      <h3>Your Cart</h3>
+      <div id="cart-list" class="horizontal-scroll"></div>
+  </section>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
   <script src="script.js" type="module"></script>
+
 </body>
 </html>
