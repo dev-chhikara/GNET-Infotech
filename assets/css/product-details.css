@@ -326,7 +326,6 @@ a {
 
 
 
-
 .bulk-order-section {
     background: url("/assets/img/tech-background.jpg");
     background-repeat: no-repeat;
@@ -372,10 +371,10 @@ a {
     margin: 20px auto;
     font-weight: bold;
     text-decoration: none;
-    color: #fff;
-    background-color: #08082c; /* Tomato red color */
+    color: #ffffff;
+    background-color: transparent; /* Tomato red color */
     border-radius: 50px; /* Rounded corners */
-    border: 2px solid #08082c; /* Border to match the button color */
+    border: 2px solid #ffffff; /* Border to match the button color */
     text-align: center;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 10px rgba(8, 8, 44, 0.3); /* Subtle shadow */
@@ -383,10 +382,10 @@ a {
   }
   
   .bulk-order-form button:hover {
-    background-color: #fff; /* White background on hover */
-    color: #08082c; /* Change text color to match the button */
-    border: 2px solid #08082c;
-    box-shadow: 0 6px 15px rgba(8, 8, 44, 0.4);/* Enhance shadow */
+    background-color: #ffffff; /* White background on hover */
+    color: #000000; /* Change text color to match the button */
+    border: 2px solid #000000;
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.473);/* Enhance shadow */
   }
   
   .message {
