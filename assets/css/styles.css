@@ -852,7 +852,10 @@ a.shop:hover {
 }
 
 .bulk-order-section {
-  background-color: #0b233d;
+  background: url("/assets/img/tech-background.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   padding: 40px 20px;
   text-align: center;
   border-radius: 10px;
@@ -862,7 +865,7 @@ a.shop:hover {
 
 .bulk-order-title {
   font-size: 26px;
-  margin: 10px auto;
+  margin: 40px auto 10px auto;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
