@@ -1,5 +1,5 @@
 import { database } from "./firebase-config.js";
-import { ref, onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { ref, onValue, push } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
 const homeRef = ref(database, "/Theme/home");
 const homeCatRef = ref(database, "/Theme/homeCategories");
@@ -24,7 +24,7 @@ onValue(homeRef, (snapshot1) => {
   const data = snapshot1.val();
 
   if (data) {
-    homescreenImageElement.src = data.img || ""; 
+    homescreenImageElement.src = data.img || "";
     const productId = data.productId || "1";
 
     homescreenImageElement.onload = () => {
@@ -50,8 +50,8 @@ onValue(homeRef, (snapshot1) => {
 
     const brandsContainer = document.querySelector(".brands-scroll-container");
     if (brandsContainer) {
-    brandsContainer.classList.add("fade-in");
-   }
+      brandsContainer.classList.add("fade-in");
+    }
 
 
   } else {
@@ -63,9 +63,9 @@ onValue(homeCatRef, (snapshot) => {
   const dada = snapshot.val();
 
   if (dada) {
-    catHomeImageOne.src = dada.imageOne || ""; 
-    catHomeImageTwo.src = dada.imageTwo || ""; 
-    catHomeImageThree.src = dada.imageThree || ""; 
+    catHomeImageOne.src = dada.imageOne || "";
+    catHomeImageTwo.src = dada.imageTwo || "";
+    catHomeImageThree.src = dada.imageThree || "";
 
     catHomeNameOne.textContent = dada.nameOne || "";
     catHomeNameTwo.textContent = dada.nameTwo || "";
@@ -74,7 +74,7 @@ onValue(homeCatRef, (snapshot) => {
     const idOne = dada.idOne;
     const idTwo = dada.idTwo;
     const idThree = dada.idThree;
-    
+
 
     catHomeButtonOne.addEventListener('click', () => {
       window.location.href = `/products?category=${idOne}`;
@@ -92,4 +92,37 @@ onValue(homeCatRef, (snapshot) => {
   } else {
     console.error("No data found in the database!");
   }
+});
+
+document.getElementById("bulkOrderForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const messageElement = document.getElementById("message");
+  const bulkOrderRef = ref(database, "/BulkOrders");
+  const emailField = document.getElementById("email");
+  const submitButton = document.getElementById("submitButton");
+
+  const now = new Date();
+  const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+  const time = now.toLocaleTimeString('en-US', options);
+  
+  const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+  const date = now.toLocaleDateString('en-US', dateOptions);
+
+  const sentTime = `${time}, ${date}`;
+
+  push(bulkOrderRef, { email, sentTime })
+    .then(() => {
+      messageElement.textContent = "We will contact you soon!";
+      messageElement.style.color = "#27ae60";
+      document.getElementById("email").value = "";
+      emailField.style.display = "none";
+      submitButton.style.display = "none";
+    })
+    .catch((error) => {
+      console.error("Error submitting form: ", error);
+      messageElement.textContent = "An error occurred. Please try again.";
+      messageElement.style.color = "#e74c3c";
+    });
 });

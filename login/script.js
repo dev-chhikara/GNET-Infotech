@@ -1,51 +1,77 @@
-import { database, auth } from "../assets/js/firebase-config.js";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+// script.js
+let recaptchaVerifier; // 
 
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
+    authDomain: "gnet-infotech.firebaseapp.com",
+    databaseURL: "https://gnet-infotech-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "gnet-infotech",
+    storageBucket: "gnet-infotech.firebasestorage.app",
+    messagingSenderId: "134910654750",
+    appId: "1:134910654750:web:faff248c0b9a1407d2f10f",
+    measurementId: "G-LGMZJPLV9P"
+};
+  
 
-    if (loginForm) {
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+// DOM Elements
+const loginForm = document.getElementById("login-form");
+const otpSection = document.getElementById("otp-section");
+const welcomeSection = document.getElementById("welcome");
+const phoneInput = document.getElementById("phone");
+const otpInput = document.getElementById("otp");
+const sendOtpButton = document.getElementById("send-otp");
+const verifyOtpButton = document.getElementById("verify-otp");
+const logoutButton = document.getElementById("logout-btn");
 
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                alert("Login successful!");
-                window.location.href = "../index.html"; // Redirect to the main page
-            } catch (error) {
-                alert("Login failed: " + error.message);
-            }
-        });
-    }
-
-    // Redirect if user is already logged in
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            window.location.href = "../index.html";
-        }
-    });
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const menuToggleButton = document.getElementById("menu-toggle");
-    const sidebar = document.querySelector(".sidebar");
-    const closeButton = document.createElement("button");
-
-    // Create the close button dynamically
-    closeButton.textContent = "Close";
-    closeButton.classList.add("close-btn");
-    sidebar.prepend(closeButton);
-
-    // Toggle sidebar on menu button click
-    menuToggleButton.addEventListener("click", () => {
-        sidebar.classList.add("active");
-    });
-
-    // Close the sidebar on close button click
-    closeButton.addEventListener("click", () => {
-        sidebar.classList.remove("active");
-    });
+// Check Login State
+auth.onAuthStateChanged(user => {
+  if (user) {
+    loginForm.style.display = "none";
+    welcomeSection.style.display = "block";
+  } else {
+    loginForm.style.display = "block";
+    welcomeSection.style.display = "none";
+  }
 });
 
+// Send OTP
+sendOtpButton.addEventListener("click", () => {
+  const phoneNumber = phoneInput.value;
+  const appVerifier = new firebase.auth.RecaptchaVerifier("send-otp", {
+    size: "invisible"
+  });
+
+  auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+    .then(confirmationResult => {
+      window.confirmationResult = confirmationResult;
+      otpSection.style.display = "block";
+    })
+    .catch(error => {
+      alert(error.message);
+    });
+});
+
+// Verify OTP
+verifyOtpButton.addEventListener("click", () => {
+  const code = otpInput.value;
+
+  window.confirmationResult.confirm(code)
+    .then(result => {
+      const user = result.user;
+      alert("Login successful!");
+      loginForm.style.display = "none";
+      welcomeSection.style.display = "block";
+    })
+    .catch(error => {
+      alert("Invalid OTP!");
+    });
+});
+
+// Logout
+logoutButton.addEventListener("click", () => {
+  auth.signOut();
+});

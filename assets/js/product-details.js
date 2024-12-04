@@ -1,4 +1,4 @@
-import { ref, get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { ref, get, push } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 import { database } from './firebase-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -128,17 +128,15 @@ function renderImprovements(improvement, initialPrice) {
 function updatePrice(initialPrice, ramSelect, hddSelect, priceElement) {
     let updatedPrice = parseInt(initialPrice);
 
-    // Log the initial values to debug
     console.log("Initial Price:", initialPrice);
     console.log("Selected RAM:", ramSelect.value);
     console.log("Selected HDD/SSD:", hddSelect.value);
 
-    // Check selected RAM
     const selectedRam = ramSelect.value;
     if (selectedRam === '16GB') {
         updatedPrice += 2000; // Increase by 2000 for 16GB RAM
     } else if (selectedRam === '32GB') {
-        updatedPrice += 4000; // Increase by 4000 for 32GB RAM
+        updatedPrice += 4000; 
     }
 
     // Check selected HDD
@@ -153,4 +151,37 @@ function updatePrice(initialPrice, ramSelect, hddSelect, priceElement) {
     console.log("Updated Price:", updatedPrice);
     priceElement.textContent = '₹' + updatedPrice;
 }
+
+document.getElementById("bulkOrderForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+  
+    const email = document.getElementById("email").value;
+    const messageElement = document.getElementById("message");
+    const bulkOrderRef = ref(database, "/BulkOrders");
+    const emailField = document.getElementById("email");
+    const submitButton = document.getElementById("submitButton");
+  
+    const now = new Date();
+    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+    const time = now.toLocaleTimeString('en-US', options);
+    
+    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = now.toLocaleDateString('en-US', dateOptions);
+  
+    const sentTime = `${time}, ${date}`;
+  
+    push(bulkOrderRef, { email, sentTime })
+      .then(() => {
+        messageElement.textContent = "We will contact you soon!";
+        messageElement.style.color = "#27ae60";
+        document.getElementById("email").value = "";
+        emailField.style.display = "none";
+        submitButton.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Error submitting form: ", error);
+        messageElement.textContent = "An error occurred. Please try again.";
+        messageElement.style.color = "#e74c3c";
+      });
+  });
 
