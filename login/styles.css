@@ -1,93 +1,71 @@
-/* styles.css */
-
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-  }
-  
-  #container {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-  }
-  
-  /* Sidebar for Desktop */
-  .sidebar {
-    width: 250px;
-    background-color: #333;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-  }
-  
-  .sidebar h2 {
-    margin: 0;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    margin: 15px 0;
-  }
-  
-  .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input, button {
-    margin: 10px 0;
-    padding: 10px;
-    width: 300px;
-    font-size: 16px;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive Sidebar for Mobile */
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 60px;
-    }
-  
-    .sidebar h2 {
-      display: none;
-    }
-  
-    .sidebar ul li {
-      text-align: center;
-    }
-  
-    .main-content {
-      padding: 10px;
-    }
-  }
-  
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.navbar {
+  background-color: #222;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  color: white;
+  font-size: 1.5em;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1em;
+}
+
+.nav-links button {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-links button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+#main-content {
+  max-width: 600px;
+  margin: 2em auto;
+  padding: 2em;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 0.8em;
+  margin: 0.5em 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 0.8em;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+}

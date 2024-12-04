@@ -3,48 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GNET Infotech - Login</title>
+  <title>GNet-Infotech Login</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
-
 </head>
 <body>
-  <div id="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h2>GNET Infotech</h2>
-      <ul>
-        <li><a href="#account">Account</a></li>
-        <li><a href="#cart">Cart</a></li>
-        <li><a href="#logout" id="logout-btn">Logout</a></li>
-      </ul>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">GNet-Infotech</div>
+    <ul class="nav-links">
+      <li><button id="account-btn">Account</button></li>
+      <li><button id="cart-btn" disabled>Cart</button></li>
+      <li><button id="logout-btn" disabled>Logout</button></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <div id="login-section">
+      <h1>Welcome to GNet-Infotech</h1>
+      <p>Enter your mobile number to log in:</p>
+      <input type="text" id="mobile-input" placeholder="Mobile Number (+91)" maxlength="10">
+      <button id="send-otp-btn">Send OTP</button>
+      <div id="otp-section" style="display: none;">
+        <p>Enter OTP:</p>
+        <input type="text" id="otp-input" placeholder="6-digit OTP">
+        <button id="verify-otp-btn">Verify OTP</button>
+        <div id="recaptcha-container"></div>
+      </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-      <div id="login-form">
-        <h2>Login</h2>
-        <form id="login">
-          <label for="phone">Enter Mobile Number:</label>
-          <input type="text" id="phone" placeholder="e.g., +919876543210" required>
-          <button type="button" id="send-otp">Send OTP</button>
-        </form>
-
-        <div id="otp-section" style="display: none;">
-          <label for="otp">Enter OTP:</label>
-          <input type="text" id="otp" placeholder="123456" required>
-          <button type="button" id="verify-otp">Verify OTP</button>
-        </div>
-      </div>
-
-      <div id="welcome" style="display: none;">
-        <h2>Welcome Back!</h2>
-        <p>You are logged in.</p>
-      </div>
+    <div id="user-section" style="display: none;">
+      <h1>Welcome, <span id="user-name">Name</span></h1>
+      <p>Mobile: <span id="user-mobile">+91XXXXXXXXXX</span> <button id="edit-mobile">Edit</button></p>
+      <p>Email: <span id="user-email">Email</span> <button id="edit-email">Edit</button></p>
+      <h2>Saved Addresses:</h2>
+      <ul id="saved-addresses"></ul>
+      <h2>Past Orders:</h2>
+      <ul id="past-orders"></ul>
     </div>
   </div>
-
-  <script src="script.js"></script>
+  <script src="script.js" type="module"></script>
 </body>
 </html>
