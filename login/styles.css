@@ -6,74 +6,85 @@ body {
 }
 
 #nav-menu {
-  background-color: #ff6f61;
+  background-color: #2874f0;
+  color: white;
   padding: 10px;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 #nav-menu button {
-  background-color: #fff;
+  background-color: #f0c14b;
   border: none;
-  padding: 10px 20px;
+  padding: 10px;
   cursor: pointer;
+}
+
+#nav-menu button:hover {
+  background-color: #ddb347;
 }
 
 #login-section, #user-section {
   padding: 20px;
-}
-
-h2 {
-  margin-bottom: 20px;
-}
-
-h3 {
-  margin-top: 40px;
-  margin-bottom: 10px;
+  background-color: white;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .horizontal-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 10px;
+  margin-top: 10px;
 }
 
-.horizontal-scroll div {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
+.horizontal-scroll > div {
+  flex: 0 0 auto;
   width: 200px;
   height: 250px;
-  display: inline-block;
+  margin-right: 20px;
+  background-color: #eaeaea;
+  border-radius: 10px;
   text-align: center;
-  border-radius: 8px;
-}
-
-#orders-list div, #cart-list div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-button {
   padding: 10px;
-  background-color: #28a745;
+}
+
+#edit-profile-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+#edit-profile-btn, #save-profile-btn, #cancel-edit-btn {
+  background-color: #2874f0;
   color: white;
+  padding: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-button:disabled {
-  background-color: #ccc;
-}
-
-#loading-spinner {
-  display: inline-block;
-  padding: 10px;
+#edit-profile-btn:hover, #save-profile-btn:hover, #cancel-edit-btn:hover {
+  background-color: #1e5bb7;
 }

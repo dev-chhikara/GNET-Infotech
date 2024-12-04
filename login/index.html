@@ -3,52 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Account</title>
+    <title>Account - Flipkart-like Design</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Navigation Bar with Logout -->
+    <div id="nav-menu">
+        <button id="logout-btn">Logout</button>
+    </div>
 
-  <!-- Navigation Bar -->
-  <div id="nav-menu">
-      <button id="logout-btn">Logout</button>
-  </div>
+    <!-- Login Section -->
+    <div id="login-section">
+        <h2>Login to Your Account</h2>
+        <input type="text" id="mobile-input" placeholder="Enter mobile number" />
+        <div id="recaptcha-container"></div>
+        <button id="send-otp-btn">Send OTP</button>
 
-  <!-- Login Section -->
-  <section id="login-section">
-      <h2>Login</h2>
-      <div>
-          <label for="mobile-input">Mobile Number</label>
-          <input type="text" id="mobile-input" placeholder="Enter mobile number" />
-          <div id="recaptcha-container"></div>
-          <button id="send-otp-btn">Send OTP</button>
-      </div>
-      <div id="otp-section" style="display: none;">
-          <label for="otp-input">OTP</label>
-          <input type="text" id="otp-input" placeholder="Enter OTP" />
-          <button id="verify-otp-btn">Verify OTP</button>
-      </div>
-      <div id="loading-spinner" style="display: none;">Loading...</div>
-  </section>
+        <div id="otp-section" style="display:none;">
+            <input type="text" id="otp-input" placeholder="Enter OTP" />
+            <button id="verify-otp-btn">Verify OTP</button>
+        </div>
+        <div id="loading-spinner" style="display:none;">Loading...</div>
+    </div>
 
-  <!-- User Account Section -->
-  <section id="user-section" style="display: none;">
-      <h2>Welcome, <span id="user-name"></span></h2>
-      <p>Mobile: <span id="user-mobile"></span></p>
-      <p>Email: <span id="user-email"></span></p>
+    <!-- User Account Section -->
+    <div id="user-section" style="display:none;">
+        <h2>Welcome, <span id="user-name"></span></h2>
+        <p>Mobile: <span id="user-mobile"></span></p>
+        <p>Email: <span id="user-email"></span></p>
+        <button id="edit-profile-btn">Edit Profile</button>
 
-      <!-- Recent Orders Section -->
-      <h3>Recent Orders</h3>
-      <div id="orders-list" class="horizontal-scroll"></div>
+        <h3>Recent Orders</h3>
+        <div id="orders-list" class="horizontal-scroll"></div>
 
-      <!-- Cart Section -->
-      <h3>Your Cart</h3>
-      <div id="cart-list" class="horizontal-scroll"></div>
-  </section>
+        <h3>Your Cart</h3>
+        <div id="cart-list" class="horizontal-scroll"></div>
+    </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  <script src="script.js" type="module"></script>
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>Edit Profile</h3>
+            <label for="edit-name">Name:</label>
+            <input type="text" id="edit-name" />
+            <label for="edit-email">Email:</label>
+            <input type="email" id="edit-email" />
+            <label for="edit-mobile">Mobile:</label>
+            <input type="text" id="edit-mobile" />
+            <button id="save-profile-btn">Save Changes</button>
+            <button id="cancel-edit-btn">Cancel</button>
+        </div>
+    </div>
 
+    <script src="script.js" type="module"></script>
 </body>
 </html>
