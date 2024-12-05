@@ -122,11 +122,6 @@ function showLoginSection() {
     document.getElementById('user-section').style.display = 'none';
 }
 
-function showUserSection() {
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('user-section').style.display = 'block';
-}
-
 const loginSection = document.getElementById('login-section');
 const userSection = document.getElementById('user-section');
 const sendOtpBtn = document.getElementById('send-otp-btn');
