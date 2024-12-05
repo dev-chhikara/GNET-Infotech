@@ -35,10 +35,13 @@ const otpSection = document.getElementById('otp-section');
 const otpInput = document.getElementById('otp-input');
 const logoutBtn = document.getElementById('logout-btn');
 const resendOtpBtn = document.getElementById('resend-otp-btn');
+const userName = document.getElementById('user-name'); // For user's name
+const userMobile = document.getElementById('user-mobile'); // For user's mobile number
+const userEmail = document.getElementById('user-email'); // For user's email
+
 let recaptchaVerifier;
 let confirmationResult;
 
-let otpTimeout;
 let otpSentTime = null;
 let resendTimeout = null;
 
