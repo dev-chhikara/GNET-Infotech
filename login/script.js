@@ -32,15 +32,41 @@ const db = getDatabase(app);
 
 setPersistence(auth, browserLocalPersistence);
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log('User logged in:', user);
-        fetchUserDetails(user);
-    } else {
-        console.log('User is not logged in');
-        showLoginSection();
-    }
-});
+// Show progress bar when checking login status
+function checkUserLogin() {
+    const progressBarContainer = document.getElementById('progress-bar-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Show the progress bar
+    progressBarContainer.style.display = 'block';
+
+    // Listen to the authentication state change
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is logged in
+            console.log('User is logged in:', user);
+
+            // Hide the progress bar after login check
+            progressBarContainer.style.display = 'none';
+
+            // Proceed with fetching user data or navigating to the user section
+            fetchUserDetails(user);
+        } else {
+            // User is not logged in
+            console.log('User is not logged in.');
+
+            // Hide the progress bar after login check
+            progressBarContainer.style.display = 'none';
+
+            // Show login section or any other UI updates
+            showLoginSection();
+        }
+    });
+}
+
+// Call the function to check user login status
+checkUserLogin();
+
 
 function fetchUserDetails(user) {
     const dbRef = ref(db);
@@ -77,6 +103,20 @@ function fetchUserDetails(user) {
 }
 
 
+function showUserSection(user) {
+    // Fetch user details from the database (if needed)
+    const userName = user.displayName || 'User';
+    const userEmail = user.email;
+
+    document.getElementById('user-name').textContent = userName;
+    document.getElementById('user-email').textContent = userEmail;
+
+    // Show user details and hide login section
+    document.getElementById('user-section').style.display = 'block';
+    document.getElementById('login-section').style.display = 'none';
+}
+
+// Function to show login section
 function showLoginSection() {
     document.getElementById('login-section').style.display = 'block';
     document.getElementById('user-section').style.display = 'none';
@@ -129,16 +169,15 @@ saveProfileBtn.addEventListener('click', () => {
             .then(() => {
                 console.log('Profile updated in auth.');
 
-                // Save updated details to Firebase Realtime Database
+                // Update only the name and email in the Realtime Database
                 const userRef = ref(db, `users/${user.uid}`);
-                set(userRef, {
+                update(userRef, {
                     name: updatedName,
-                    email: updatedEmail,
-                    phone: user.phoneNumber,
+                    email: updatedEmail, 
                 })
                     .then(() => {
                         console.log('Profile updated in database.');
-                        // Update UI
+                        // Update UI with the new details
                         document.getElementById('user-name').textContent = updatedName;
                         document.getElementById('user-email').textContent = updatedEmail;
                         editProfileModal.style.display = 'none';
