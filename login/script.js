@@ -47,14 +47,25 @@ function fetchUserDetails(user) {
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                document.getElementById('user-name').textContent = data.name || user.displayName || 'User Name';
-                document.getElementById('user-mobile').textContent = user.phoneNumber || 'N/A';
-                document.getElementById('user-email').textContent = data.email || 'Not Provided';
+                console.log('Fetched user data:', data);
+
+                // Handle undefined or missing fields
+                const name = data.name || user.displayName || 'User Name';
+                const mobile = user.phoneNumber || 'N/A';
+                const email = data.email || 'Not Provided';
+
+                // Update the UI with fetched data
+                document.getElementById('user-name').textContent = name;
+                document.getElementById('user-mobile').textContent = mobile;
+                document.getElementById('user-email').textContent = email;
+
                 showUserSection();
             } else {
                 console.log('No user data found in database.');
-                document.getElementById('user-name').textContent = user.displayName || 'User Name';
-                document.getElementById('user-mobile').textContent = user.phoneNumber || 'N/A';
+                const name = user.displayName || 'User Name';
+                const mobile = user.phoneNumber || 'N/A';
+                document.getElementById('user-name').textContent = name;
+                document.getElementById('user-mobile').textContent = mobile;
                 document.getElementById('user-email').textContent = 'Not Provided';
                 showUserSection();
             }
@@ -70,9 +81,7 @@ function showLoginSection() {
     document.getElementById('user-section').style.display = 'none';
 }
 
-function showUserSection(user) {
-    document.getElementById('user-name').textContent = user.name || 'User Name';
-    document.getElementById('user-mobile').textContent = user.phoneNumber;
+function showUserSection() {
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('user-section').style.display = 'block';
 }
