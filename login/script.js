@@ -115,7 +115,6 @@ function startResendTimer() {
     resendTimeout = setInterval(updateTimer, 1000); // Update every second
     updateTimer(); // Call immediately to show the initial timer
 }
-import { ref, set, get } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
 verifyOtpBtn.addEventListener('click', () => {
     const otpValue = otpInput.value;
