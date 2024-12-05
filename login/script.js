@@ -10,7 +10,7 @@ import {
     PhoneAuthProvider,
     signInWithCredential,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getDatabase, ref, get, set, child } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+import { getDatabase, ref, get, update, set, child } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
@@ -66,6 +66,22 @@ function checkUserLogin() {
 
 // Call the function to check user login status
 checkUserLogin();
+
+function toggleLoading(isLoading) {
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    const verifyOtpBtn = document.getElementById('verify-otp-btn');
+    const loadingSpinner = document.getElementById('loading-spinner');
+
+    if (isLoading) {
+        loadingSpinner.style.display = 'block';
+        sendOtpBtn.style.display = 'none';
+        verifyOtpBtn.style.display = 'none';
+    } else {
+        loadingSpinner.style.display = 'none';
+        sendOtpBtn.style.display = 'block';
+        verifyOtpBtn.style.display = 'block';
+    }
+}
 
 
 function fetchUserDetails(user) {
@@ -160,7 +176,7 @@ saveProfileBtn.addEventListener('click', () => {
                 const userRef = ref(db, `users/${user.uid}`);
                 update(userRef, {
                     name: updatedName,
-                    email: updatedEmail, 
+                    email: updatedEmail,
                 })
                     .then(() => {
                         console.log('Profile updated in database.');
@@ -212,6 +228,7 @@ sendOtpBtn.addEventListener('click', () => {
         alert("Please enter a valid phone number");
         return;
     }
+    toggleLoading(true);
 
     resetRecaptcha(); // Reset reCAPTCHA before every OTP attempt
     recaptchaVerifier.verify().then(() => {
@@ -232,6 +249,11 @@ sendOtpBtn.addEventListener('click', () => {
         console.error("reCAPTCHA error:", error);
         alert("reCAPTCHA verification failed.");
     });
+
+    setTimeout(() => {
+        toggleLoading(false);  // Hide loading spinner after OTP is sent
+        document.getElementById('otp-section').style.display = 'block';  // Show OTP input section
+    }, 2000);  // Simulate 2 seconds delay
 });
 
 function startResendTimer() {
@@ -265,6 +287,8 @@ verifyOtpBtn.addEventListener('click', () => {
         alert('Please enter the OTP.');
         return;
     }
+
+    toggleLoading(true);
 
     confirmationResult.confirm(otpValue)
         .then(async (result) => {
@@ -300,6 +324,12 @@ verifyOtpBtn.addEventListener('click', () => {
             console.error('Error verifying OTP:', error);
             alert('Failed to verify OTP. Please try again.');
         });
+
+        setTimeout(() => {
+            toggleLoading(false);  // Hide loading spinner after verification is complete
+            alert("OTP Verified successfully!");
+            document.getElementById('user-section').style.display = 'block';  // Show user section after successful OTP verification
+        }, 2000);
 });
 
 
