@@ -3,14 +3,13 @@ import {
     getAuth,
     setPersistence,
     browserLocalPersistence,
-    browserSessionPersistence,
     RecaptchaVerifier,
     onAuthStateChanged,
     signInWithPhoneNumber,
     PhoneAuthProvider,
     signInWithCredential,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+import { getDatabase, ref, get, set, child } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
@@ -30,23 +29,37 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-setPersistence(auth, browserLocalPersistence)
-    .then(() => {
-        console.log('Persistence set to local.');
-    })
-    .catch((error) => {
-        console.error('Error setting persistence:', error);
-    });
+setPersistence(auth, browserLocalPersistence);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log('User is logged in:', user);
-        showUserSection(user);
+        console.log('User logged in:', user);
+        fetchUserDetails(user);
     } else {
         console.log('User is not logged in');
         showLoginSection();
     }
 });
+
+function fetchUserDetails(user) {
+    const dbRef = ref(db);
+    get(child(dbRef, `users/${user.uid}`))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                document.getElementById('user-name').textContent = data.name || 'User Name';
+                document.getElementById('user-mobile').textContent = user.phoneNumber;
+                document.getElementById('user-email').textContent = data.email || 'Not Provided';
+                showUserSection();
+            } else {
+                console.log('No user data found in database.');
+                showUserSection();
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
+}
 
 function showLoginSection() {
     document.getElementById('login-section').style.display = 'block';
@@ -72,6 +85,59 @@ const resendOtpBtn = document.getElementById('resend-otp-btn');
 const userName = document.getElementById('user-name'); // For user's name
 const userMobile = document.getElementById('user-mobile'); // For user's mobile number
 const userEmail = document.getElementById('user-email'); // For user's email
+const editProfileBtn = document.getElementById('edit-profile-btn');
+const editProfileModal = document.getElementById('edit-profile-modal');
+const saveProfileBtn = document.getElementById('save-profile-btn');
+const cancelEditBtn = document.getElementById('cancel-edit-btn');
+
+editProfileBtn.addEventListener('click', () => {
+    editProfileModal.style.display = 'block';
+    document.getElementById('edit-name').value = document.getElementById('user-name').textContent;
+    document.getElementById('edit-email').value = document.getElementById('user-email').textContent;
+});
+
+// Close modal without saving
+cancelEditBtn.addEventListener('click', () => {
+    editProfileModal.style.display = 'none';
+});
+
+// Save updated profile details
+saveProfileBtn.addEventListener('click', () => {
+    const updatedName = document.getElementById('edit-name').value;
+    const updatedEmail = document.getElementById('edit-email').value;
+
+    // Update details in Firebase Authentication
+    const user = auth.currentUser;
+    if (user) {
+        updateProfile(user, {
+            displayName: updatedName,
+        })
+            .then(() => {
+                console.log('Profile updated in auth.');
+
+                // Save updated details to Firebase Realtime Database
+                const userRef = ref(db, `users/${user.uid}`);
+                set(userRef, {
+                    name: updatedName,
+                    email: updatedEmail,
+                    phone: user.phoneNumber,
+                })
+                    .then(() => {
+                        console.log('Profile updated in database.');
+                        // Update UI
+                        document.getElementById('user-name').textContent = updatedName;
+                        document.getElementById('user-email').textContent = updatedEmail;
+                        editProfileModal.style.display = 'none';
+                    })
+                    .catch((error) => {
+                        console.error('Error updating profile in database:', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Error updating profile in auth:', error);
+            });
+    }
+});
 
 let recaptchaVerifier;
 let confirmationResult;
