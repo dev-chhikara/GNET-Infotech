@@ -104,14 +104,6 @@ function fetchUserDetails(user) {
 
 
 function showUserSection(user) {
-    // Fetch user details from the database (if needed)
-    const userName = user.displayName || 'User';
-    const userEmail = user.email;
-
-    document.getElementById('user-name').textContent = userName;
-    document.getElementById('user-email').textContent = userEmail;
-
-    // Show user details and hide login section
     document.getElementById('user-section').style.display = 'block';
     document.getElementById('login-section').style.display = 'none';
 }
