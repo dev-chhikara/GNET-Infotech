@@ -39,7 +39,8 @@ let recaptchaVerifier;
 let confirmationResult;
 
 let otpTimeout;
-let otpResendEnabled = false;
+let otpSentTime = null;
+let resendTimeout = null;
 
 // Initialize reCAPTCHA
 function resetRecaptcha() {
@@ -62,8 +63,6 @@ function resetRecaptcha() {
     );
     recaptchaVerifier.render();
 }
-
-// Send OTP
 sendOtpBtn.addEventListener('click', () => {
     const phoneNumber = `+91${mobileInput.value}`;
     if (!phoneNumber || phoneNumber.length !== 13) {
@@ -77,7 +76,10 @@ sendOtpBtn.addEventListener('click', () => {
             .then((result) => {
                 confirmationResult = result;
                 otpSection.style.display = 'block';
-                startOtpTimeout();
+
+                // Start the timer for the resend OTP button
+                otpSentTime = Date.now();
+                startResendTimer();
             })
             .catch((error) => {
                 console.error("Error sending OTP:", error);
@@ -88,6 +90,31 @@ sendOtpBtn.addEventListener('click', () => {
         alert("reCAPTCHA verification failed.");
     });
 });
+
+function startResendTimer() {
+    sendOtpBtn.disabled = true; // Disable the send OTP button
+    const timerElement = document.getElementById('timer');
+    const resendBtn = document.getElementById('resend-otp-btn');
+    const timerSection = document.getElementById('timer-section');
+
+    resendBtn.style.display = 'none';
+    timerSection.style.display = 'block';
+
+    function updateTimer() {
+        const remainingTime = 30 - Math.floor((Date.now() - otpSentTime) / 1000);
+        if (remainingTime <= 0) {
+            clearInterval(resendTimeout);
+            timerSection.style.display = 'none';
+            resendBtn.style.display = 'inline-block'; // Show resend OTP button
+            sendOtpBtn.disabled = false; // Enable the send OTP button again
+        } else {
+            timerElement.textContent = `${remainingTime} seconds`;
+        }
+    }
+
+    resendTimeout = setInterval(updateTimer, 1000); // Update every second
+    updateTimer(); // Call immediately to show the initial timer
+}
 
 // Verify OTP
 verifyOtpBtn.addEventListener('click', async () => {
@@ -102,16 +129,25 @@ verifyOtpBtn.addEventListener('click', async () => {
         const userCredential = await signInWithCredential(auth, credential);
         const user = userCredential.user;
 
+        // Reference to the user's data in the Realtime Database
         const userRef = ref(db, 'users/' + user.uid);
         const userSnap = await get(userRef);
+
+        // If user data does not exist, initialize it
         if (!userSnap.exists()) {
-            await set(userRef, { name: "New User", email: "", mobile: user.phoneNumber });
+            // Initialize with default data
+            await set(userRef, {
+                name: "New User",
+                email: "",
+                mobile: user.phoneNumber,
+            });
         }
 
+        // Retrieve and display the user data
         const userData = userSnap.val();
-        document.getElementById('user-name').textContent = userData.name;
-        document.getElementById('user-mobile').textContent = userData.mobile;
-        document.getElementById('user-email').textContent = userData.email;
+        document.getElementById('user-name').textContent = userData.name || 'User Name';
+        document.getElementById('user-mobile').textContent = userData.mobile || 'Mobile Number';
+        document.getElementById('user-email').textContent = userData.email || 'Email Address';
 
         loginSection.style.display = 'none';
         userSection.style.display = 'block';
@@ -121,23 +157,34 @@ verifyOtpBtn.addEventListener('click', async () => {
     }
 });
 
-// Resend OTP after 30 seconds
-function startOtpTimeout() {
-    otpResendEnabled = false;
-    resendOtpBtn.style.display = 'none';
-    otpTimeout = setTimeout(() => {
-        otpResendEnabled = true;
-        resendOtpBtn.style.display = 'inline';
-    }, 30000); // 30 seconds timeout for resending OTP
-}
 
 // Resend OTP
 resendOtpBtn.addEventListener('click', () => {
-    if (!otpResendEnabled) {
-        alert("You can only resend OTP after 30 seconds.");
+    const phoneNumber = `+91${mobileInput.value}`;
+    if (!phoneNumber || phoneNumber.length !== 13) {
+        alert("Please enter a valid phone number");
         return;
     }
-    sendOtpBtn.click(); // Trigger OTP resend by simulating the send OTP button click
+
+    resetRecaptcha(); // Reset reCAPTCHA before every OTP attempt
+    recaptchaVerifier.verify().then(() => {
+        signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
+            .then((result) => {
+                confirmationResult = result;
+                otpSection.style.display = 'block';
+
+                // Start the timer for the resend OTP button
+                otpSentTime = Date.now();
+                startResendTimer();
+            })
+            .catch((error) => {
+                console.error("Error sending OTP:", error);
+                alert("Failed to send OTP. Please try again.");
+            });
+    }).catch((error) => {
+        console.error("reCAPTCHA error:", error);
+        alert("reCAPTCHA verification failed.");
+    });
 });
 
 // Logout
