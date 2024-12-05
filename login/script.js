@@ -6,7 +6,7 @@ import {
     PhoneAuthProvider,
     signInWithCredential,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import { initializeFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
@@ -18,9 +18,18 @@ const firebaseConfig = {
     appId: "1:134910654750:web:faff248c0b9a1407d2f10f",
     measurementId: "G-LGMZJPLV9P",
 };
+
+// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore with experimental settings for better network compatibility
+const db = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+    useFetchStreams: false,
+});
+
+// Initialize Auth
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 const loginSection = document.getElementById('login-section');
 const userSection = document.getElementById('user-section');
@@ -39,26 +48,56 @@ function resetRecaptcha() {
     if (recaptchaVerifier) {
         recaptchaVerifier.clear();
     }
-    recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+    recaptchaVerifier = new RecaptchaVerifier(
+        'recaptcha-container',
+        {
+            size: 'invisible',
+            callback: () => {
+                console.log('reCAPTCHA solved');
+            },
+            'expired-callback': () => {
+                console.log('reCAPTCHA expired; resetting.');
+                resetRecaptcha();
+            },
+        },
+        auth
+    );
+    recaptchaVerifier.render();
 }
 
 // Send OTP
 sendOtpBtn.addEventListener('click', () => {
     const phoneNumber = `+91${mobileInput.value}`;
-    resetRecaptcha();
+    if (!phoneNumber || phoneNumber.length !== 13) {
+        alert("Please enter a valid phone number");
+        return;
+    }
+
+    resetRecaptcha(); // Reset reCAPTCHA before every OTP attempt
     recaptchaVerifier.verify().then(() => {
         signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
             .then((result) => {
                 confirmationResult = result;
                 otpSection.style.display = 'block';
             })
-            .catch((error) => console.error("Error sending OTP:", error));
+            .catch((error) => {
+                console.error("Error sending OTP:", error);
+                alert("Failed to send OTP. Please try again.");
+            });
+    }).catch((error) => {
+        console.error("reCAPTCHA error:", error);
+        alert("reCAPTCHA verification failed.");
     });
 });
 
 // Verify OTP
 verifyOtpBtn.addEventListener('click', async () => {
     const otp = otpInput.value;
+    if (!otp || otp.length !== 6) {
+        alert("Please enter a valid 6-digit OTP");
+        return;
+    }
+
     try {
         const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otp);
         const userCredential = await signInWithCredential(auth, credential);
@@ -79,6 +118,7 @@ verifyOtpBtn.addEventListener('click', async () => {
         userSection.style.display = 'block';
     } catch (error) {
         console.error("Error verifying OTP:", error);
+        alert("Invalid OTP. Please try again.");
     }
 });
 
@@ -87,5 +127,8 @@ logoutBtn.addEventListener('click', () => {
     auth.signOut().then(() => {
         loginSection.style.display = 'block';
         userSection.style.display = 'none';
+    }).catch((error) => {
+        console.error("Error logging out:", error);
+        alert("Failed to logout. Please try again.");
     });
 });
