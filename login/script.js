@@ -67,7 +67,7 @@ function showLoginSection() {
 }
 
 function showUserSection(user) {
-    document.getElementById('user-name').textContent = user.displayName || 'User Name';
+    document.getElementById('user-name').textContent = user.name || 'User Name';
     document.getElementById('user-mobile').textContent = user.phoneNumber;
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('user-section').style.display = 'block';
