@@ -128,6 +128,10 @@ function updateUrlParams(url, key, values) {
     }
 }
 
+document.getElementById('accountButton').addEventListener('click', function () {
+    window.location.href = '/login';
+  });
+
 
 
 

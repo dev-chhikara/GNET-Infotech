@@ -185,3 +185,6 @@ document.getElementById("bulkOrderForm").addEventListener("submit", (e) => {
       });
   });
 
+  document.getElementById('accountButton').addEventListener('click', function () {
+    window.location.href = '/login';
+  });
