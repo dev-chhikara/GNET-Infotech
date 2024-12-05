@@ -1,6 +1,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 import {
     getAuth,
+    setPersistence,
+    browserSessionPersistence,
     RecaptchaVerifier,
     signInWithPhoneNumber,
     PhoneAuthProvider,
@@ -25,6 +27,36 @@ const app = initializeApp(firebaseConfig);
 // Initialize Auth and Database
 const auth = getAuth(app);
 const db = getDatabase(app);
+
+setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+        console.log('Persistence set to local.');
+    })
+    .catch((error) => {
+        console.error('Error setting persistence:', error);
+    });
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log('User is logged in:', user);
+        showUserSection(user);
+    } else {
+        console.log('User is not logged in');
+        showLoginSection();
+    }
+});
+
+function showLoginSection() {
+    document.getElementById('login-section').style.display = 'block';
+    document.getElementById('user-section').style.display = 'none';
+}
+
+function showUserSection(user) {
+    document.getElementById('user-name').textContent = user.displayName || 'User Name';
+    document.getElementById('user-mobile').textContent = user.phoneNumber;
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('user-section').style.display = 'block';
+}
 
 const loginSection = document.getElementById('login-section');
 const userSection = document.getElementById('user-section');
