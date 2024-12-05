@@ -7,7 +7,7 @@ body {
 }
 
 #nav-menu {
-  background-color: #2874f0;
+  background-color: #09162c;
   color: white;
   padding: 10px;
   display: flex;
@@ -15,14 +15,44 @@ body {
 }
 
 #nav-menu button {
-  background-color: #f0c14b;
-  border: none;
-  padding: 10px;
+  background-color: #ffffff;
+  color: #0b2231;
+  font-size: 16px;
   cursor: pointer;
+  max-width: 150px;
+  display: none;
+  height: 50px;
+  width: 95%;
+  text-align: center;
+  border: none;
+  border-radius: 15px;
+  margin: 10px auto;
 }
 
-#nav-menu button:hover {
-  background-color: #ddb347;
+/* Remove up and down arrows in number input */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+@media (max-width: 512px) {
+  #nav-menu button {
+    width: 90%;
+    max-width: 90%;
+    margin: 10px auto;
+  }
+}
+
+@media (min-width: 512px) {
+  #nav-menu button {
+    margin: 10px 20px;
+  }
 }
 
 #login-section, #user-section {
@@ -30,9 +60,19 @@ body {
   background-color: white;
   margin: 20px auto;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   text-align: center;
+}
+
+.inputBoxes{
+  height: 40px;
+  width: 80%;
+  text-align: center;
+  max-lines: 1;
+  border: #888 1px solid;
+  border-radius: 15px;
+  padding: 5px 20px;
+  margin: 10px auto;
 }
 
 .user-avatar {
@@ -71,21 +111,6 @@ body {
   align-items: center;
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
 /* General Spinner Styling */
 #loading-spinner {
   display: none;
@@ -97,15 +122,17 @@ body {
 
 /* Style for buttons */
 button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  background-color: #3498db;
+  background-color: #0b2231;
   color: white;
   font-size: 16px;
-  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  height: 50px;
+  width: 95%;
+  text-align: center;
+  border: none;
+  border-radius: 15px;
+  margin: 10px auto;
 }
 
 button:hover {
@@ -137,20 +164,44 @@ button:disabled {
   z-index: 1;
   left: 0;
   top: 0;
+  margin: auto;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#user-section h2{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#user-section h3{
+  margin-top: 50px;
 }
 
 .modal-content {
-  background-color: #ff0000;
+  background-color: #ffffff;
   margin: 15% auto;
   padding: 20px;
+  max-width: 400px;
+  border-radius: 30px;
   border: 1px solid #888;
-  width: 80%;
+  width: 70%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.modal-content input {
+  width: 85%;
+  margin: 20px auto;
+}
+
+.modal-content button {
+  width: 100%;
+  margin: 10px auto;
+}
+
 /* Progress Bar Styling */
 #progress-bar-container {
   width: 100%;

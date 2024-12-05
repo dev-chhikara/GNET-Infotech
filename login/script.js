@@ -43,20 +43,18 @@ function checkUserLogin() {
     // Listen to the authentication state change
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // User is logged in
-            console.log('User is logged in:', user);
 
             // Hide the progress bar after login check
             progressBarContainer.style.display = 'none';
+            logoutBtn.style.display = 'inline';
 
             // Proceed with fetching user data or navigating to the user section
             fetchUserDetails(user);
         } else {
-            // User is not logged in
-            console.log('User is not logged in.');
 
             // Hide the progress bar after login check
             progressBarContainer.style.display = 'none';
+            logoutBtn.style.display = 'none';
 
             // Show login section or any other UI updates
             showLoginSection();
@@ -90,8 +88,6 @@ function fetchUserDetails(user) {
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                console.log('Fetched user data:', data);
-
                 // Handle undefined or missing fields
                 const name = data.name || user.displayName || 'User Name';
                 const mobile = user.phoneNumber || 'N/A';
@@ -104,7 +100,6 @@ function fetchUserDetails(user) {
 
                 showUserSection();
             } else {
-                console.log('No user data found in database.');
                 const name = user.displayName || 'User Name';
                 const mobile = user.phoneNumber || 'N/A';
                 document.getElementById('user-name').textContent = name;
@@ -114,7 +109,6 @@ function fetchUserDetails(user) {
             }
         })
         .catch((error) => {
-            console.error('Error fetching user data:', error);
         });
 }
 
@@ -170,7 +164,6 @@ saveProfileBtn.addEventListener('click', () => {
             displayName: updatedName,
         })
             .then(() => {
-                console.log('Profile updated in auth.');
 
                 // Update only the name and email in the Realtime Database
                 const userRef = ref(db, `users/${user.uid}`);
@@ -179,18 +172,15 @@ saveProfileBtn.addEventListener('click', () => {
                     email: updatedEmail,
                 })
                     .then(() => {
-                        console.log('Profile updated in database.');
                         // Update UI with the new details
                         document.getElementById('user-name').textContent = updatedName;
                         document.getElementById('user-email').textContent = updatedEmail;
                         editProfileModal.style.display = 'none';
                     })
                     .catch((error) => {
-                        console.error('Error updating profile in database:', error);
                     });
             })
             .catch((error) => {
-                console.error('Error updating profile in auth:', error);
             });
     }
 });
@@ -211,10 +201,8 @@ function resetRecaptcha() {
         {
             size: 'invisible',
             callback: () => {
-                console.log('reCAPTCHA solved');
             },
             'expired-callback': () => {
-                console.log('reCAPTCHA expired; resetting.');
                 resetRecaptcha();
             },
         },
@@ -242,18 +230,16 @@ sendOtpBtn.addEventListener('click', () => {
                 startResendTimer();
             })
             .catch((error) => {
-                console.error("Error sending OTP:", error);
                 alert("Failed to send OTP. Please try again.");
             });
     }).catch((error) => {
-        console.error("reCAPTCHA error:", error);
         alert("reCAPTCHA verification failed.");
     });
 
     setTimeout(() => {
         toggleLoading(false);  // Hide loading spinner after OTP is sent
         document.getElementById('otp-section').style.display = 'block';  // Show OTP input section
-    }, 2000);  // Simulate 2 seconds delay
+    }, 3000);  // Simulate 2 seconds delay
 });
 
 function startResendTimer() {
@@ -293,7 +279,6 @@ verifyOtpBtn.addEventListener('click', () => {
     confirmationResult.confirm(otpValue)
         .then(async (result) => {
             const user = result.user; // Firebase authenticated user
-            console.log('User verified:', user);
 
             const userId = user.uid;
             const userRef = ref(db, `users/${userId}`);
@@ -319,15 +304,15 @@ verifyOtpBtn.addEventListener('click', () => {
 
             loginSection.style.display = 'none';
             userSection.style.display = 'block';
+
+            location.reload();
         })
         .catch((error) => {
-            console.error('Error verifying OTP:', error);
             alert('Failed to verify OTP. Please try again.');
         });
 
         setTimeout(() => {
             toggleLoading(false);  // Hide loading spinner after verification is complete
-            alert("OTP Verified successfully!");
             document.getElementById('user-section').style.display = 'block';  // Show user section after successful OTP verification
         }, 2000);
 });
@@ -353,11 +338,9 @@ resendOtpBtn.addEventListener('click', () => {
                 startResendTimer();
             })
             .catch((error) => {
-                console.error("Error sending OTP:", error);
                 alert("Failed to send OTP. Please try again.");
             });
     }).catch((error) => {
-        console.error("reCAPTCHA error:", error);
         alert("reCAPTCHA verification failed.");
     });
 });
@@ -367,8 +350,8 @@ logoutBtn.addEventListener('click', () => {
     auth.signOut().then(() => {
         loginSection.style.display = 'block';
         userSection.style.display = 'none';
+        location.reload();
     }).catch((error) => {
-        console.error("Error logging out:", error);
         alert("Failed to logout. Please try again.");
     });
 });
