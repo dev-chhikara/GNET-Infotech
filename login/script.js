@@ -6,7 +6,7 @@ import {
     PhoneAuthProvider,
     signInWithCredential,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { initializeFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2bLHi2CKsdI4w-_FNO01T8VSPidQMkeE",
@@ -22,14 +22,9 @@ const firebaseConfig = {
 // Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore with experimental settings for better network compatibility
-const db = initializeFirestore(app, {
-    experimentalForceLongPolling: true,
-    useFetchStreams: false,
-});
-
-// Initialize Auth
+// Initialize Auth and Database
 const auth = getAuth(app);
+const db = getDatabase(app);
 
 const loginSection = document.getElementById('login-section');
 const userSection = document.getElementById('user-section');
@@ -39,9 +34,12 @@ const mobileInput = document.getElementById('mobile-input');
 const otpSection = document.getElementById('otp-section');
 const otpInput = document.getElementById('otp-input');
 const logoutBtn = document.getElementById('logout-btn');
-
+const resendOtpBtn = document.getElementById('resend-otp-btn');
 let recaptchaVerifier;
 let confirmationResult;
+
+let otpTimeout;
+let otpResendEnabled = false;
 
 // Initialize reCAPTCHA
 function resetRecaptcha() {
@@ -79,6 +77,7 @@ sendOtpBtn.addEventListener('click', () => {
             .then((result) => {
                 confirmationResult = result;
                 otpSection.style.display = 'block';
+                startOtpTimeout();
             })
             .catch((error) => {
                 console.error("Error sending OTP:", error);
@@ -103,13 +102,13 @@ verifyOtpBtn.addEventListener('click', async () => {
         const userCredential = await signInWithCredential(auth, credential);
         const user = userCredential.user;
 
-        const userRef = doc(db, 'users', user.uid);
-        const userDoc = await getDoc(userRef);
-        if (!userDoc.exists()) {
-            await setDoc(userRef, { name: "New User", email: "", mobile: user.phoneNumber });
+        const userRef = ref(db, 'users/' + user.uid);
+        const userSnap = await get(userRef);
+        if (!userSnap.exists()) {
+            await set(userRef, { name: "New User", email: "", mobile: user.phoneNumber });
         }
 
-        const userData = (await getDoc(userRef)).data();
+        const userData = userSnap.val();
         document.getElementById('user-name').textContent = userData.name;
         document.getElementById('user-mobile').textContent = userData.mobile;
         document.getElementById('user-email').textContent = userData.email;
@@ -120,6 +119,25 @@ verifyOtpBtn.addEventListener('click', async () => {
         console.error("Error verifying OTP:", error);
         alert("Invalid OTP. Please try again.");
     }
+});
+
+// Resend OTP after 30 seconds
+function startOtpTimeout() {
+    otpResendEnabled = false;
+    resendOtpBtn.style.display = 'none';
+    otpTimeout = setTimeout(() => {
+        otpResendEnabled = true;
+        resendOtpBtn.style.display = 'inline';
+    }, 30000); // 30 seconds timeout for resending OTP
+}
+
+// Resend OTP
+resendOtpBtn.addEventListener('click', () => {
+    if (!otpResendEnabled) {
+        alert("You can only resend OTP after 30 seconds.");
+        return;
+    }
+    sendOtpBtn.click(); // Trigger OTP resend by simulating the send OTP button click
 });
 
 // Logout
