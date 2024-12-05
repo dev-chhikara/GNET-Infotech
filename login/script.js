@@ -115,46 +115,49 @@ function startResendTimer() {
     resendTimeout = setInterval(updateTimer, 1000); // Update every second
     updateTimer(); // Call immediately to show the initial timer
 }
+import { ref, set, get } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
-// Verify OTP
-verifyOtpBtn.addEventListener('click', async () => {
-    const otp = otpInput.value;
-    if (!otp || otp.length !== 6) {
-        alert("Please enter a valid 6-digit OTP");
+verifyOtpBtn.addEventListener('click', () => {
+    const otpValue = otpInput.value;
+    if (!otpValue) {
+        alert('Please enter the OTP.');
         return;
     }
 
-    try {
-        const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otp);
-        const userCredential = await signInWithCredential(auth, credential);
-        const user = userCredential.user;
+    confirmationResult.confirm(otpValue)
+        .then(async (result) => {
+            const user = result.user; // Firebase authenticated user
+            console.log('User verified:', user);
 
-        // Reference to the user's data in the Realtime Database
-        const userRef = ref(db, 'users/' + user.uid);
-        const userSnap = await get(userRef);
+            const userId = user.uid;
+            const userRef = ref(db, `users/${userId}`);
 
-        // If user data does not exist, initialize it
-        if (!userSnap.exists()) {
-            // Initialize with default data
-            await set(userRef, {
-                name: "New User",
-                email: "",
-                mobile: user.phoneNumber,
-            });
-        }
+            // Check if the user already exists in the database
+            const snapshot = await get(userRef);
+            if (!snapshot.exists()) {
+                // Save user data to the database
+                await set(userRef, {
+                    name: 'New User',
+                    phoneNumber: user.phoneNumber,
+                    email: '',
+                });
+            }
 
-        // Retrieve and display the user data
-        const userData = userSnap.val();
-        document.getElementById('user-name').textContent = userData.name || 'User Name';
-        document.getElementById('user-mobile').textContent = userData.mobile || 'Mobile Number';
-        document.getElementById('user-email').textContent = userData.email || 'Email Address';
+            // Fetch user data to display
+            const userData = snapshot.val() || { name: 'New User', phoneNumber: user.phoneNumber, email: '' };
 
-        loginSection.style.display = 'none';
-        userSection.style.display = 'block';
-    } catch (error) {
-        console.error("Error verifying OTP:", error);
-        alert("Invalid OTP. Please try again.");
-    }
+            // Update UI
+            userName.textContent = userData.name || 'No Name Provided';
+            userMobile.textContent = userData.phoneNumber || 'No Mobile Number';
+            userEmail.textContent = userData.email || 'No Email';
+
+            loginSection.style.display = 'none';
+            userSection.style.display = 'block';
+        })
+        .catch((error) => {
+            console.error('Error verifying OTP:', error);
+            alert('Failed to verify OTP. Please try again.');
+        });
 });
 
 
