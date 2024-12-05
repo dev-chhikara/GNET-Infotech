@@ -47,12 +47,15 @@ function fetchUserDetails(user) {
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                document.getElementById('user-name').textContent = data.name || 'User Name';
-                document.getElementById('user-mobile').textContent = user.phoneNumber;
+                document.getElementById('user-name').textContent = data.name || user.displayName || 'User Name';
+                document.getElementById('user-mobile').textContent = user.phoneNumber || 'N/A';
                 document.getElementById('user-email').textContent = data.email || 'Not Provided';
                 showUserSection();
             } else {
                 console.log('No user data found in database.');
+                document.getElementById('user-name').textContent = user.displayName || 'User Name';
+                document.getElementById('user-mobile').textContent = user.phoneNumber || 'N/A';
+                document.getElementById('user-email').textContent = 'Not Provided';
                 showUserSection();
             }
         })
@@ -60,6 +63,7 @@ function fetchUserDetails(user) {
             console.error('Error fetching user data:', error);
         });
 }
+
 
 function showLoginSection() {
     document.getElementById('login-section').style.display = 'block';
