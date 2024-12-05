@@ -5,6 +5,7 @@ import {
     browserLocalPersistence,
     browserSessionPersistence,
     RecaptchaVerifier,
+    onAuthStateChanged,
     signInWithPhoneNumber,
     PhoneAuthProvider,
     signInWithCredential,
