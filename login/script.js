@@ -2,6 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase
 import {
     getAuth,
     setPersistence,
+    browserLocalPersistence,
     browserSessionPersistence,
     RecaptchaVerifier,
     signInWithPhoneNumber,
