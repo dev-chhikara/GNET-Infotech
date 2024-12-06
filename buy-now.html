@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy - GNET-Infotech</title>
+    <link rel="stylesheet" href="assets/css/buy-now.css">
+    <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <div id="nav-menu">
+        <button id="back-btn">Back</button>
+    </div>
+
+    <div id="progress-bar-container" style="display: none;">
+        <div id="progress-bar" class="progress-bar"></div>
+    </div>
+
+    <div id="user-section" style="display:none;">
+        <div class="user-info">
+            <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="User Avatar" class="user-avatar" />
+            <h2 id="user-name">User Name</h2>
+            <p>Mobile: <span id="user-mobile"></span></p>
+            <p>Email: <span id="user-email"></span></p>
+            <button id="edit-profile-btn">Edit Profile</button>
+        </div>
+
+        <h3>Recent Orders</h3>
+        <div id="orders-list" class="horizontal-scroll">No recent orders</div>
+
+        <h3>Your Cart</h3>
+        <div id="cart-list" class="horizontal-scroll">No items in the cart</div>
+    </div>
+
+    <script src="assets/js/buy-now.js" type="module"></script>
+</body>
+</html>

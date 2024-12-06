@@ -15,50 +15,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const productRef = ref(database, `/Products/${productId}`);
 
     get(productRef)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                const product = snapshot.val();
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            const product = snapshot.val();
 
-                // Render product details
-                productContainer.innerHTML = `
-                    <div class="image-section">
-                        <img src="${product.img}" alt="${product.name}" class="main-image">
-                        <div class="thumbnails">
-                            ${Object.values(product.images || {}).map(image => `
-                                <img src="${image}" class="thumbnail" alt="Thumbnail">
-                            `).join('')}
-                        </div>
+            // Render product details
+            productContainer.innerHTML = `
+                <div class="image-section">
+                    <img src="${product.img}" alt="${product.name}" class="main-image">
+                    <div class="thumbnails">
+                        ${Object.values(product.images || {}).map(image => `
+                            <img src="${image}" class="thumbnail" alt="Thumbnail">
+                        `).join('')}
                     </div>
-                    <div class="details-section">
-                        <h1>${product.name}</h1>
-                        <p class="description">${product.description}</p>
-                        <p class="longdesc">${product.longdesc}</p>
-                        <p class="price">₹${product.price.replace("Rs ", "")}</p>
-                        <div class="improvement-options">
-                            ${renderImprovements(product.improvement || "", product.price.replace("Rs ", ""))}
-                        </div>
-                        <button class="buy-now">Buy Now</button>
-                        <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="details-section">
+                    <h1>${product.name}</h1>
+                    <p class="description">${product.description}</p>
+                    <p class="longdesc">${product.longdesc}</p>
+                    <p class="price">₹${product.price.replace("Rs ", "")}</p>
+                    <div class="improvement-options">
+                        ${renderImprovements(product.improvement || "", product.price.replace("Rs ", ""))}
                     </div>
-                `;
+                    <button id="buy-now" class="buy-now">Buy Now</button>
+                </div>
+            `;
 
-                // Add thumbnail click functionality
-                const thumbnails = document.querySelectorAll('.thumbnail');
-                const mainImage = document.querySelector('.main-image');
+            // Add click event for "Buy Now" button
+            const buyNowButton = document.getElementById('buy-now');
+            buyNowButton.addEventListener('click', function () {
+                const productId = snapshot.key; // Use the product ID from Firebase snapshot
+                window.location.href = `/buy-now?productid=${productId}`;
+            });
 
-                thumbnails.forEach(thumbnail => {
-                    thumbnail.addEventListener('click', () => {
-                        mainImage.src = thumbnail.src;
-                    });
+            // Add thumbnail click functionality
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.querySelector('.main-image');
+
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    mainImage.src = thumbnail.src;
                 });
-            } else {
-                productContainer.innerHTML = "<p>Product not found</p>";
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching product details:", error);
-            productContainer.innerHTML = "<p>Error fetching product details. Please try again later.</p>";
-        });
+            });
+        } else {
+            productContainer.innerHTML = "<p>Product not found</p>";
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching product details:", error);
+        productContainer.innerHTML = "<p>Error fetching product details. Please try again later.</p>";
+    });
 });
 
 /**
@@ -188,3 +194,11 @@ document.getElementById("bulkOrderForm").addEventListener("submit", (e) => {
   document.getElementById('accountButton').addEventListener('click', function () {
     window.location.href = '/login';
   });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('buy-now').addEventListener('click', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id"); // Get "id" from the current URL
+        window.location.href = `/buy-now?productid=${productId}`;
+    });
+});
