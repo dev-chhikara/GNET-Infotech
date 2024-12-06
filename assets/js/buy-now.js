@@ -79,13 +79,25 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
         quantity,
     };
 
+    const usernumber= "+91";
+
+    const userPhoneRef = ref(db, `users/${auth.currentUser.uid}/phoneNumber`);
+
+    // Fetch the phone number
+    get(userPhoneRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            usernumber = snapshot.val();
+        } 
+    }).catch((error) => {
+    });
+
     const productId = urlParams.get("productid");
     fetchProductDetails(productId);
 
     // Order Data for Firebase
     const orderData = {
         userAuthId: auth.currentUser.uid,  // User's Auth ID
-        userMobile: auth.currentUser.mobile,                // User's Mobile
+        userMobile: usernumber,                // User's Mobile
         productCode: productId,            // Product Code (ID)
         status: 'Pending',                 // Default status
         orderDetails: orderDetails,
