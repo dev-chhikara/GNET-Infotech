@@ -109,13 +109,16 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     set(orderRef, orderData)
         .then(() => {     
 
+            alert("Order Placed Successfully!");
+
             // Show "Order Placed" message
             document.getElementById("buying-section").innerHTML = "<h2 style='color: green;'>Order Placed!</h2>";
+
+            
 
             // Redirect to Home page after 5 seconds
             setTimeout(() => {
                 window.location.href = "/"; // Redirect to Home page
-                alert("Order Placed Successfully!");
             }, 5000);
         })
         .catch((error) => {

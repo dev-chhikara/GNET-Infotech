@@ -110,7 +110,7 @@ function renderImprovements(improvement, initialPrice) {
 
     if (!ramSelect || !hddSelect || !priceElement) {
         console.error("Error: One or more elements are missing");
-        return optionsHTML || "<p>No customizations available for this product.</p>";
+        return optionsHTML || "<p></p>";
     }
 
     // Initial price update when the page loads
