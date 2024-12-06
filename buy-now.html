@@ -21,20 +21,56 @@
         <div id="progress-bar" class="progress-bar"></div>
     </div>
 
-    <div id="user-section" style="display:none;">
-        <div class="user-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="User Avatar" class="user-avatar" />
-            <h2 id="user-name">User Name</h2>
-            <p>Mobile: <span id="user-mobile"></span></p>
-            <p>Email: <span id="user-email"></span></p>
-            <button id="edit-profile-btn">Edit Profile</button>
+    <div id="buying-section" style="display:none;">
+        <div class="buy-info">
+            <img src="" id="productImage" class="user-avatar" />
+            <h2 id="product-name"></h2>
+            <p><span id="product-description"></span></p>
         </div>
+             
+    </div>
 
-        <h3>Recent Orders</h3>
-        <div id="orders-list" class="horizontal-scroll">No recent orders</div>
-
-        <h3>Your Cart</h3>
-        <div id="cart-list" class="horizontal-scroll">No items in the cart</div>
+    <div id="address-form-section" style="display: none;">
+        <form id="address-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required placeholder="Enter your full name" />
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" required placeholder="Enter your phone number" />
+            </div>
+        
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" required placeholder="Enter your address"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required placeholder="Enter your city" />
+            </div>
+        
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" required placeholder="Enter your pincode" />
+            </div>
+        
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" value="India" disabled />
+            </div>
+        
+            <div class="form-group">
+                <label for="quantity">Quantity (Max 50)</label>
+                <input type="number" id="quantity" min="1" max="50" required />
+            </div>
+        
+            <button type="submit" id="place-order">Place Order</button>
+        </form>
+        
+        <div id="order-status" style="display: none; color: green;">Order Placed!</div>
     </div>
 
     <script src="assets/js/buy-now.js" type="module"></script>
