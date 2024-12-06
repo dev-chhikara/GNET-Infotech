@@ -54,29 +54,26 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     event.preventDefault();
 
     const urlParams = new URLSearchParams(window.location.search);
-    const productsId = urlParams.get("productid");
 
     const name = document.getElementById('name').value;
-    const mobile = document.getElementById('mobile').value;
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const city = document.getElementById('city').value;
-    const state = document.getElementById('state').value;
+    const pincode = document.getElementById('pincode').value;
     const country = document.getElementById('country').value;
     const quantity = document.getElementById('quantity').value;
 
-    if (!name || !mobile || !email || !address || !city || !state || !quantity) {
+    if (!name || !pincode || !email || !address || !city  || !quantity) {
         alert('Please fill all fields');
         return;
     }
 
     const orderDetails = {
         name,
-        mobile,
         email,
         address,
         city,
-        state,
+        pincode,
         country,
         quantity,
     };
@@ -87,7 +84,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     // Order Data for Firebase
     const orderData = {
         userAuthId: auth.currentUser.uid,  // User's Auth ID
-        userMobile: mobile,                // User's Mobile
+        userMobile: auth.currentUser.mobile,                // User's Mobile
         productCode: productId,            // Product Code (ID)
         status: 'Pending',                 // Default status
         orderDetails: orderDetails,
