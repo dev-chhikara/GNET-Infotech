@@ -1,6 +1,6 @@
 import { auth, database } from "./firebase-config.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,7 +17,6 @@ export function checkLoginStatus() {
         window.location.href = `/login`;
         
       }
-      dialogBox.classList.toggle("hidden");
     });
   }
 
