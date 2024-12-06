@@ -186,7 +186,6 @@ body {
     padding: 20px;
     max-width: 400px;
     border-radius: 30px;
-    border: 1px solid #888;
     width: 70%;
   }
   
@@ -223,5 +222,13 @@ body {
     0% { width: 0%; }
     50% { width: 50%; }
     100% { width: 100%; }
+  }
+
+  #productImage{
+    border-radius: 0;
+    width: 90%;
+    margin: 20px auto;
+    height: auto;
+    
   }
   

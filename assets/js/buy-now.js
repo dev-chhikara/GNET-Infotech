@@ -107,27 +107,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     // Save Order to Firebase
     const orderRef = ref(db, 'Orders/' + Date.now());  // Use timestamp as unique key
     set(orderRef, orderData)
-        .then(() => {
-            console.log('Order placed and saved to Firebase!');
-            
-            // Send WhatsApp message after successful order placement
-            const product = {
-                name: "Sample Product",  // Replace with actual product name
-                price: "₹500",           // Replace with actual product price
-            };
-
-            const whatsappMessage = `
-                *Order Placed!*\n
-                Product: ${product.name}\n
-                Price: ${product.price}\n
-                Quantity: ${orderDetails.quantity}\n
-                Delivery Address: ${orderDetails.address}, ${orderDetails.city}, ${orderDetails.state}, ${orderDetails.country}\n
-                We will contact you soon for the payment.
-            `;
-
-            // WhatsApp Message Link (Replace with your WhatsApp business number)
-            const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(whatsappMessage)}`;
-            window.open(whatsappUrl, '_blank');
+        .then(() => {     
 
             // Show "Order Placed" message
             document.getElementById("buying-section").innerHTML = "<h2 style='color: green;'>Order Placed!</h2>";
@@ -135,6 +115,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
             // Redirect to Home page after 5 seconds
             setTimeout(() => {
                 window.location.href = "/"; // Redirect to Home page
+                alert("Order Placed Successfully!");
             }, 5000);
         })
         .catch((error) => {
