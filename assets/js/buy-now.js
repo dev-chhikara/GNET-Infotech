@@ -34,7 +34,7 @@ const orderConfirmation = document.getElementById("order-confirmation");
 
 // Fetch product details from the database
 async function fetchProductDetails() {
-    const productRef = ref(db, `products/${productId}`);
+    const productRef = ref(db, `Products/${productId}`);
     const snapshot = await get(productRef);
     if (snapshot.exists()) {
         const product = snapshot.val();
