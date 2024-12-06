@@ -93,7 +93,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
         productCode: productId,            
         status: 'Pending',                 
         address: orderDetails,
-        timestamp: Date.now(),            
+        timestamp: formatDate(Date.now()),            
     };
 
     // Save Order to Firebase
@@ -113,3 +113,33 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
 });
 
 fetchProductDetails(productId);
+
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+
+    // Get day, month, year, hours, and minutes
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' });  // Get month abbreviation
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert 24-hour time to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0) as 12
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Add the "st", "nd", "rd", or "th" suffix to the day
+    let daySuffix = 'th';
+    if (day === 1 || day === 21 || day === 31) {
+        daySuffix = 'st';
+    } else if (day === 2 || day === 22) {
+        daySuffix = 'nd';
+    } else if (day === 3 || day === 23) {
+        daySuffix = 'rd';
+    }
+
+    // Format and return the date
+    return `${hours}:${formattedMinutes} ${ampm} ${day}${daySuffix} ${month} ${year}`;
+}
