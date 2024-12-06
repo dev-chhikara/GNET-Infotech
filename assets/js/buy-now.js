@@ -7,6 +7,7 @@ import {
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 
+
 export function checkLoginStatus() {
     const dialogBox = document.getElementById("dialog-box");
     onAuthStateChanged(auth, (user) => {
