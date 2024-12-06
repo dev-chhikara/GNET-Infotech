@@ -116,7 +116,6 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
                 price: "₹500",           // Replace with actual product price
             };
 
-            // WhatsApp Message Format
             const whatsappMessage = `
                 *Order Placed!*\n
                 Product: ${product.name}\n
