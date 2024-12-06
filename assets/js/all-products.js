@@ -23,10 +23,16 @@ get(productsRef)
         const products = snapshot.val();
 
         if (products) {
-            console.log("Fetched products:", products); // Debugging: Log fetched products
 
             // Get the product entries as an array for sorting and filtering
             let productEntries = Object.entries(products);
+
+            // Filter out products with price equal to "soon"
+            productEntries = productEntries.filter(([productId, product]) => {
+                const validPrice = product.price !== "soon";
+                if (!validPrice) console.log(`Filtered out due to invalid price: ${product.name} (${product.price})`);
+                return validPrice;
+            });
 
             // Filter based on selected brands (if any filters are applied)
             if (brandFilters.length > 0) {
@@ -114,3 +120,4 @@ get(productsRef)
         console.error("Error fetching products:", error);
         productContainer.innerHTML = '<p>Error fetching products. Please try again later.</p>';
     });
+
