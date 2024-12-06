@@ -50,50 +50,89 @@ async function fetchProductDetails() {
 
 fetchProductDetails();
 
-// Handle form submission
-document.getElementById('address-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+document.getElementById('place-order-btn').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productsId = urlParams.get("productid");
 
     const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
+    const mobile = document.getElementById('mobile').value;
+    const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const city = document.getElementById('city').value;
-    const pincode = document.getElementById('pincode').value;
+    const state = document.getElementById('state').value;
+    const country = document.getElementById('country').value;
     const quantity = document.getElementById('quantity').value;
 
-    // Fetch the product details using the productId from the URL
+    if (!name || !mobile || !email || !address || !city || !state || !quantity) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    const orderDetails = {
+        name,
+        mobile,
+        email,
+        address,
+        city,
+        state,
+        country,
+        quantity,
+    };
+
+    // Fetch Product ID from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('productid');
+    const productId = urlParams.get("productid");
+    fetchProductDetails(productId);
 
-    // Assuming you already have Firebase Realtime Database set up to fetch the product
-    const productRef = ref(db, `products/${productId}`);
-    
-    get(productRef)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                const product = snapshot.val();
-                
-                // Display order status
-                document.getElementById('order-status').style.display = 'block';
-                setTimeout(() => {
-                    window.location.href = '/'; // Redirect to the home page after 5 seconds
-                }, 5000);
+    // Order Data for Firebase
+    const orderData = {
+        userAuthId: auth.currentUser.uid,  // User's Auth ID
+        userMobile: mobile,                // User's Mobile
+        productCode: productId,            // Product Code (ID)
+        status: 'Pending',                 // Default status
+        orderDetails: orderDetails,
+        timestamp: Date.now(),             // Timestamp of the order
+    };
 
-                // Send the WhatsApp Business message
-                const whatsappMessage = `Order Placed!\n\nProduct: ${product.name}\nPrice: ₹${product.price}\nQuantity: ${quantity}\nDelivery Address: ${address}, ${city}, ${pincode}, India\nWe will contact you soon for the payment.`;
-                const encodedMessage = encodeURIComponent(whatsappMessage);
+    // Save Order to Firebase
+    const orderRef = ref(db, 'Orders/' + Date.now());  // Use timestamp as unique key
+    set(orderRef, orderData)
+        .then(() => {
+            console.log('Order placed and saved to Firebase!');
+            
+            // Send WhatsApp message after successful order placement
+            const product = {
+                name: "Sample Product",  // Replace with actual product name
+                price: "₹500",           // Replace with actual product price
+            };
 
-                // Replace with your WhatsApp Business number
-                const whatsappURL = `https://wa.me/your-whatsapp-business-number?text=${encodedMessage}`;
-                
-                // Open the WhatsApp URL
-                window.open(whatsappURL, '_blank');
-            } else {
-                alert("Product not found.");
-            }
+            // WhatsApp Message Format
+            const whatsappMessage = `
+                *Order Placed!*\n
+                Product: ${product.name}\n
+                Price: ${product.price}\n
+                Quantity: ${orderDetails.quantity}\n
+                Delivery Address: ${orderDetails.address}, ${orderDetails.city}, ${orderDetails.state}, ${orderDetails.country}\n
+                We will contact you soon for the payment.
+            `;
+
+            // WhatsApp Message Link (Replace with your WhatsApp business number)
+            const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(whatsappMessage)}`;
+            window.open(whatsappUrl, '_blank');
+
+            // Show "Order Placed" message
+            document.getElementById("buying-section").innerHTML = "<h2 style='color: green;'>Order Placed!</h2>";
+
+            // Redirect to Home page after 5 seconds
+            setTimeout(() => {
+                window.location.href = "/"; // Redirect to Home page
+            }, 5000);
         })
         .catch((error) => {
-            console.error("Error fetching product:", error);
-            alert("Error fetching product details. Please try again.");
+            console.error("Error saving order to Firebase:", error);
         });
 });
+
+fetchProductDetails(productId);
