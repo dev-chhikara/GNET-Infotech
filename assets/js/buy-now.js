@@ -40,11 +40,12 @@ async function fetchProductDetails() {
     if (snapshot.exists()) {
         const product = snapshot.val();
         productImage.src = product.img || "";
-        productName.textContent = product.name || "Product Name";
-        productDescription.textContent = product.description || "Product Description";
+        productName.textContent = product.name || "";
+        productDescription.textContent = product.description || "";
         document.getElementById("buying-section").style.display = "block";
         addressFormSection.style.display = "block";
     } else {
+        window.location.href('/index.html')
         alert("Product not found.");
     }
 }
@@ -58,50 +59,41 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
 
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const addressl1 = document.getElementById('addressL1').value;
+    const addressl2 = document.getElementById('addressL2').value;
+    const addressl3 = document.getElementById('addressL3').value;
     const city = document.getElementById('city').value;
     const pincode = document.getElementById('pincode').value;
-    const country = document.getElementById('country').value;
-    const quantity = document.getElementById('quantity').value;
+    const state = document.getElementById('state').value;
 
-    if (!name || !pincode || !email || !address || !city  || !quantity) {
+    if (!name || !pincode || !phoneNumber || !email || !addressl1 || !city  || !state) {
         alert('Please fill all fields');
         return;
     }
 
     const orderDetails = {
-        name,
-        email,
-        address,
-        city,
+        addressl1,
+        addressl2,
+        addressl3,
         pincode,
-        country,
-        quantity,
+        city,
+        state
     };
-
-    const usernumber= "+91";
-
-    const userPhoneRef = ref(db, `users/${auth.currentUser.uid}/phoneNumber`);
-
-    // Fetch the phone number
-    get(userPhoneRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            usernumber = snapshot.val();
-        } 
-    }).catch((error) => {
-    });
 
     const productId = urlParams.get("productid");
     fetchProductDetails(productId);
 
     // Order Data for Firebase
     const orderData = {
-        userAuthId: auth.currentUser.uid,  // User's Auth ID
-        userMobile: usernumber,                // User's Mobile
-        productCode: productId,            // Product Code (ID)
-        status: 'Pending',                 // Default status
-        orderDetails: orderDetails,
-        timestamp: Date.now(),             // Timestamp of the order
+        userAuthId: auth.currentUser.uid, 
+        userMobile: phoneNumber,      
+        userName: name,
+        userMobile: phoneNumber,   
+        productCode: productId,            
+        status: 'Pending',                 
+        address: orderDetails,
+        timestamp: Date.now(),            
     };
 
     // Save Order to Firebase
@@ -109,17 +101,11 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     set(orderRef, orderData)
         .then(() => {     
 
-            alert("Order Placed Successfully!");
+            alert("Order Placed! We will contact you soon!");
 
             // Show "Order Placed" message
             document.getElementById("buying-section").innerHTML = "<h2 style='color: green;'>Order Placed!</h2>";
-
-            
-
-            // Redirect to Home page after 5 seconds
-            setTimeout(() => {
-                window.location.href = "/"; // Redirect to Home page
-            }, 5000);
+            window.location.href = "/"; 
         })
         .catch((error) => {
             console.error("Error saving order to Firebase:", error);

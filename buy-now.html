@@ -13,9 +13,6 @@
         rel="stylesheet">
 </head>
 <body>
-    <div id="nav-menu">
-        <button id="back-btn">Back</button>
-    </div>
 
     <div id="progress-bar-container" style="display: none;">
         <div id="progress-bar" class="progress-bar"></div>
@@ -24,6 +21,9 @@
     <div class="modal">
 
         <div class="modal-content">
+
+
+
             <div id="buying-section" style="display:none;">
                 <div class="buy-info">
                     <img src="" id="productImage" class="user-avatar" />
@@ -36,46 +36,68 @@
             <div id="address-form-section" style="display: none;">
                 <form id="address-form">
                     <div class="form-group">
-                        <label for="name">Full Name</label>
+                        <label for="name">Name*</label>
                         <br>
-                        <input type="text" id="name" required placeholder="Enter your full name" />
+                        <input type="text" class="inputBoxes" id="name" required placeholder="Name" />
                     </div>
                     
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email*</label>
                         <br>
-                        <input type="email" id="email" required placeholder="Enter your email" />
+                        <input type="email" class="inputBoxes" id="email" required placeholder="Email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber">WhatsApp Phone Number*</label>
+                        <br>
+                        <input type="tel" class="inputBoxes" id="phoneNumber" required placeholder="Mobile Number" />
                     </div>
                 
                     <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="addressL1">Address Line 1*</label>
                         <br>
-                        <textarea id="address" required placeholder="Enter your address"></textarea>
+                        <input id="addressL1" class="inputBoxes" required placeholder="House No/Flat No"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addressL2">Address Line 2</label>
+                        <br>
+                        <input id="addressL2" class="inputBoxes" placeholder="Apt Suite Landmark"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addressL3">Address Line 3</label>
+                        <br>
+                        <input id="addressL3" class="inputBoxes" placeholder="Nearby Location"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pincode">Pincode*</label>
+                        <br>
+                        <input type="number" class="inputBoxes" id="pincode" required placeholder="Pincode" />
                     </div>
                     
                     <div class="form-group">
-                        <label for="city">City</label>
+                        <label for="city">City*</label>
                         <br>
-                        <input type="text" id="city" required placeholder="Enter your city" />
+                        <input type="text" class="inputBoxes" id="city" required placeholder="City" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State*</label>
+                        <br>
+                        <input type="text" class="inputBoxes" id="state" required placeholder="State" />
                     </div>
                 
                     <div class="form-group">
-                        <label for="pincode">Pincode</label>
+                        <label for="country">Country*</label>
                         <br>
-                        <input type="text" id="pincode" required placeholder="Enter your pincode" />
+                        <input type="text" class="inputBoxes" id="country" value="India" disabled />
                     </div>
-                
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <br>
-                        <input type="text" id="country" value="India" disabled />
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="quantity">Quantity (Max 50)</label>
-                        <br>
-                        <input type="number" id="quantity" min="1" max="50" required />
-                    </div>
+
+
+                    <p>After placing order, you will receive a confirmation message on WhatsApp. You will be asked to do payment and other verification there.</p>
+            
                 
                     <button type="submit" id="place-order-btn">Place Order</button>
                 </form>
