@@ -110,7 +110,7 @@ function renderImprovements(improvement, initialPrice) {
 
     if (!ramSelect || !hddSelect || !priceElement) {
         console.error("Error: One or more elements are missing");
-        return optionsHTML || "<p></p>";
+        return optionsHTML || "<p>Upgradeable Configuration</p>";
     }
 
     // Initial price update when the page loads
