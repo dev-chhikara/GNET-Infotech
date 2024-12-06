@@ -21,57 +21,65 @@
         <div id="progress-bar" class="progress-bar"></div>
     </div>
 
-    <div id="buying-section" style="display:none;">
-        <div class="buy-info">
-            <img src="" id="productImage" class="user-avatar" />
-            <h2 id="product-name"></h2>
-            <p><span id="product-description"></span></p>
+    <div class="modal">
+
+        <div class="modal-content">
+            <div id="buying-section" style="display:none;">
+                <div class="buy-info">
+                    <img src="" id="productImage" class="user-avatar" />
+                    <h2 id="product-name"></h2>
+                    <p><span id="product-description"></span></p>
+                </div>
+                     
+            </div>
+        
+            <div id="address-form-section" style="display: none;">
+                <form id="address-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required placeholder="Enter your full name" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="Enter your email" />
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" required placeholder="Enter your address"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" required placeholder="Enter your city" />
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" required placeholder="Enter your pincode" />
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" value="India" disabled />
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="quantity">Quantity (Max 50)</label>
+                        <input type="number" id="quantity" min="1" max="50" required />
+                    </div>
+                
+                    <button type="submit" id="place-order-btn">Place Order</button>
+                </form>
+                
+                <div id="order-status" style="display: none; color: green;">Order Placed!</div>
+            </div>
         </div>
-             
+
     </div>
 
-    <div id="address-form-section" style="display: none;">
-        <form id="address-form">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" required placeholder="Enter your full name" />
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" required placeholder="Enter your email" />
-            </div>
-        
-            <div class="form-group">
-                <label for="address">Address</label>
-                <textarea id="address" required placeholder="Enter your address"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" required placeholder="Enter your city" />
-            </div>
-        
-            <div class="form-group">
-                <label for="pincode">Pincode</label>
-                <input type="text" id="pincode" required placeholder="Enter your pincode" />
-            </div>
-        
-            <div class="form-group">
-                <label for="country">Country</label>
-                <input type="text" id="country" value="India" disabled />
-            </div>
-        
-            <div class="form-group">
-                <label for="quantity">Quantity (Max 50)</label>
-                <input type="number" id="quantity" min="1" max="50" required />
-            </div>
-        
-            <button type="submit" id="place-order-btn">Place Order</button>
-        </form>
-        
-        <div id="order-status" style="display: none; color: green;">Order Placed!</div>
-    </div>
+    
 
     <script src="assets/js/buy-now.js" type="module"></script>
 </body>
