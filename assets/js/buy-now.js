@@ -81,8 +81,6 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
         quantity,
     };
 
-    // Fetch Product ID from URL
-    const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("productid");
     fetchProductDetails(productId);
 
