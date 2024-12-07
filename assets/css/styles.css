@@ -222,6 +222,19 @@ button:hover {
   align-items: center;
 }
 
+#maps{
+  height: 400px;
+  width: 400px;
+}
+
+@media (max-width: 500px) {
+  #maps{
+    height: 200px;
+    width: 200px;
+  }
+
+}
+
 .logo {
   width: 65px;
   height: 65px;
