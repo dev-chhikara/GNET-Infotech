@@ -269,6 +269,7 @@ button.apply-filter-btn:hover {
         margin-bottom: 20px;
     }
 }
+
 /* Product container grid layout */
 .product-container {
     display: grid;
@@ -344,6 +345,13 @@ button.apply-filter-btn:hover {
     text-align: center;
     margin: 8px 0;
 }
+
+.product-card .mrp {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin: 10px auto 20px auto;
+  }
 
 /* Product price styling */
 .product-card .price {

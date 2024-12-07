@@ -89,14 +89,17 @@ function updateProductList(products, filters) {
             // Ensure the price is correctly displayed
             const price = product.price || 'Price not available'; // Fallback to default text if price is not available
 
-            // Set the innerHTML of the product card
-            productCard.innerHTML = `
+            const mrp = product.mrp || '₹null/-';
+
+                // Set the innerHTML of the product card
+                productCard.innerHTML = `
                 <div class="image-container">
                     ${productImage}
                 </div>
                 <h3>${product.name}</h3>
                 <p class="description">${product.description}</p>
                 <h5 class="price">${price}</h5>
+                <p class="mrp">M.R.P. <s>${mrp}</s></p>
             `;
 
             // Append the card to the container

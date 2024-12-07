@@ -223,14 +223,15 @@ button:hover {
 }
 
 #maps{
-  height: 400px;
-  width: 400px;
+  height: 300px;
+  width: 600px;
 }
 
 @media (max-width: 500px) {
   #maps{
     height: 200px;
-    width: 200px;
+    width: 90%;
+    margin: 0 auto;
   }
 
 }
@@ -713,15 +714,14 @@ a.shop:hover {
       width: 80%;
   }
 }
-
+/* Product container grid layout */
 .product-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Default: 2 items per row */
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr); /* 2 items per row by default */
+  gap: 20px;
   padding: 16px;
   scroll-behavior: smooth;
 }
-
 /* Product card styling */
 .product-card {
   display: flex;
@@ -748,7 +748,7 @@ a.shop:hover {
   padding-bottom: 100%; /* This keeps a 1:1 aspect ratio */
   position: relative;
   overflow: hidden;
-  background-color: #ffffff; /* Light gray background if no image */
+  background-color: #ffffff; /* Set background to white */
   border-radius: 8px;
 }
 
@@ -769,7 +769,7 @@ a.shop:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #ffffff; /* Placeholder background */
+  background-color: #fff; /* Placeholder background */
   border-radius: 8px;
 }
 
@@ -780,6 +780,31 @@ a.shop:hover {
   font-weight: bold;
   text-align: center;
   color: #333;
+}
+
+/* Product description styling */
+.product-card .description {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin: 8px 0;
+}
+
+/* Product price styling */
+.product-card .price {
+  font-size: 18px;
+  color: #112f55; /* Green color for price */
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0 !important;
+}
+
+.product-card .mrp {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin: 10px auto 20px auto;
 }
 
 /* Responsive design: Adjust grid layout on large screens */
@@ -802,17 +827,10 @@ a.shop:hover {
   }
 }
 
-
-/* Responsive Styling */
-@media (max-width: 512px) {
-  .brands-section h2{
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 512px) {
-  #latestAddedProducts{
-    font-size: 1.5rem;
+@media (min-width: 1080px) {
+  .product-container {
+      width: 80%;
+      margin: 0 auto;
   }
 }
 

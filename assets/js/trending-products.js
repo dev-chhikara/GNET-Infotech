@@ -12,9 +12,14 @@ get(productsRef)
         const products = snapshot.val();
 
         if (products) {
-            // Get the keys (product IDs) and sort them in descending order to get the last 8 products
-            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)); // Sort in descending order
-            const limitedProductIds = sortedProductIds.slice(0, 8); // Get the last 8 product IDs
+            // Get the keys (product IDs) and sort them in descending order
+            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)).reverse(); // Sort in descending order
+
+            // Filter and limit the products to 8 items without "soon" in their price
+            const limitedProductIds = sortedProductIds.filter((productId) => {
+                const product = products[productId];
+                return !(product.price && product.price.toLowerCase().includes("soon"));
+            }).slice(0, 8); // Get the first 8 valid product IDs
 
             limitedProductIds.forEach((productId) => {
                 const product = products[productId];
@@ -30,20 +35,32 @@ get(productsRef)
 
                 // Check if the image URL exists and is valid
                 const imageUrl = product.img || ''; // If no image, it will be an empty string
-                const productImage = imageUrl ? `<img src="${imageUrl}" alt="${product.name}" class="product-image">` : '<div class="image-placeholder"></div>';
+                const productImage = imageUrl
+                    ? `<img src="${imageUrl}" alt="${product.name}" class="product-image">`
+                    : '<div class="image-placeholder"></div>';
+
+                const price = product.price || 'Price not available';
+                const mrp = product.mrp || '₹null/-';
 
                 // Set the innerHTML of the product card
                 productCard.innerHTML = `
-                    <div class="image-container">
-                        ${productImage}
-                    </div>
-                    <h3>${product.name}</h3>
-                    <h5>${product.price}</h5>
-                `;
+                <div class="image-container">
+                    ${productImage}
+                </div>
+                <h3>${product.name}</h3>
+                <p class="description">${product.description}</p>
+                <h5 class="price">${price}</h5>
+                <p class="mrp">M.R.P. <s>${mrp}</s></p>
+            `;
 
                 // Append the card to the container
                 productContainer.appendChild(productCard);
             });
+
+            // Show a message if no valid products are found
+            if (limitedProductIds.length === 0) {
+                productContainer.innerHTML = '<p>No products found without "soon" in the price.</p>';
+            }
         } else {
             productContainer.innerHTML = '<p>No products found.</p>';
         }
@@ -51,3 +68,5 @@ get(productsRef)
     .catch((error) => {
         console.error("Error fetching products:", error);
     });
+
+
