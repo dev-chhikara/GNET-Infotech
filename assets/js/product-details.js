@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="description">${product.description}</p>
                     <p class="longdesc">${product.longdesc}</p>
                     <p class="price">${product.price.replace("Rs ", "")}</p>
+                    <p class="mrp">M.R.P. <s>${product.mrp.replace("Rs ", "")}</s></p>
                     <div class="improvement-options">
                         ${renderImprovements(product.improvement || "", product.price.replace("Rs ", ""))}
                     </div>

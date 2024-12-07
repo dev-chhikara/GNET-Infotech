@@ -347,11 +347,11 @@ button.apply-filter-btn:hover {
 }
 
 .product-card .mrp {
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-    margin: 10px auto 20px auto;
-  }
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin: 10px auto 20px auto;
+}
 
 /* Product price styling */
 .product-card .price {
