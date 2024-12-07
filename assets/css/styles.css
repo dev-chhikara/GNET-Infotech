@@ -423,6 +423,28 @@ a {
   }
 }
 
+.refurb{
+  width: 100%;
+  text-align: center;
+  background-color: #000;
+  padding: 10px;
+}
+
+.refurb h1{
+  color: white;
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@media (max-width: 512px) {
+  .refurb h1{
+    font-size: 15px;
+  }
+}
+
 
 .centeredDiv {
   width: 100%;
