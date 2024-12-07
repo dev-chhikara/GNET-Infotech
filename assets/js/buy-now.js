@@ -86,6 +86,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
 
     // Order Data for Firebase
     const orderData = {
+        orderId: "#" + Date.now(),
         userAuthId: auth.currentUser.uid, 
         userMobile: phoneNumber,      
         userName: name,
