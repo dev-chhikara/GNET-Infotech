@@ -7,6 +7,9 @@ import {
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get("productid");
+
 
 export function checkLoginStatus() {
     const dialogBox = document.getElementById("dialog-box");
@@ -14,8 +17,7 @@ export function checkLoginStatus() {
       if (user) {
         
       } else {
-        window.location.href = `/login`;
-        
+        window.location.href = `/login?checkout=${productId}`;
       }
     });
   }
@@ -23,9 +25,6 @@ export function checkLoginStatus() {
   checkLoginStatus();
 
 const db = database;
-
-const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get("productid");
 
 const productImage = document.getElementById("productImage");
 const productName = document.getElementById("product-name");

@@ -31,8 +31,6 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 setPersistence(auth, browserLocalPersistence);
-
-// Show progress bar when checking login status
 function checkUserLogin() {
     const progressBarContainer = document.getElementById('progress-bar-container');
     const progressBar = document.getElementById('progress-bar');
@@ -40,18 +38,25 @@ function checkUserLogin() {
     // Show the progress bar
     progressBarContainer.style.display = 'block';
 
+    // Parse URL parameters to check for checkout ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const checkoutId = urlParams.get('checkout');
+
     // Listen to the authentication state change
     onAuthStateChanged(auth, (user) => {
         if (user) {
-
             // Hide the progress bar after login check
             progressBarContainer.style.display = 'none';
             logoutBtn.style.display = 'inline';
 
-            // Proceed with fetching user data or navigating to the user section
-            fetchUserDetails(user);
+            // If checkout ID exists, redirect to /buy-now with product ID
+            if (checkoutId) {
+                window.location.href = `/buy-now?productid=${checkoutId}`;
+            } else {
+                // Proceed with fetching user data or navigating to the user section
+                fetchUserDetails(user);
+            }
         } else {
-
             // Hide the progress bar after login check
             progressBarContainer.style.display = 'none';
             logoutBtn.style.display = 'none';
