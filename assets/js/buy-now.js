@@ -107,8 +107,6 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     set(orderRef, orderData)
         .then(() => {     
 
-            sendMessageOnWhatsApp(phoneNumber);
-
             alert("Order Placed! We will contact you soon!");
 
             // Show "Order Placed" message
@@ -152,38 +150,3 @@ function formatDate(timestamp) {
     return `${hours}:${formattedMinutes} ${ampm} ${day}${daySuffix} ${month} ${year}`;
 }
 
-async function sendMessageOnWhatsApp(phoneNumber) {
-
-    const url = "https://graph.facebook.com/v21.0/492455473953878/messages";
-    const accessToken = "EAASEbvKNZCxMBOyxbegYQtax8iUFx1pJX77Dn3gb3zEaZBDqo3amkDROnXP2yf0s7aoE0DBTOn82tfiEBWT1AxeE6vYfLdzcP6i13T25YlMd2AEDbV0tumZCuAHz1y7ITfsBe2ZBpUNZB67avhI9P2601ZC48fxDo1ZBZBqqHCkTj2TSZAZCoVO4fRWkETdCas04OFew3ykXpnco4ijqZCxql2Sifx6wZCot1ZCX9xYMZD"; // Replace with your actual token
-
-    const messagePayload = {
-        messaging_product: "whatsapp",
-        to: "+91" + phoneNumber,
-        type: "text",
-        text: {
-            body: "Hi by ME, its test message bro"
-        }
-    };
-
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${accessToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(messagePayload)
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            console.log("Whatsapp failed: " + result.messages[0].id);
-        } else {
-            const error = await response.json();
-            console.log("Whatsapp failed: " + error.error.message);
-        }
-    } catch (err) {
-        console.log("Whatsapp failed: " + err.message);
-    }
-}
