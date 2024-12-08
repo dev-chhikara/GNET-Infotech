@@ -66,8 +66,15 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     const pincode = document.getElementById('pincode').value;
     const state = document.getElementById('state').value;
 
-    if (!name || !pincode || !phoneNumber || !email || !addressl1 || !city  || !state) {
+    const phoneRegex = /^[0-9]{10}$/;
+
+    if (!name || !pincode || !phoneNumber || !email || !addressl1 || !city || !state) {
         alert('Please fill all fields');
+        return;
+    }
+    
+    if (!phoneRegex.test(phoneNumber)) {
+        alert('Please enter a valid phone number');
         return;
     }
 
@@ -89,7 +96,6 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
         userAuthId: auth.currentUser.uid, 
         userMobile: phoneNumber,      
         userName: name,
-        userMobile: phoneNumber,   
         productCode: productId,            
         status: 'Pending',                 
         address: orderDetails,
@@ -100,6 +106,8 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     const orderRef = ref(db, 'Orders/' + Date.now());  // Use timestamp as unique key
     set(orderRef, orderData)
         .then(() => {     
+
+            sendMessageOnWhatsApp(userMobile);
 
             alert("Order Placed! We will contact you soon!");
 
@@ -142,4 +150,40 @@ function formatDate(timestamp) {
 
     // Format and return the date
     return `${hours}:${formattedMinutes} ${ampm} ${day}${daySuffix} ${month} ${year}`;
+}
+
+async function sendMessageOnWhatsApp(phoneNumber) {
+
+    const url = "https://graph.facebook.com/v21.0/492455473953878/messages";
+    const accessToken = "EAASEbvKNZCxMBOw3TZCD6zfZB3JU6u9ZArfUrUElTle87kH72ewzNyvqTrRoFYfAUDxUNJojRFsidzu8sZBS8MnvmzrcJT0vikYkZBHkYbdz28o00jsiCCqzY4selWHTtViR2b4bxHk9LMvkNcb11bsVVHEqPrpZC5a7mg4D1U5X4ZCAyJoD9c7ZAgKDgKEh1yvI6jNhwyjHfIIHt38knMYGdmjk0L6bPGzijxMuPVQZDZD"; // Replace with your actual token
+
+    const messagePayload = {
+        messaging_product: "whatsapp",
+        to: "+91" + phoneNumber,
+        type: "text",
+        text: {
+            body: "Hi by ME, its test message bro"
+        }
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(messagePayload)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log("Whatsapp failed: " + result.messages[0].id);
+        } else {
+            const error = await response.json();
+            console.log("Whatsapp failed: " + error.error.message);
+        }
+    } catch (err) {
+        console.log("Whatsapp failed: " + err.message);
+    }
 }
