@@ -107,7 +107,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     set(orderRef, orderData)
         .then(() => {     
 
-            sendMessageOnWhatsApp(userMobile);
+            sendMessageOnWhatsApp(phoneNumber);
 
             alert("Order Placed! We will contact you soon!");
 
