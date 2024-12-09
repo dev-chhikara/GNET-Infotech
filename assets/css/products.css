@@ -2,14 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  /* Body styling */
-  body {
-    font-family: 'Arial', sans-serif;
-  }
+}
 
-  
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+
 /* Navbar container */
 .navbar {
     display: flex;
@@ -18,23 +18,23 @@
     padding: 10px 80px;
     height: 80px;
     background-color: rgb(209, 209, 209);
-  }
-  
-  /* Left side (logo and title) */
-  .navbar-left {
+}
+
+/* Left side (logo and title) */
+.navbar-left {
     display: flex;
     align-items: center;
-  }
-  
-  .logo {
+}
+
+.logo {
     width: 40px;
     height: 40px;
     margin-right: 10px;
     object-fit: cover;
     border-radius: 15px;
-  }
-  
-  .title {
+}
+
+.title {
     font-size: 25px;
     color: #000000;
     margin-left: 10px;
@@ -42,51 +42,54 @@
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
-  }
-  
-  /* Right side (icons) */
-  .navbar-right {
+}
+
+/* Right side (icons) */
+.navbar-right {
     display: flex;
     align-items: center;
     gap: 30px;
-  }
-  
-  a {
+}
+
+a {
     text-decoration: none;
     border: none;
-  }
-  
-  .navbar-right i {
+}
+
+.navbar-right i {
     font-size: 20px;
     color: #000;
     cursor: pointer;
     transition: color 0.3s;
-  }
-  
-  
-  @media (max-width: 500px) {
-    .navbar{
-        padding: 10px 30px;
-    }
-    .logo {
-      width: 35px;
-      margin-right: 0;
-      height: 35px;
-    }
-    
-    .title {
-      font-size: 15px;
-    }
-  
-  }
+}
 
-  
+
+@media (max-width: 500px) {
+    .navbar {
+        padding: 10px 30px;
+        height: 60px;
+    }
+
+    .logo {
+        width: 35px;
+        margin-right: 0;
+        height: 35px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+}
+
+
 /* Search Bar */
 .search-bar {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    position: relative; /* To position the icon inside the input */
+    position: relative;
+    /* To position the icon inside the input */
 }
 
 .search-input {
@@ -127,6 +130,21 @@ button {
     background: linear-gradient(to right, #0b233d, #344f6e);
     color: #fff;
     transition: background-color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    button {
+        padding: 10px 20px;
+        border: none;
+        font-size: 14px;
+    }
+    .search-input {
+        height: 40px;
+        margin-top: 20px;
+        padding: 5px 20px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
 }
 
 button:hover {
@@ -182,7 +200,7 @@ button:hover {
 }
 
 .filter-menu {
-    display: none; 
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -235,7 +253,8 @@ button:hover {
 }
 
 /* Custom Checkboxes and Radios */
-input[type="checkbox"], input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
     margin-right: 10px;
     accent-color: #007bff;
 }
@@ -264,7 +283,7 @@ button.apply-filter-btn:hover {
         height: 100%;
         border-radius: 0;
     }
-    
+
     .filter-section {
         margin-bottom: 20px;
     }
@@ -273,17 +292,17 @@ button.apply-filter-btn:hover {
 /* Product container grid layout */
 .product-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 items per row by default */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 items per row by default */
     gap: 20px;
     padding: 16px;
     scroll-behavior: smooth;
 }
+
 /* Product card styling */
 .product-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
@@ -301,10 +320,12 @@ button.apply-filter-btn:hover {
 .image-container {
     width: 100%;
     height: 0;
-    padding-bottom: 100%; /* This keeps a 1:1 aspect ratio */
+    padding-bottom: 100%;
+    /* This keeps a 1:1 aspect ratio */
     position: relative;
     overflow: hidden;
-    background-color: #ffffff; /* Set background to white */
+    background-color: #ffffff;
+    /* Set background to white */
     border-radius: 8px;
 }
 
@@ -325,8 +346,16 @@ button.apply-filter-btn:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #fff; /* Placeholder background */
+    background-color: #fff;
+    /* Placeholder background */
     border-radius: 8px;
+}
+
+.rate-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 items per row by default */
+    gap: 10px;
 }
 
 /* Product title styling */
@@ -334,45 +363,95 @@ button.apply-filter-btn:hover {
     margin-top: 12px;
     font-size: 16px;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     color: #333;
+}
+
+
+.buy-now {
+    background: linear-gradient(to right, #0b233d, #344f6e);
+    color: white;
+    padding: 12px 20px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
 /* Product description styling */
 .product-card .description {
     font-size: 14px;
     color: #555;
-    text-align: center;
+    text-align: left;
     margin: 8px 0;
 }
 
 .product-card .mrp {
-  font-size: 14px;
-  color: #555;
-  text-align: center;
-  margin: 10px auto 20px auto;
+    font-size: 14px;
+    color: #555;
+    text-align: right;
+    margin-top: 11px;
 }
 
 /* Product price styling */
 .product-card .price {
     font-size: 18px;
-    color: #112f55; /* Green color for price */
+    margin-bottom: 5px;
+    color: #112f55;
+    /* Green color for price */
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     margin-top: 8px;
 }
 
 /* Responsive design: Adjust grid layout on large screens */
 @media (min-width: 768px) {
     .product-container {
-        grid-template-columns: repeat(4, 1fr); /* 4 items per row on desktop */
+        grid-template-columns: repeat(4, 1fr);
+        /* 4 items per row on desktop */
     }
 }
 
 @media (max-width: 600px) {
     .product-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 items per row on mobile */
     }
+
+    /* Product title styling */
+    .product-card h3 {
+        font-size: 13px;
+    }
+
+
+    .buy-now {
+        font-size: 11px;
+    }
+
+    /* Product description styling */
+    .product-card .description {
+        font-size: 11px;
+        color: #555;
+        text-align: left;
+        margin: 8px 0;
+    }
+
+    .product-card .mrp {
+        font-size: 11px;
+    }
+
+    /* Product price styling */
+    .product-card .price {
+        font-size: 15px;
+    }
+
 }
 
 @media (min-width: 1024px) {
@@ -393,80 +472,88 @@ button.apply-filter-btn:hover {
 /* General Footer Styles */
 footer {
     margin-top: 50px;
-    background-color: #000; /* Black background */
-    color: white; /* White text */
-    padding: 40px 0; /* Increase height of footer */
-  }
-  
-  .footer-container {
+    background-color: #000;
+    /* Black background */
+    color: white;
+    /* White text */
+    padding: 40px 0;
+    /* Increase height of footer */
+}
+
+.footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-  }
-  
-  .footer-left,
-  .footer-center,
-  .footer-right {
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
     display: flex;
     align-items: center;
-  }
-  
-  .footer-logo {
-    width: 60px; /* Adjust logo size */
+}
+
+.footer-logo {
+    width: 60px;
+    /* Adjust logo size */
     margin-right: 15px;
-  }
-  
-  .brand-name {
+}
+
+.brand-name {
     font-size: 24px;
     font-weight: bold;
-  }
-  
-  .social-icons {
+}
+
+.social-icons {
     list-style: none;
     display: flex;
     gap: 20px;
-  }
-  
-  .social-icon i {
-    font-size: 30px; /* Increase icon size */
-    color: white; /* Change icon color to white */
+}
+
+.social-icon i {
+    font-size: 30px;
+    /* Increase icon size */
+    color: white;
+    /* Change icon color to white */
     transition: color 0.3s ease;
-  }
-  
-  .social-icon:hover i {
-    color: #ff6347; /* Add hover effect to icons */
-  }
-  
-  /* Footer Right */
-  .footer-right p {
+}
+
+.social-icon:hover i {
+    color: #ff6347;
+    /* Add hover effect to icons */
+}
+
+/* Footer Right */
+.footer-right p {
     font-size: 14px;
     margin-top: 0;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
     .footer-container {
         flex-direction: column;
         align-items: flex-start;
     }
-  
+
     .footer-left {
-        margin-bottom: 20px; /* Add spacing between logo and brand name */
+        margin-bottom: 20px;
+        /* Add spacing between logo and brand name */
     }
-  
+
     .footer-center {
-        margin-bottom: 20px; /* Add spacing between icons and other elements */
+        margin-bottom: 20px;
+        /* Add spacing between icons and other elements */
     }
-  
+
     .social-icons {
         gap: 15px;
     }
-  
+
     .footer-right p {
         margin-top: 10px;
     }
-  }
-  
+}

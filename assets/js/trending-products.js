@@ -13,7 +13,7 @@ get(productsRef)
 
         if (products) {
             // Get the keys (product IDs) and sort them in descending order
-            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)).reverse(); // Sort in descending order
+            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)); // Sort in descending order
 
             // Filter and limit the products to 8 items without "soon" in their price
             const limitedProductIds = sortedProductIds.filter((productId) => {
@@ -47,10 +47,13 @@ get(productsRef)
                 <div class="image-container">
                     ${productImage}
                 </div>
+                <div class="rate-container">
+                   <h5 class="price">${price}</h5>
+                <p class="mrp"><s>${mrp}</s></p>
+                </div>
                 <h3>${product.name}</h3>
                 <p class="description">${product.description}</p>
-                <h5 class="price">${price}</h5>
-                <p class="mrp">M.R.P. <s>${mrp}</s></p>
+                <button id="buynow" class="buynow">View Details</button>
             `;
 
                 // Append the card to the container

@@ -21,7 +21,7 @@ function updateProductList(products, filters) {
     // Filter out products with price equal to "soon"
     productEntries = productEntries.filter(([productId, product]) => {
         const validPrice = product.price !== "soon";
-        if (!validPrice) console.log(`Filtered out due to invalid price: ${product.name} (${product.price})`);
+        if (!validPrice) console.log(`New Products: ${product.name} (${product.price})`);
         return validPrice;
     });
 
@@ -96,10 +96,13 @@ function updateProductList(products, filters) {
                 <div class="image-container">
                     ${productImage}
                 </div>
+                <div class="rate-container">
+                   <h5 class="price">${price}</h5>
+                <p class="mrp"><s>${mrp}</s></p>
+                </div>
                 <h3>${product.name}</h3>
                 <p class="description">${product.description}</p>
-                <h5 class="price">${price}</h5>
-                <p class="mrp">M.R.P. <s>${mrp}</s></p>
+                <button id="buy-now" class="buy-now">View Details</button>
             `;
 
             // Append the card to the container

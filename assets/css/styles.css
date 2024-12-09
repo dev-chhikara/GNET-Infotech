@@ -432,6 +432,37 @@ a {
   padding: 10px;
 }
 
+/* Scroller container styling */
+.scroller-container {
+  width: 100%; /* Adjust width as needed */
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  background: #000000; /* Background color for the scroller */
+  border: none;
+  padding: 10px 0; /* Padding for better appearance */
+  box-sizing: border-box;
+}
+
+/* Scroller content styling */
+.scroller-content {
+  display: inline-block;
+  animation: scroll-text 5s linear infinite;
+  font-size: 16px;
+  color: #ffffff; /* Text color */
+}
+
+/* Keyframes for scrolling animation */
+@keyframes scroll-text {
+  0% {
+      transform: translateX(100%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+
+
 .refurb h1{
   color: white;
   font-size: 30px;
@@ -738,20 +769,22 @@ a.shop:hover {
       width: 80%;
   }
 }
-/* Product container grid layout */
+
+
+
 .product-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 items per row by default */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 items per row by default */
   gap: 20px;
   padding: 16px;
   scroll-behavior: smooth;
 }
+
 /* Product card styling */
 .product-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
@@ -769,10 +802,12 @@ a.shop:hover {
 .image-container {
   width: 100%;
   height: 0;
-  padding-bottom: 100%; /* This keeps a 1:1 aspect ratio */
+  padding-bottom: 100%;
+  /* This keeps a 1:1 aspect ratio */
   position: relative;
   overflow: hidden;
-  background-color: #ffffff; /* Set background to white */
+  background-color: #ffffff;
+  /* Set background to white */
   border-radius: 8px;
 }
 
@@ -793,8 +828,16 @@ a.shop:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff; /* Placeholder background */
+  background-color: #fff;
+  /* Placeholder background */
   border-radius: 8px;
+}
+
+.rate-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 items per row by default */
+  gap: 10px;
 }
 
 /* Product title styling */
@@ -802,46 +845,96 @@ a.shop:hover {
   margin-top: 12px;
   font-size: 16px;
   font-weight: bold;
-  text-align: center;
+  margin-bottom: 0;
+  text-align: left;
   color: #333;
+}
+
+
+.buynow {
+  background: linear-gradient(to right, #0b233d, #344f6e);
+  color: white;
+  padding: 12px 20px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
 /* Product description styling */
 .product-card .description {
   font-size: 14px;
   color: #555;
-  text-align: center;
+  text-align: left;
   margin: 8px 0;
-}
-
-/* Product price styling */
-.product-card .price {
-  font-size: 18px;
-  color: #112f55; /* Green color for price */
-  font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 0 !important;
 }
 
 .product-card .mrp {
   font-size: 14px;
   color: #555;
-  text-align: center;
-  margin: 10px auto 20px auto;
+  text-align: right;
+  margin-top: 11px;
+}
+
+/* Product price styling */
+.product-card .price {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #112f55;
+  /* Green color for price */
+  font-weight: bold;
+  text-align: left;
+  margin-top: 8px;
 }
 
 /* Responsive design: Adjust grid layout on large screens */
 @media (min-width: 768px) {
   .product-container {
-      grid-template-columns: repeat(4, 1fr); /* 4 items per row on desktop */
+      grid-template-columns: repeat(4, 1fr);
+      /* 4 items per row on desktop */
   }
 }
 
 @media (max-width: 600px) {
   .product-container {
-      grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 items per row on mobile */
   }
+
+  /* Product title styling */
+  .product-card h3 {
+      font-size: 13px;
+  }
+
+
+  .buynow {
+      font-size: 11px;
+  }
+
+  /* Product description styling */
+  .product-card .description {
+      font-size: 11px;
+      color: #555;
+      text-align: left;
+      margin: 8px 0;
+  }
+
+  .product-card .mrp {
+      font-size: 11px;
+  }
+
+  /* Product price styling */
+  .product-card .price {
+      font-size: 15px;
+  }
+
 }
 
 @media (min-width: 1024px) {
@@ -857,6 +950,9 @@ a.shop:hover {
       margin: 0 auto;
   }
 }
+
+
+
 
 .button-container {
   display: flex;
