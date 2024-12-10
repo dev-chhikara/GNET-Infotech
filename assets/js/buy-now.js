@@ -98,6 +98,7 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
         userAuthId: auth.currentUser.uid, 
         userMobile: phoneNumber,      
         userName: name,
+        userEmail: email,
         productCode: productId,            
         status: 'Pending',                 
         address: orderDetails,
