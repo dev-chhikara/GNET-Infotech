@@ -789,6 +789,16 @@ a.shop:hover {
   border-radius: 8px;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  padding: 3px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#product-text-container{
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
   padding: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

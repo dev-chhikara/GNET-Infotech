@@ -96,6 +96,7 @@ function updateProductList(products, filters) {
                 <div class="image-container">
                     ${productImage}
                 </div>
+                <div id="product-text-container">
                 <div class="rate-container">
                    <h5 class="price">${price}</h5>
                 <p class="mrp"><s>${mrp}</s></p>
@@ -103,6 +104,7 @@ function updateProductList(products, filters) {
                 <h3>${product.name}</h3>
                 <p class="description">${product.description}</p>
                 <button id="buy-now" class="buy-now">View Details</button>
+                </div>
             `;
 
             // Append the card to the container
