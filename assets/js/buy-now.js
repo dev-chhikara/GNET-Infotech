@@ -90,20 +90,22 @@ document.getElementById('place-order-btn').addEventListener('click', function (e
     const productId = urlParams.get("productid");
     fetchProductDetails(productId);
 
+    const date = Date.now();
+
     // Order Data for Firebase
     const orderData = {
-        orderId: "#" + Date.now(),
+        orderId: "#" + date,
         userAuthId: auth.currentUser.uid, 
         userMobile: phoneNumber,      
         userName: name,
         productCode: productId,            
         status: 'Pending',                 
         address: orderDetails,
-        timestamp: formatDate(Date.now()),            
+        timestamp: formatDate(date),            
     };
 
     // Save Order to Firebase
-    const orderRef = ref(db, 'Orders/' + Date.now());  // Use timestamp as unique key
+    const orderRef = ref(db, 'Orders/' + date);  // Use timestamp as unique key
     set(orderRef, orderData)
         .then(() => {     
 
