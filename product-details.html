@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNET Infotech: Product Details</title>
+    <title>GNET Infotech: Product Specifications</title>
     <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/product-details.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-
 <body>
-    <nav class="navbar">
+    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    
+    <nav class="navbar glass-nav">
         <a href="/index.html">
             <div class="navbar-left">
                 <img src="assets/img/logo.jpg" class="logo">
@@ -19,65 +20,27 @@
             </div>
         </a>
         <div class="navbar-right">
-            <i class="fas fa-user" id="accountButton"></i>
+            <i class="fas fa-user glass-icon" id="accountButton"></i>
         </div>
     </nav>
 
+    <div id="productContainer" class="product-container-main glass-card-lg fade-in-up"></div>
 
-
-
-    <div id="productContainer" class="product-container-main">
-    </div>
-
-
-    <div class="stats-container">
-        <div class="stat-item">
-            <h3>7<span>Days Return</span></h3>
+    <div class="stats-container fade-in-up">
+        <div class="stat-item glass-card">
+            <div class="stat-icon"><i class="fas fa-undo"></i></div>
+            <h3>7 Days</h3><span>Hassle-Free Return</span>
         </div>
-        <div class="stat-item">
-            <h3>5<span>Days Delivery</span></h3>
+        <div class="stat-item glass-card">
+            <div class="stat-icon"><i class="fas fa-truck"></i></div>
+            <h3>5 Days</h3><span>Express Delivery</span>
         </div>
-        <div class="stat-item">
-            <h3>14<span>Days Replacement</span></h3>
+        <div class="stat-item glass-card">
+            <div class="stat-icon"><i class="fas fa-sync"></i></div>
+            <h3>14 Days</h3><span>Replacement Auth</span>
         </div>
     </div>
-
-
-
-    <div class="bulk-order-section">
-        <h2 class="bulk-order-title">Order in Bulk</h2>
-        <form id="bulkOrderForm" class="bulk-order-form">
-          <input type="email" id="email" placeholder="Enter your email" required />
-          <button id="submitButton" type="submit">Submit</button>
-        </form>
-        <p id="message" class="message"></p>
-      </div>  
-
-    
-
-
-
-    <footer>
-        <div class="footer-container">
-            <div class="footer-left">
-                <img src="assets/img/logo_png_white.png" class="footer-logo">
-                <span class="brand-name">GNET-Infotech</span>
-            </div>
-            <div class="footer-center">
-                <ul class="social-icons">
-                    <li><a href="https://www.facebook.com/people/Gnet-Infotech/pfbid0NiZ4XjRDWaWsUvDi245iCWNABd7bdej94C5MpGPovTC8KhaNAi4W75kWWUxCszVxl/"
-                            target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a></li>
-                    <li><a href="https://www.instagram.com/gnetinfotech" target="_blank" class="social-icon"><i
-                                class="fab fa-instagram"></i></a></li>
-                </ul>
-            </div>
-            <div class="footer-right">
-                <p>&copy; 2024 GNET-Infotech. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <script type="module" src="assets/js/product-details.js"></script>
 </body>
-
 </html>

@@ -1,182 +1,206 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNET Infotech: Home</title>
-    <meta name="description"
-        content="GNET INFOTECH is a trusted provider of high-quality refurbished laptops, offering a cost-effective solution for customers seeking reliable, performance-driven devices. With a commitment to quality, each laptop is carefully inspected, tested, and restored to like-new condition, ensuring optimal functionality and longevity.">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>GNET Infotech | Premium Refurbished Laptops</title>
+    <meta name="description" content="GNET INFOTECH is a trusted provider of high-quality refurbished laptops. We offer rigorously tested, enterprise-grade devices delivering premium performance at cost-effective prices.">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="assets/js/firebase-config.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
+    
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="assets/js/firebase-config.js" type="module"></script>
 </head>
-
 <body>
 
-    <nav class="navbar">
+    <div id="fullscreen-loader">
+    <div class="loader-spinner"></div>
+</div>
+
+    <nav class="navbar glass-nav">
         <a href="#">
             <div class="navbar-left">
-                <img src="assets/img/logo.jpg" class="logo">
+                <img src="assets/img/logo.jpg" class="logo" alt="GNET Logo">
                 <span class="title">GNET Infotech</span>
             </div>
         </a>
         <div class="navbar-right">
-            <i class="fas fa-user" id="accountButton"></i>
+            <i class="fas fa-user glass-icon" id="accountButton"></i>
         </div>
     </nav>
-    <!-- <div class="scroller-container">
-        <div class="scroller-content">
-            Upgrade your tech game with GNET Infotech - Premium refurbished laptops at unbeatable prices, performance guaranteed!
-        </div>
-    </div> -->
-    <div id="dialog-box" class="hidden"></div>
-    <div style="background-color: #dadada;">
-        <div class="top-container">
-            <div class="image-section">
+    
+    <div id="dialog-box" class="hidden glass-dialog"></div>
+    
+    <div class="hero-section">
+        <div class="top-container fade-in-up">
+            <div class="text-section">
+                <h1>Enterprise-Grade<br><span class="text-gradient">Refurbished Technology</span></h1>
+                <p>Uncompromising performance and reliability at a fraction of the cost. Carefully rigorously tested and restored.</p>
+                <a href="#productContainer" class="hero-btn">Explore Collection</a>
+            </div>
+            <div class="image-section float-anim">
                 <img src="assets/img/laptop.png" alt="Premium Laptop" class="laptop-image">
             </div>
-            <div class="text-section">
-                <h1>Premium Laptops</h1>
-                <p>at affordable rates</p>
-            </div>
         </div>
     </div>
-    <div class="refurb">
-        <h1>&quot;Largest Refurbished Store&quot;</h1>
+
+    <div class="refurb glass-banner">
+        <h1>India's Most Trusted Refurbished Tech Store</h1>
     </div>
-    <div class="stats-container">
-        <div class="stat-item">
-            <h3>1500+ <span>Happy Customers</span></h3>
+
+    <div class="stats-container fade-in-up">
+        <div class="stat-item glass-card">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <h3>1,500+</h3>
+            <span>Verified Clients</span>
         </div>
-        <div class="stat-item">
-            <h3>350+ <span>Pincodes Delivered</span></h3>
+        <div class="stat-item glass-card">
+            <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <h3>350+</h3>
+            <span>Pincodes Served</span>
         </div>
-        <div class="stat-item">
-            <h3>150+<span>Items in Stock</span></h3>
+        <div class="stat-item glass-card">
+            <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>150+</h3>
+            <span>Premium Devices</span>
         </div>
     </div>
-    <div class="promo-section">
-        <div class="promo-image">
-            <img id="lapImageHome">
-        </div>
+
+    <div class="promo-section glass-card-lg fade-in-up">
         <div class="promo-content">
+            <span class="badge">Featured</span>
             <h1>Trending Tech</h1>
-            <p id="lapPriceHome"></p>
+            <p id="lapPriceHome" class="price-highlight"></p>
             <div class="laptop-details">
                 <h2 id="lapNameHome"></h2>
                 <h5 id="lapDetailsHome"></h5>
-                <button id="lapButtonHome" class="buy-now">Buy Now</button>
+                <button id="lapButtonHome" class="buy-now modern-btn">Acquire Now</button>
             </div>
         </div>
+        <div class="promo-image float-anim">
+            <img id="lapImageHome" alt="Trending Laptop">
+        </div>
     </div>
-    <div class="container">
-        <div class="card">
+
+    <div class="container staggered-fade">
+        <div class="card glass-card">
             <img id="catImageOne" src="" class="product-image">
             <h3 id="catNameOne"></h3>
             <div class="buttons">
-                <a id="catButtonOne"  class="shop">Shop &rsaquo;</a>
+                <a id="catButtonOne" class="shop modern-btn-outline">Browse Series ›</a>
             </div>
         </div>
-        <div class="card">
+        <div class="card glass-card">
             <img id="catImageTwo" src="" class="product-image">
             <h3 id="catNameTwo"></h3>
             <div class="buttons">
-                <a id="catButtonTwo"  class="shop">Shop &rsaquo;</a>
+                <a id="catButtonTwo" class="shop modern-btn-outline">Browse Series ›</a>
             </div>
         </div>
-        <div class="card">
+        <div class="card glass-card">
             <img id="catImageThree" src="" class="product-image">
             <h3 id="catNameThree"></h3>
             <div class="buttons">
-                <a id="catButtonThree"  class="shop">Shop &rsaquo;</a>
+                <a id="catButtonThree" class="shop modern-btn-outline">Browse Series ›</a>
             </div>
         </div>
     </div>
-    <div class="brands-section">
-        <h2>Shop by Brand</h2>
+
+    <div class="brands-section fade-in-up">
+        <h2>Partnering with the Best</h2>
         <div class="brands-scroll-container">
-        </div>
+            </div>
     </div>
-    <h2 id="latestAddedProducts">Latest Products</h2>
+
+    <h2 id="latestAddedProducts" class="section-title">New Arrivals</h2>
     <div id="productContainer" class="product-container"></div>
+    
     <div class="button-container">
-        <a href="/products" class="view-all-button">View All</a>
+        <a href="/products.html" class="view-all-button modern-btn">View Complete Catalog</a>
     </div>
-    <div class="features-containera">
-        <div class="featurea">
-            <p class="icon">🚚</p>
-            <h3 class="feature-title">Free Delivery on Order</h3>
-            <p class="feature-description">Enjoy fast and free delivery on all your orders, no minimum purchase
-                required.</p>
+
+    <div class="features-containera staggered-fade">
+        <div class="featurea glass-card">
+            <div class="icon-wrapper"><i class="fas fa-shipping-fast"></i></div>
+            <h3 class="feature-title">Express Pan-India Delivery</h3>
+            <p class="feature-description">Complimentary secure shipping across India on all certified devices.</p>
         </div>
-        <div class="featurea">
-            <p class="icon">🔒</p>
-            <h3 class="feature-title">100% Secure Payment</h3>
-            <p class="feature-description">Your transactions are fully secure with industry-leading encryption
-                technology.</p>
+        <div class="featurea glass-card">
+            <div class="icon-wrapper"><i class="fas fa-shield-alt"></i></div>
+            <h3 class="feature-title">End-to-End Encryption</h3>
+            <p class="feature-description">Your transactions are fortified with industry-leading 256-bit secure gateways.</p>
         </div>
-        <div class="featurea">
-            <p class="icon">✔️</p>
-            <h3 class="feature-title">Quality Guarantee</h3>
-            <p class="feature-description">We ensure top-notch quality products, backed by our satisfaction guarantee.
-            </p>
+        <div class="featurea glass-card">
+            <div class="icon-wrapper"><i class="fas fa-check-circle"></i></div>
+            <h3 class="feature-title">Certified Quality</h3>
+            <p class="feature-description">Every unit undergoes a rigorous 40-point quality assurance protocol.</p>
         </div>
     </div>
-    <div class="bulk-order-section">
-        <h2 class="bulk-order-title">Order in Bulk</h2>
+
+    <div class="bulk-order-section glass-card-lg fade-in-up">
+        <h2 class="bulk-order-title">Corporate & Bulk Acquisitions</h2>
+        <p>Equip your workforce with enterprise-ready devices.</p>
         <form id="bulkOrderForm" class="bulk-order-form">
-            <input type="email" id="email" placeholder="Enter your email" required />
-            <button id="submitButton" type="submit">Submit</button>
+            <input type="email" id="email" class="glass-input" placeholder="Corporate Email Address" required />
+            <button id="submitButton" type="submit" class="modern-btn">Request a Quote</button>
         </form>
         <p id="message" class="message"></p>
     </div>
-    <section id="visit-us" class="visit-us-section">
-        <div class="visit-us-container">
+
+    <section id="visit-us" class="visit-us-section fade-in-up">
+        <div class="visit-us-container glass-card">
             <div class="visit-us-info">
-                <h2>Visit Us</h2>
-                <p>Pillar No 66, above SBI Bank 1st Floor, Street Number 14, near Nangli Metro Station, Anand Vihar, Nangli Sakrawati, Najafgarh, Delhi 110043</p>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1238.301197355884!2d77.00985978309656!3d28.61643133743231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0fb8545567f9%3A0x1c12764c48e02fc6!2sGNET%20Infotech!5e0!3m2!1sen!2sin!4v1733543376256!5m2!1sen!2sin"
-                    id="maps" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <h2>Corporate Headquarters</h2>
+                <p>Pillar No 66, Above SBI Bank 1st Floor, Street No 14, Near Nangli Metro Station,<br> Anand Vihar, Nangli Sakrawati, Najafgarh, Delhi 110043</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1238.301197355884!2d77.00985978309656!3d28.61643133743231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0fb8545567f9%3A0x1c12764c48e02fc6!2sGNET%20Infotech!5e0!3m2!1sen!2sin!4v1733543376256!5m2!1sen!2sin" id="maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
             <div class="contact-buttons">
-                <a href="tel:+919310252506" class="call-button">Call Us</a>
-                <a href="https://wa.me/+919310252506" class="whatsapp-button" target="_blank">WhatsApp Us</a>
+                <a href="tel:+919310252506" class="call-button modern-btn"><i class="fas fa-phone-alt"></i> Contact Support</a>
+                <a href="https://wa.me/+919310252506" class="whatsapp-button modern-btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
             </div>
         </div>
     </section>
-    <footer>
+
+    <footer class="glass-footer">
         <div class="footer-container">
             <div class="footer-left">
-                <img src="assets/img/logo_png_white.png" class="footer-logo">
+                <img src="assets/img/logo_png_white.png" class="footer-logo" alt="Logo">
                 <span class="brand-name">GNET-Infotech</span>
             </div>
             <div class="footer-center">
                 <ul class="social-icons">
-                    <li><a href="https://www.facebook.com/people/Gnet-Infotech/pfbid0NiZ4XjRDWaWsUvDi245iCWNABd7bdej94C5MpGPovTC8KhaNAi4W75kWWUxCszVxl/"
-                            target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a></li>
-                    <li><a href="https://www.instagram.com/gnetinfotech" target="_blank" class="social-icon"><i
-                                class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/people/Gnet-Infotech/pfbid0NiZ4XjRDWaWsUvDi245iCWNABd7bdej94C5MpGPovTC8KhaNAi4W75kWWUxCszVxl/" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.instagram.com/gnetinfotech" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a></li>
                 </ul>
             </div>
             <div class="footer-right">
-                <p>&copy; 2024 GNET-Infotech. All Rights Reserved.</p>
+                <p>© 2024 GNET-Infotech. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
+
     <script src="assets/js/trending-products.js" type="module"></script>
     <script src="assets/js/theme.js" type="module"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/brands.js" type="module"></script>
+    <script>
+    // Fades out the loader once everything is fully loaded
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('fullscreen-loader');
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+        document.body.classList.add('loaded');
+    });
+</script>
+    
 </body>
-
 </html>

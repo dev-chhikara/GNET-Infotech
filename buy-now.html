@@ -3,113 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNET Infotech: Buy Product</title>
+    <title>Secure Checkout | GNET Infotech</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/buy-now.css">
     <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="checkout-body">
+    <div id="progress-bar-container"><div id="progress-bar"></div></div>
 
-    <div id="progress-bar-container" style="display: none;">
-        <div id="progress-bar" class="progress-bar"></div>
-    </div>
-
-    <div class="modal">
-
-        <div class="modal-content">
-
-
-
-            <div id="buying-section" style="display:none;">
+    <div class="checkout-wrapper fade-in-up">
+        <div class="modal-content glass-card-lg">
+            
+            <div id="buying-section" style="display:none;" class="order-summary">
                 <div class="buy-info">
                     <img src="" id="productImage" class="user-avatar" />
                     <h2 id="product-name"></h2>
-                    <p><span id="product-description"></span></p>
+                    <p class="desc"><span id="product-description"></span></p>
                 </div>
-                     
             </div>
         
             <div id="address-form-section" style="display: none;">
+                <h3 class="form-title">Shipping Details</h3>
                 <form id="address-form">
-                    <div class="form-group">
-                        <label for="name">Name*</label>
-                        <br>
-                        <input type="text" class="inputBoxes" id="name" required placeholder="Name" />
+                    <div class="input-grid">
+                        <div class="form-group">
+                            <input type="text" class="glass-input" id="name" required placeholder="Full Name*" />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="glass-input" id="email" required placeholder="Email Address*" />
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="glass-input" id="phoneNumber" required placeholder="WhatsApp Number*" />
+                        </div>
+                        <div class="form-group">
+                            <input id="addressL1" class="glass-input" required placeholder="House No/Flat No*">
+                        </div>
+                        <div class="form-group">
+                            <input id="addressL2" class="glass-input" placeholder="Apt Suite Landmark">
+                        </div>
+                        <div class="form-group">
+                            <input id="pincode" type="number" class="glass-input" required placeholder="Pincode*">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="glass-input" id="city" required placeholder="City*">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="glass-input" id="state" required placeholder="State*">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="glass-input" id="country" value="India" disabled style="opacity:0.7;">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="email">Email*</label>
-                        <br>
-                        <input type="email" class="inputBoxes" id="email" required placeholder="Email" />
+                    <div class="secure-note">
+                        <i class="fas fa-lock"></i> After placing your order, you will receive a secure WhatsApp confirmation to finalize payment.
                     </div>
-
-                    <div class="form-group">
-                        <label for="phoneNumber">WhatsApp Phone Number*</label>
-                        <br>
-                        <input type="tel" class="inputBoxes" id="phoneNumber" required placeholder="Mobile Number" />
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="addressL1">Address Line 1*</label>
-                        <br>
-                        <input id="addressL1" class="inputBoxes" required placeholder="House No/Flat No"></input>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="addressL2">Address Line 2</label>
-                        <br>
-                        <input id="addressL2" class="inputBoxes" placeholder="Apt Suite Landmark"></input>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="addressL3">Address Line 3</label>
-                        <br>
-                        <input id="addressL3" class="inputBoxes" placeholder="Nearby Location"></input>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pincode">Pincode*</label>
-                        <br>
-                        <input type="number" class="inputBoxes" id="pincode" required placeholder="Pincode" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="city">City*</label>
-                        <br>
-                        <input type="text" class="inputBoxes" id="city" required placeholder="City" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="state">State*</label>
-                        <br>
-                        <input type="text" class="inputBoxes" id="state" required placeholder="State" />
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="country">Country*</label>
-                        <br>
-                        <input type="text" class="inputBoxes" id="country" value="India" disabled />
-                    </div>
-
-
-                    <p>After placing order, you will receive a confirmation message on WhatsApp. You will be asked to do payment and other verification there.</p>
             
-                
-                    <button type="submit" id="place-order-btn">Place Order</button>
+                    <button type="submit" id="place-order-btn" class="modern-btn checkout-btn">Confirm Order</button>
                 </form>
-                
-                <div id="order-status" style="display: none; color: green;">Order Placed!</div>
+                <div id="order-status" style="display: none; color: #10b981; text-align:center; font-weight:600; margin-top:15px;">Order Placed Successfully!</div>
             </div>
         </div>
-
     </div>
-
-    
-
     <script src="assets/js/buy-now.js" type="module"></script>
 </body>
 </html>
