@@ -105,8 +105,12 @@ function showLoginSection() {
     document.getElementById('user-section').style.display = 'none';
 }
 
+// Global DOM Variables
 const loginSection = document.getElementById('login-section');
 const userSection = document.getElementById('user-section');
+const mobileInputSection = document.getElementById('mobile-input-section'); // New Container
+const loginSubtitle = document.getElementById('login-subtitle'); // Subtitle
+const otpSentMessage = document.getElementById('otp-sent-message'); // Dynamic Message
 const sendOtpBtn = document.getElementById('send-otp-btn');
 const verifyOtpBtn = document.getElementById('verify-otp-btn');
 const mobileInput = document.getElementById('mobile-input');
@@ -168,12 +172,14 @@ function resetRecaptcha() {
     recaptchaVerifier.render();
 }
 
+// ---------------- SEND OTP FIX ----------------
 sendOtpBtn.addEventListener('click', () => {
     const phoneNumber = `+91${mobileInput.value}`;
     if (!phoneNumber || phoneNumber.length !== 13) {
         alert("Please enter a valid 10-digit phone number");
         return;
     }
+    
     toggleLoading(true);
     resetRecaptcha(); 
 
@@ -181,21 +187,31 @@ sendOtpBtn.addEventListener('click', () => {
         signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
             .then((result) => {
                 confirmationResult = result;
+                
+                // Hide the loader, input, and subtitle
+                toggleLoading(false);
+                mobileInputSection.style.display = 'none';
+                loginSubtitle.style.display = 'none';
+                
+                // Show dynamic success message and OTP field
+                otpSentMessage.textContent = `OTP successfully sent to ${phoneNumber}`;
+                otpSentMessage.style.display = 'block';
                 otpSection.style.display = 'block';
+                
                 otpSentTime = Date.now();
                 startResendTimer();
             })
-            .catch(() => alert("Failed to send OTP. Please try again."));
-    }).catch(() => alert("reCAPTCHA verification failed."));
-
-    setTimeout(() => {
-        toggleLoading(false);  
-        document.getElementById('otp-section').style.display = 'block';  
-    }, 3000);  
+            .catch((error) => {
+                toggleLoading(false);
+                alert("Failed to send OTP. Please try again.");
+            });
+    }).catch((error) => {
+        toggleLoading(false);
+        alert("reCAPTCHA verification failed.");
+    });
 });
 
 function startResendTimer() {
-    sendOtpBtn.disabled = true; 
     const timerElement = document.getElementById('timer');
     const resendBtn = document.getElementById('resend-otp-btn');
     const timerSection = document.getElementById('timer-section');
@@ -209,8 +225,6 @@ function startResendTimer() {
             clearInterval(resendTimeout);
             timerSection.style.display = 'none';
             resendBtn.style.display = 'inline-block'; 
-            sendOtpBtn.disabled = false; 
-            sendOtpBtn.style.display = 'none'; 
         } else {
             timerElement.textContent = `${remainingTime} seconds`;
         }
@@ -220,6 +234,7 @@ function startResendTimer() {
     updateTimer(); 
 }
 
+// ---------------- VERIFY OTP FIX ----------------
 verifyOtpBtn.addEventListener('click', () => {
     const otpValue = otpInput.value;
     if (!otpValue) {
@@ -250,15 +265,14 @@ verifyOtpBtn.addEventListener('click', () => {
             userMobile.textContent = userData.phoneNumber || 'No Mobile Number';
             userEmail.textContent = userData.email || 'No Email';
 
+            toggleLoading(false);
             loginSection.style.display = 'none';
             userSection.style.display = 'block';
         })
         .catch(() => {
-            alert('Failed to verify OTP. Please try again or resend.');
             toggleLoading(false);
+            alert('Failed to verify OTP. Please try again or resend.');
         });
-
-        setTimeout(() => { toggleLoading(false); }, 2000);
 });
 
 resendOtpBtn.addEventListener('click', () => {
@@ -268,17 +282,27 @@ resendOtpBtn.addEventListener('click', () => {
         return;
     }
 
+    toggleLoading(true);
     resetRecaptcha(); 
+    
     recaptchaVerifier.verify().then(() => {
         signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
             .then((result) => {
                 confirmationResult = result;
-                otpSection.style.display = 'block';
+                
+                toggleLoading(false);
+                otpSentMessage.textContent = `OTP successfully re-sent to ${phoneNumber}`;
                 otpSentTime = Date.now();
                 startResendTimer();
             })
-            .catch(() => alert("Failed to send OTP. Please try again."));
-    }).catch(() => alert("reCAPTCHA verification failed."));
+            .catch((error) => {
+                toggleLoading(false);
+                alert("Failed to send OTP. Please try again.");
+            });
+    }).catch((error) => {
+        toggleLoading(false);
+        alert("reCAPTCHA verification failed.");
+    });
 });
 
 logoutBtn.addEventListener('click', () => {
