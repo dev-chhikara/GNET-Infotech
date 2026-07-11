@@ -1,40 +1,33 @@
 import { ref, get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-import { database } from './firebase-config.js';  // Assuming this file contains your Firebase config
-
+import { database } from './firebase-config.js';  
 
 const productsRef = ref(database, '/Products');
 const productContainer = document.getElementById('productContainer');
 
-// Fetch and display the last 8 products from Firebase Realtime Database
 get(productsRef)
     .then((snapshot) => {
-        productContainer.innerHTML = ''; // Clear previous content
+        productContainer.innerHTML = ''; 
         const products = snapshot.val();
 
         if (products) {
-            // Get the keys (product IDs) and sort them in descending order
-            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)); // Sort in descending order
+            const sortedProductIds = Object.keys(products).sort((a, b) => b.localeCompare(a)); 
 
-            // Filter and limit the products to 8 items without "soon" in their price
             const limitedProductIds = sortedProductIds.filter((productId) => {
                 const product = products[productId];
                 return !(product.price && product.price.toLowerCase().includes("soon"));
-            }).slice(0, 8); // Get the first 8 valid product IDs
+            }).slice(0, 8); 
 
             limitedProductIds.forEach((productId) => {
                 const product = products[productId];
 
-                // Create a product card
                 const productCard = document.createElement('div');
-                productCard.classList.add('product-card');
+                productCard.classList.add('product-card', 'glass-card');
 
-                // Add onClick event to redirect to the product details page
                 productCard.addEventListener('click', () => {
-                    window.location.href = `/product-details?id=${productId}`;
+                    window.location.href = `/product-details.html?id=${productId}`;
                 });
 
-                // Check if the image URL exists and is valid
-                const imageUrl = product.img || ''; // If no image, it will be an empty string
+                const imageUrl = product.img || ''; 
                 const productImage = imageUrl
                     ? `<img src="${imageUrl}" alt="${product.name}" class="product-image">`
                     : '<div class="image-placeholder"></div>';
@@ -42,37 +35,30 @@ get(productsRef)
                 const price = product.price || 'Price not available';
                 const mrp = product.mrp || '₹null/-';
 
-                // Set the innerHTML of the product card
                 productCard.innerHTML = `
                 <div class="image-container">
                     ${productImage}
                 </div>
                 <div id="product-text-container">
-                <div class="rate-container">
-                   <h5 class="price">${price}</h5>
-                <p class="mrp"><s>${mrp}</s></p>
+                    <div class="rate-container">
+                        <h5 class="price">${price}</h5>
+                        <p class="mrp"><s>${mrp}</s></p>
+                    </div>
+                    <h3>${product.name}</h3>
+                    <p class="description">${product.description}</p>
+                    <button class="modern-btn-outline" style="width:100%; margin-top:15px; padding: 10px; font-size: 0.9rem;">View Details</button>
                 </div>
-                <h3>${product.name}</h3>
-                <p class="description">${product.description}</p>
-                <button id="buynow" class="buynow">View Details</button>
-                </div>
-                
             `;
-
-                // Append the card to the container
                 productContainer.appendChild(productCard);
             });
 
-            // Show a message if no valid products are found
             if (limitedProductIds.length === 0) {
-                productContainer.innerHTML = '<p>No products found without "soon" in the price.</p>';
+                productContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">No products found without "soon" in the price.</p>';
             }
         } else {
-            productContainer.innerHTML = '<p>No products found.</p>';
+            productContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">No products found.</p>';
         }
     })
     .catch((error) => {
         console.error("Error fetching products:", error);
     });
-
-
