@@ -14,7 +14,7 @@ get(productsRef)
 
             const limitedProductIds = sortedProductIds.filter((productId) => {
                 const product = products[productId];
-                return !(product.price && product.price.toLowerCase().includes("soon"));
+                return !(product.price && String(product.price).toLowerCase().includes("soon"));
             }).slice(0, 8); 
 
             limitedProductIds.forEach((productId) => {

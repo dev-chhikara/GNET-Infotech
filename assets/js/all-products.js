@@ -5,9 +5,10 @@ const productsRef = ref(database, '/Products');
 const productContainer = document.getElementById('productContainer');
 const searchInput = document.querySelector('.search-input');
 
+// UPGRADED: Strips absolutely everything except raw digits so sorting never breaks
 function parsePrice(priceString) {
-    if (!priceString || priceString.includes("null")) return 0; 
-    return parseInt(priceString.replace(/Rs\s|,|\/-/g, ''), 10) || 0;
+    if (!priceString || String(priceString).includes("null") || String(priceString).toLowerCase().includes("soon")) return 9999999; 
+    return parseInt(String(priceString).replace(/[^0-9]/g, ''), 10) || 0;
 }
 
 function updateProductList(products, filters) {
@@ -38,6 +39,7 @@ function updateProductList(products, filters) {
         });
     }
 
+    // Sort Logic
     switch (filters.sortKey) {
         case "price-asc":
             productEntries.sort(([, a], [, b]) => parsePrice(a.price) - parsePrice(b.price));

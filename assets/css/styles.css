@@ -296,3 +296,84 @@ a { text-decoration: none !important; }
     .product-details-wrapper { padding: 25px; margin: 40px 15px; }
     .product-details-wrapper .main-image { height: 280px; }
 }
+
+/* =========================================
+   📱 PRODUCT GRID OVERRIDE (STRICT 4 ITEMS)
+   ========================================= */
+.product-container { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Increased from 220px to fill space better */
+    gap: 30px; 
+    max-width: 1350px; 
+    margin: 0 auto 80px; 
+    padding: 0 20px; 
+}
+
+/* Force exactly 4 columns on large desktop screens */
+@media (min-width: 1200px) {
+    .product-container { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* =========================================
+   🔐 PREMIUM LOGIN PAGE UI
+   ========================================= */
+.login-wrapper {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-glass-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--glass-shadow);
+    max-width: 1000px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.login-image {
+    flex: 1;
+    min-width: 350px;
+    /* High quality tech workspace image */
+    background: url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+    position: relative;
+}
+
+.login-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(11,35,61,0.6), rgba(37,99,235,0.4));
+}
+
+.login-content {
+    flex: 1;
+    padding: 60px 40px;
+    min-width: 350px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-content h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.login-content p { color: var(--text-muted); margin-bottom: 10px; }
+.login-content h3 { color: var(--primary); margin: 30px 0 15px 0; font-size: 1.4rem;}
+
+/* Remove old login margins to fit the new card */
+#login-section, #user-section {
+    padding: 0; background-color: transparent; margin: 0; box-shadow: none; border: none; max-width: 100%;
+}

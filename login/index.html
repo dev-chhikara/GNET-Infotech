@@ -3,67 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNET Infotech: Login</title>
+    <title>GNET Infotech | Account Access</title>
     <link rel="icon" href="https://gnetinfotech.com/assets/img/logo_thumb.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=4.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Bar with Logout -->
-    <div id="nav-menu">
-        <button id="logout-btn">Logout</button>
-    </div>
-
-
-    <div id="progress-bar-container" style="display: none;">
-        <div id="progress-bar" class="progress-bar"></div>
-    </div>
-
-    <!-- Login Section -->
-    <div id="login-section">
-        <h2>Login to Your Account</h2>
-        <input type="number" class="inputBoxes" id="mobile-input" maxlength="10" placeholder="Enter mobile number" />
-        <div id="recaptcha-container"></div>
-        <button id="send-otp-btn">Send OTP</button>
-        <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
-        <div id="otp-section" style="display:none;">
-            <input type="number" class="inputBoxes" id="otp-input"  maxlength="6" placeholder="Enter OTP" />
-            <button id="verify-otp-btn">Verify OTP</button>
+    <div id="fullscreen-loader"><div class="loader-spinner"></div></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar glass-nav">
+        <a href="/index.html">
+            <div class="navbar-left">
+                <img src="assets/img/logo.jpg" class="logo" alt="GNET Logo">
+                <span class="title">GNET Infotech</span>
+            </div>
+        </a>
+        <div class="navbar-right" id="nav-menu">
+            <button id="logout-btn" class="modern-btn-outline" style="display:none; padding: 8px 20px; font-size: 0.9rem;">Logout</button>
         </div>
-        <div id="loading-spinner" style="display:none;">Loading...</div>
-        <div id="timer-section" style="display:none;">Please wait: <span id="timer"></span></div>
-        <div id="loading-spinner" style="display:none;">Loading...</div>
-    </div>
+    </nav>
 
-    <!-- User Account Section -->
-    <div id="user-section" style="display:none;">
-        <div class="user-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="User Avatar" class="user-avatar" />
-            <h2 id="user-name">User Name</h2>
-            <p>Mobile: <span id="user-mobile"></span></p>
-            <p>Email: <span id="user-email"></span></p>
-            <button id="edit-profile-btn">Edit Profile</button>
+    <div class="login-wrapper fade-in-up">
+        <div class="login-glass-card">
+            
+            <!-- Left Side Image Cover -->
+            <div class="login-image"></div>
+            
+            <!-- Right Side Form Content -->
+            <div class="login-content">
+                
+                <!-- State 1: Login -->
+                <div id="login-section">
+                    <h2>Welcome Back</h2>
+                    <p>Enter your registered mobile number to access your account.</p>
+                    <input type="number" class="glass-input" id="mobile-input" maxlength="10" placeholder="Mobile Number (e.g. 9876543210)" style="margin-bottom: 20px;"/>
+                    
+                    <div id="recaptcha-container" style="display: flex; justify-content: center; margin-bottom: 20px;"></div>
+                    
+                    <button id="send-otp-btn" class="hero-btn" style="width: 100%;">Send OTP</button>
+                    <button id="resend-otp-btn" class="modern-btn-outline" style="display:none; width: 100%; margin-top:10px;">Resend OTP</button>
+                    
+                    <div id="otp-section" style="display:none; margin-top: 25px;">
+                        <input type="number" class="glass-input" id="otp-input" maxlength="6" placeholder="Enter 6-Digit OTP" style="margin-bottom: 20px;"/>
+                        <button id="verify-otp-btn" class="hero-btn" style="width: 100%;">Verify Secure Login</button>
+                    </div>
+                    
+                    <div id="timer-section" style="display:none; color: var(--text-muted); margin-top: 15px;">Please wait: <span id="timer" style="font-weight: 700; color: var(--primary);"></span></div>
+                    <div id="loading-spinner" style="display:none; margin-top: 20px; color: var(--accent);"><i class="fas fa-circle-notch fa-spin"></i> Authenticating...</div>
+                </div>
+
+                <!-- State 2: User Dashboard -->
+                <div id="user-section" style="display:none;">
+                    <div class="user-info">
+                        <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="User Avatar" class="user-avatar" style="width: 80px; margin-bottom: 15px;" />
+                        <h2 id="user-name">User Name</h2>
+                        <p><i class="fas fa-phone"></i> <span id="user-mobile"></span></p>
+                        <p><i class="fas fa-envelope"></i> <span id="user-email"></span></p>
+                        <button id="edit-profile-btn" class="modern-btn-outline" style="margin-top: 20px;">Edit Profile</button>
+                    </div>
+
+                    <h3>Recent Orders</h3>
+                    <div id="orders-list" class="horizontal-scroll" style="color: var(--text-muted);">No recent orders</div>
+
+                    <h3>Your Cart</h3>
+                    <div id="cart-list" class="horizontal-scroll" style="color: var(--text-muted);">No items in the cart</div>
+                </div>
+
+            </div>
         </div>
-
-        <h3>Recent Orders</h3>
-        <div id="orders-list" class="horizontal-scroll">No recent orders</div>
-
-        <h3>Your Cart</h3>
-        <div id="cart-list" class="horizontal-scroll">No items in the cart</div>
     </div>
 
     <!-- Edit Profile Modal -->
-    <div id="edit-profile-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h3>Edit Profile</h3>
-            <label for="edit-name">Name:</label>
-            <input type="text" class="inputBoxes" id="edit-name" />
-            <label for="edit-email">Email:</label>
-            <input type="email" class="inputBoxes"  id="edit-email" />
-            <button id="save-profile-btn">Save Changes</button>
-            <button id="cancel-edit-btn">Cancel</button>
+    <div id="edit-profile-modal" class="modal" style="display:none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; display: flex;">
+        <div class="modal-content glass-card-lg" style="width: 90%; max-width: 400px; padding: 40px; text-align: center;">
+            <h3 style="margin-bottom: 20px; color: var(--primary);">Edit Profile</h3>
+            <input type="text" class="glass-input" id="edit-name" placeholder="Full Name"/>
+            <input type="email" class="glass-input" id="edit-email" placeholder="Email Address"/>
+            <button id="save-profile-btn" class="hero-btn" style="width: 100%; margin-top: 20px;">Save Changes</button>
+            <button id="cancel-edit-btn" class="modern-btn-outline" style="width: 100%; margin-top: 10px;">Cancel</button>
         </div>
     </div>
 
+    <script>
+        document.getElementById('edit-profile-modal').style.display = 'none'; // Ensure hidden on load
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('fullscreen-loader');
+            if (loader) loader.classList.add('hidden');
+        });
+    </script>
     <script src="script.js" type="module"></script>
 </body>
 </html>
