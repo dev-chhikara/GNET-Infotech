@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GNET Infotech: Product Specifications</title>
     <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
-    <link rel="stylesheet" href="assets/css/product-details.css?v=1.0">
+    <!-- Notice ?v=3.0 cache busting parameter -->
+    <link rel="stylesheet" href="assets/css/styles.css?v=3.0">
+    <link rel="stylesheet" href="assets/css/product-details.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    <div id="fullscreen-loader"><div class="loader-spinner"></div></div>
     
     <nav class="navbar glass-nav">
         <a href="/index.html">
             <div class="navbar-left">
-                <img src="assets/img/logo.jpg" class="logo">
+                <img src="assets/img/logo.jpg" class="logo" alt="Logo">
                 <span class="title">GNET-Infotech</span>
             </div>
         </a>
@@ -24,7 +26,8 @@
         </div>
     </nav>
 
-    <div id="productContainer" class="product-container-main glass-card-lg fade-in-up"></div>
+    <!-- JS will populate this cleanly into the new glass card -->
+    <div id="productContainer" class="fade-in-up"></div>
 
     <div class="stats-container fade-in-up">
         <div class="stat-item glass-card">
@@ -41,6 +44,39 @@
         </div>
     </div>
 
+    <div class="bulk-order-section glass-card-lg fade-in-up">
+        <h2 class="bulk-order-title">Order in Bulk</h2>
+        <form id="bulkOrderForm" class="bulk-order-form">
+          <input type="email" id="email" class="glass-input" placeholder="Enter your corporate email" required />
+          <button id="submitButton" type="submit" class="modern-btn">Submit Request</button>
+        </form>
+        <p id="message" class="message"></p>
+    </div>  
+
+    <footer class="glass-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="assets/img/logo_png_white.png" class="footer-logo" alt="Logo">
+                <span class="brand-name">GNET-Infotech</span>
+            </div>
+            <div class="footer-center">
+                <ul class="social-icons">
+                    <li><a href="https://www.facebook.com/people/Gnet-Infotech/pfbid0NiZ4XjRDWaWsUvDi245iCWNABd7bdej94C5MpGPovTC8KhaNAi4W75kWWUxCszVxl/" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.instagram.com/gnetinfotech" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <p>&copy; 2024 GNET-Infotech. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script type="module" src="assets/js/product-details.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('fullscreen-loader');
+            if (loader) loader.classList.add('hidden');
+        });
+    </script>
 </body>
 </html>

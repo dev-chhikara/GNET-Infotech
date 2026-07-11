@@ -3,25 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GNET Infotech | Premium Refurbished Laptops in Delhi</title>
-    <meta name="description" content="GNET INFOTECH is a trusted provider of high-quality refurbished laptops. We offer rigorously tested, enterprise-grade devices delivering premium performance at cost-effective prices.">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
+    <title>GNET Infotech | Premium Refurbished Laptops</title>
+    <meta name="description" content="GNET INFOTECH is a trusted provider of high-quality refurbished laptops.">
+    <!-- Notice ?v=3.0 -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
-    
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
     <script src="assets/js/firebase-config.js" type="module"></script>
 </head>
 <body>
-
-    <div id="fullscreen-loader">
-    <div class="loader-spinner"></div>
-</div>
+    <div id="fullscreen-loader"><div class="loader-spinner"></div></div>
 
     <nav class="navbar glass-nav">
         <a href="#">
@@ -35,13 +32,13 @@
         </div>
     </nav>
     
-    <div id="dialog-box" class="hidden glass-dialog"></div>
+    <div id="dialog-box" class="hidden glass-card"></div>
     
     <div class="hero-section">
         <div class="top-container fade-in-up">
             <div class="text-section">
                 <h1>Enterprise-Grade<br><span class="text-gradient">Refurbished Technology</span></h1>
-                <p>Uncompromising performance and reliability at a fraction of the cost. Carefully rigorously tested and restored.</p>
+                <p>Uncompromising performance and reliability at a fraction of the cost. Carefully and rigorously tested.</p>
                 <a href="#productContainer" class="hero-btn">Explore Collection</a>
             </div>
             <div class="image-section float-anim">
@@ -57,75 +54,67 @@
     <div class="stats-container fade-in-up">
         <div class="stat-item glass-card">
             <div class="stat-icon"><i class="fas fa-users"></i></div>
-            <h3>1,500+</h3>
-            <span>Verified Clients</span>
+            <h3>1,500+</h3><span>Verified Clients</span>
         </div>
         <div class="stat-item glass-card">
             <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <h3>350+</h3>
-            <span>Pincodes Served</span>
+            <h3>350+</h3><span>Pincodes Served</span>
         </div>
         <div class="stat-item glass-card">
             <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
-            <h3>150+</h3>
-            <span>Premium Devices</span>
+            <h3>150+</h3><span>Premium Devices</span>
         </div>
     </div>
 
     <div class="promo-section glass-card-lg fade-in-up">
-        <div class="promo-content">
-            <span class="badge">Featured</span>
+        <div class="text-section">
+            <span class="badge">Featured Deals</span>
             <h1>Trending Tech</h1>
             <p id="lapPriceHome" class="price-highlight"></p>
             <div class="laptop-details">
                 <h2 id="lapNameHome"></h2>
                 <h5 id="lapDetailsHome"></h5>
-                <button id="lapButtonHome" class="buy-now modern-btn">Acquire Now</button>
+                <button id="lapButtonHome" class="hero-btn" style="margin-top:15px;">Acquire Now</button>
             </div>
         </div>
-        <div class="promo-image float-anim">
-            <img id="lapImageHome" alt="Trending Laptop">
+        <div class="image-section float-anim">
+            <img id="lapImageHome" class="laptop-image" alt="Trending Laptop">
         </div>
     </div>
 
-    <div class="container staggered-fade">
+    <div class="container fade-in-up">
         <div class="card glass-card">
             <img id="catImageOne" src="" class="product-image">
             <h3 id="catNameOne"></h3>
-            <div class="buttons">
-                <a id="catButtonOne" class="shop modern-btn-outline">Browse Series ›</a>
-            </div>
+            <div class="buttons"><a id="catButtonOne" class="modern-btn-outline">Browse Series ›</a></div>
         </div>
         <div class="card glass-card">
             <img id="catImageTwo" src="" class="product-image">
             <h3 id="catNameTwo"></h3>
-            <div class="buttons">
-                <a id="catButtonTwo" class="shop modern-btn-outline">Browse Series ›</a>
-            </div>
+            <div class="buttons"><a id="catButtonTwo" class="modern-btn-outline">Browse Series ›</a></div>
         </div>
         <div class="card glass-card">
             <img id="catImageThree" src="" class="product-image">
             <h3 id="catNameThree"></h3>
-            <div class="buttons">
-                <a id="catButtonThree" class="shop modern-btn-outline">Browse Series ›</a>
-            </div>
+            <div class="buttons"><a id="catButtonThree" class="modern-btn-outline">Browse Series ›</a></div>
         </div>
     </div>
 
     <div class="brands-section fade-in-up">
         <h2>Partnering with the Best</h2>
         <div class="brands-scroll-container">
-            </div>
+            <!-- JS Inject -->
+        </div>
     </div>
 
     <h2 id="latestAddedProducts" class="section-title">New Arrivals</h2>
     <div id="productContainer" class="product-container"></div>
     
     <div class="button-container">
-        <a href="/products.html" class="view-all-button modern-btn">View Complete Catalog</a>
+        <a href="/products.html" class="hero-btn">View Complete Catalog</a>
     </div>
 
-    <div class="features-containera staggered-fade">
+    <div class="features-containera fade-in-up">
         <div class="featurea glass-card">
             <div class="icon-wrapper"><i class="fas fa-shipping-fast"></i></div>
             <h3 class="feature-title">Express Pan-India Delivery</h3>
@@ -148,23 +137,23 @@
         <p>Equip your workforce with enterprise-ready devices.</p>
         <form id="bulkOrderForm" class="bulk-order-form">
             <input type="email" id="email" class="glass-input" placeholder="Corporate Email Address" required />
-            <button id="submitButton" type="submit" class="modern-btn">Request a Quote</button>
+            <button id="submitButton" type="submit" class="hero-btn">Request a Quote</button>
         </form>
         <p id="message" class="message"></p>
     </div>
 
     <section id="visit-us" class="visit-us-section fade-in-up">
-        <div class="visit-us-container glass-card">
+        <div class="visit-us-container glass-card-lg">
             <div class="visit-us-info">
-                <h2>Corporate Headquarters</h2>
-                <p>Pillar No 66, Above SBI Bank 1st Floor, Street No 14, Near Nangli Metro Station,<br> Anand Vihar, Nangli Sakrawati, Najafgarh, Delhi 110043</p>
+                <h2 style="font-size:2rem; margin-bottom:10px; color:#0f172a;">Corporate Headquarters</h2>
+                <p style="color:#64748b; font-size:1.1rem;">Pillar No 66, Above SBI Bank 1st Floor, Street No 14, Near Nangli Metro Station,<br> Anand Vihar, Nangli Sakrawati, Najafgarh, Delhi 110043</p>
                 <div class="map-container">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1238.301197355884!2d77.00985978309656!3d28.61643133743231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0fb8545567f9%3A0x1c12764c48e02fc6!2sGNET%20Infotech!5e0!3m2!1sen!2sin!4v1733543376256!5m2!1sen!2sin" id="maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             <div class="contact-buttons">
-                <a href="tel:+919310252506" class="call-button modern-btn"><i class="fas fa-phone-alt"></i> Contact Support</a>
-                <a href="https://wa.me/+919310252506" class="whatsapp-button modern-btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                <a href="tel:+919310252506" class="hero-btn"><i class="fas fa-phone-alt"></i> Contact Support</a>
+                <a href="https://wa.me/+919310252506" class="modern-btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
             </div>
         </div>
     </section>
@@ -192,15 +181,10 @@
     <script src="assets/js/script.js"></script>
     <script src="assets/js/brands.js" type="module"></script>
     <script>
-    // Fades out the loader once everything is fully loaded
-    window.addEventListener('load', () => {
-        const loader = document.getElementById('fullscreen-loader');
-        if (loader) {
-            loader.classList.add('hidden');
-        }
-        document.body.classList.add('loaded');
-    });
-</script>
-    
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('fullscreen-loader');
+            if (loader) loader.classList.add('hidden');
+        });
+    </script>
 </body>
 </html>

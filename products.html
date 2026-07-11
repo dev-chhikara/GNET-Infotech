@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GNET Infotech | Products Catalog</title>
-    <link rel="stylesheet" href="assets/css/products.css?v=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css?v=1.0"> <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
+    <!-- Notice ?v=3.0 -->
+    <link rel="stylesheet" href="assets/css/styles.css?v=3.0"> 
+    <link rel="stylesheet" href="assets/css/products.css?v=3.0">
+    <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    <div id="fullscreen-loader"><div class="loader-spinner"></div></div>
 
     <nav class="navbar glass-nav">
         <a href="/index.html">
@@ -34,6 +36,7 @@
         </div>
     </div>
 
+    <!-- Sort Bottom Menu -->
     <div id="sort-menu" class="sort-menu glass-modal">
         <div class="sort-menu-content">
             <h3>Sort By</h3>
@@ -47,23 +50,23 @@
     </div>
 
     <div id="filter-menu" class="filter-menu">
-        <div class="filter-menu-content glass-modal-lg">
+        <div class="filter-menu-content glass-card-lg">
             <div class="filter-left">
-                <h3>Refine Results</h3>
+                <h3 style="margin-bottom:20px;">Refine Results</h3>
                 <div class="filter-section">
-                    <h4>Brands</h4>
-                    <label class="custom-checkbox"><input type="checkbox" id="brand-lenovo"> Lenovo</label>
-                    <label class="custom-checkbox"><input type="checkbox" id="brand-hp"> HP</label>
+                    <h4 style="margin-bottom:10px;">Brands</h4>
+                    <label class="custom-checkbox"><input type="checkbox" id="brand-lenovo"> Lenovo</label><br>
+                    <label class="custom-checkbox"><input type="checkbox" id="brand-hp"> HP</label><br>
                     <label class="custom-checkbox"><input type="checkbox" id="brand-dell"> Dell</label>
                 </div>
-                <div class="filter-section">
-                    <h4>Category</h4>
-                    <label class="custom-checkbox"><input type="checkbox" id="purpose-student"> Student</label>
-                    <label class="custom-checkbox"><input type="checkbox" id="purpose-business"> Business</label>
+                <div class="filter-section" style="margin-top:20px;">
+                    <h4 style="margin-bottom:10px;">Category</h4>
+                    <label class="custom-checkbox"><input type="checkbox" id="purpose-student"> Student</label><br>
+                    <label class="custom-checkbox"><input type="checkbox" id="purpose-business"> Business</label><br>
                     <label class="custom-checkbox"><input type="checkbox" id="purpose-desktop"> Desktops</label>
                 </div>
-                <button class="apply-filter-btn modern-btn" onclick="applyFilters()">Apply Filters</button>
-                <button class="apply-filter-btn modern-btn-outline" onclick="toggleFilterMenu()" style="margin-top: 10px;">Close</button>
+                <button class="apply-filter-btn hero-btn" onclick="applyFilters()" style="width:100%; margin-top:30px;">Apply Filters</button>
+                <button class="apply-filter-btn modern-btn-outline" onclick="toggleFilterMenu()" style="width:100%; margin-top: 15px;">Close</button>
             </div>
         </div>
     </div>
@@ -101,6 +104,10 @@
             const m = document.getElementById('sort-menu');
             m.style.display = m.style.display === 'block' ? 'none' : 'block';
         }
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('fullscreen-loader');
+            if (loader) loader.classList.add('hidden');
+        });
     </script>
     <script src="assets/js/products.js"></script>
     <script src="assets/js/all-products.js" type="module"></script>

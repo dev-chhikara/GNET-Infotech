@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Checkout | GNET Infotech</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/buy-now.css">
+    <!-- Notice ?v=3.0 -->
+    <link rel="stylesheet" href="assets/css/styles.css?v=3.0">
+    <link rel="stylesheet" href="assets/css/buy-now.css?v=3.0">
     <link rel="icon" href="assets/img/logo_thumb.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="checkout-body">
-    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    <div id="fullscreen-loader"><div class="loader-spinner"></div></div>
 
     <div class="checkout-wrapper fade-in-up">
         <div class="modal-content glass-card-lg">
@@ -26,48 +28,37 @@
             </div>
         
             <div id="address-form-section" style="display: none;">
-                <h3 class="form-title">Shipping Details</h3>
+                <h3 class="form-title" style="text-align:center; font-size:1.8rem; margin-bottom:20px; color:#0f172a;">Shipping Details</h3>
                 <form id="address-form">
                     <div class="input-grid">
-                        <div class="form-group">
-                            <input type="text" class="glass-input" id="name" required placeholder="Full Name*" />
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="glass-input" id="email" required placeholder="Email Address*" />
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" class="glass-input" id="phoneNumber" required placeholder="WhatsApp Number*" />
-                        </div>
-                        <div class="form-group">
-                            <input id="addressL1" class="glass-input" required placeholder="House No/Flat No*">
-                        </div>
-                        <div class="form-group">
-                            <input id="addressL2" class="glass-input" placeholder="Apt Suite Landmark">
-                        </div>
-                        <div class="form-group">
-                            <input id="pincode" type="number" class="glass-input" required placeholder="Pincode*">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="glass-input" id="city" required placeholder="City*">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="glass-input" id="state" required placeholder="State*">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="glass-input" id="country" value="India" disabled style="opacity:0.7;">
-                        </div>
+                        <div class="form-group"><input type="text" class="glass-input" id="name" required placeholder="Full Name*" /></div>
+                        <div class="form-group"><input type="email" class="glass-input" id="email" required placeholder="Email Address*" /></div>
+                        <div class="form-group"><input type="tel" class="glass-input" id="phoneNumber" required placeholder="WhatsApp Number*" /></div>
+                        <div class="form-group"><input id="addressL1" class="glass-input" required placeholder="House No/Flat No*"></div>
+                        <div class="form-group"><input id="addressL2" class="glass-input" placeholder="Apt Suite Landmark"></div>
+                        <div class="form-group"><input id="pincode" type="number" class="glass-input" required placeholder="Pincode*"></div>
+                        <div class="form-group"><input type="text" class="glass-input" id="city" required placeholder="City*"></div>
+                        <div class="form-group"><input type="text" class="glass-input" id="state" required placeholder="State*"></div>
+                        <div class="form-group"><input type="text" class="glass-input" id="country" value="India" disabled style="opacity:0.7;"></div>
                     </div>
                     
-                    <div class="secure-note">
+                    <div class="secure-note" style="text-align:center; font-size:0.9rem; color:#64748b; margin:20px 0;">
                         <i class="fas fa-lock"></i> After placing your order, you will receive a secure WhatsApp confirmation to finalize payment.
                     </div>
             
-                    <button type="submit" id="place-order-btn" class="modern-btn checkout-btn">Confirm Order</button>
+                    <button type="submit" id="place-order-btn" class="hero-btn" style="width:100%;">Confirm Order</button>
                 </form>
-                <div id="order-status" style="display: none; color: #10b981; text-align:center; font-weight:600; margin-top:15px;">Order Placed Successfully!</div>
+                <div id="order-status" style="display: none; color: #10b981; text-align:center; font-weight:700; margin-top:20px; font-size:1.2rem;">Order Placed Successfully!</div>
             </div>
         </div>
     </div>
+    
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('fullscreen-loader');
+            if (loader) loader.classList.add('hidden');
+        });
+    </script>
     <script src="assets/js/buy-now.js" type="module"></script>
 </body>
 </html>
