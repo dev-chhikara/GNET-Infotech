@@ -7,7 +7,6 @@ import {
     onAuthStateChanged,
     updateProfile,
     signInWithPhoneNumber,
-    signInWithCredential,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 import { getDatabase, ref, get, update, set, child } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
@@ -22,10 +21,7 @@ const firebaseConfig = {
     measurementId: "G-LGMZJPLV9P",
 };
 
-// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
-
-// Initialize Auth and Database
 const auth = getAuth(app);
 const db = getDatabase(app);
 
@@ -33,35 +29,27 @@ setPersistence(auth, browserLocalPersistence);
 
 function checkUserLogin() {
     const loader = document.getElementById('fullscreen-loader');
-
-    // Parse URL parameters to check for checkout ID
     const urlParams = new URLSearchParams(window.location.search);
     const checkoutId = urlParams.get('checkout');
 
-    // Listen to the authentication state change
     onAuthStateChanged(auth, (user) => {
         if (user) {
             if (loader) loader.classList.add('hidden');
             logoutBtn.style.display = 'inline-block';
 
-            // If checkout ID exists, redirect to /buy-now with product ID
             if (checkoutId) {
-                window.location.href = `/buy-now.html?productid=${checkoutId}`;
+                window.location.href = `../buy-now.html?productid=${checkoutId}`;
             } else {
-                // Proceed with fetching user data or navigating to the user section
                 fetchUserDetails(user);
             }
         } else {
             if (loader) loader.classList.add('hidden');
             logoutBtn.style.display = 'none';
-
-            // Show login section
             showLoginSection();
         }
     });
 }
 
-// Call the function to check user login status
 checkUserLogin();
 
 function toggleLoading(isLoading) {
@@ -104,9 +92,7 @@ function fetchUserDetails(user) {
                 showUserSection();
             }
         })
-        .catch((error) => {
-            console.error(error);
-        });
+        .catch((error) => console.error(error));
 }
 
 function showUserSection() {
@@ -136,9 +122,8 @@ const editProfileModal = document.getElementById('edit-profile-modal');
 const saveProfileBtn = document.getElementById('save-profile-btn');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-// Edit Profile Modal Logic (Fixed for Flexbox centering)
 editProfileBtn.addEventListener('click', () => {
-    editProfileModal.style.display = 'flex'; // Uses flex for perfectly centered overlay
+    editProfileModal.style.display = 'flex'; 
     document.getElementById('edit-name').value = document.getElementById('user-name').textContent;
     document.getElementById('edit-email').value = document.getElementById('user-email').textContent;
 });
@@ -153,27 +138,18 @@ saveProfileBtn.addEventListener('click', () => {
 
     const user = auth.currentUser;
     if (user) {
-        updateProfile(user, {
-            displayName: updatedName,
-        })
+        updateProfile(user, { displayName: updatedName })
         .then(() => {
             const userRef = ref(db, `users/${user.uid}`);
-            update(userRef, {
-                name: updatedName,
-                email: updatedEmail,
-            })
+            update(userRef, { name: updatedName, email: updatedEmail })
             .then(() => {
                 document.getElementById('user-name').textContent = updatedName;
                 document.getElementById('user-email').textContent = updatedEmail;
                 editProfileModal.style.display = 'none';
             })
-            .catch((error) => {
-                console.error(error);
-            });
+            .catch((error) => console.error(error));
         })
-        .catch((error) => {
-            console.error(error);
-        });
+        .catch((error) => console.error(error));
     }
 });
 
@@ -182,22 +158,13 @@ let confirmationResult;
 let otpSentTime = null;
 let resendTimeout = null;
 
-// Initialize reCAPTCHA
 function resetRecaptcha() {
-    if (recaptchaVerifier) {
-        recaptchaVerifier.clear();
-    }
-    recaptchaVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        {
-            size: 'invisible',
-            callback: () => {},
-            'expired-callback': () => {
-                resetRecaptcha();
-            },
-        },
-        auth
-    );
+    if (recaptchaVerifier) recaptchaVerifier.clear();
+    recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+        callback: () => {},
+        'expired-callback': () => resetRecaptcha(),
+    }, auth);
     recaptchaVerifier.render();
 }
 
@@ -208,23 +175,18 @@ sendOtpBtn.addEventListener('click', () => {
         return;
     }
     toggleLoading(true);
-
     resetRecaptcha(); 
+
     recaptchaVerifier.verify().then(() => {
         signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
             .then((result) => {
                 confirmationResult = result;
                 otpSection.style.display = 'block';
-
                 otpSentTime = Date.now();
                 startResendTimer();
             })
-            .catch((error) => {
-                alert("Failed to send OTP. Please try again.");
-            });
-    }).catch((error) => {
-        alert("reCAPTCHA verification failed.");
-    });
+            .catch(() => alert("Failed to send OTP. Please try again."));
+    }).catch(() => alert("reCAPTCHA verification failed."));
 
     setTimeout(() => {
         toggleLoading(false);  
@@ -248,7 +210,7 @@ function startResendTimer() {
             timerSection.style.display = 'none';
             resendBtn.style.display = 'inline-block'; 
             sendOtpBtn.disabled = false; 
-            sendOtpBtn.style.display = 'none'; // Keep hidden since resend is now active
+            sendOtpBtn.style.display = 'none'; 
         } else {
             timerElement.textContent = `${remainingTime} seconds`;
         }
@@ -290,20 +252,15 @@ verifyOtpBtn.addEventListener('click', () => {
 
             loginSection.style.display = 'none';
             userSection.style.display = 'block';
-
-            location.reload();
         })
-        .catch((error) => {
+        .catch(() => {
             alert('Failed to verify OTP. Please try again or resend.');
             toggleLoading(false);
         });
 
-        setTimeout(() => {
-            toggleLoading(false);  
-        }, 2000);
+        setTimeout(() => { toggleLoading(false); }, 2000);
 });
 
-// Resend OTP
 resendOtpBtn.addEventListener('click', () => {
     const phoneNumber = `+91${mobileInput.value}`;
     if (!phoneNumber || phoneNumber.length !== 13) {
@@ -317,25 +274,17 @@ resendOtpBtn.addEventListener('click', () => {
             .then((result) => {
                 confirmationResult = result;
                 otpSection.style.display = 'block';
-
                 otpSentTime = Date.now();
                 startResendTimer();
             })
-            .catch((error) => {
-                alert("Failed to send OTP. Please try again.");
-            });
-    }).catch((error) => {
-        alert("reCAPTCHA verification failed.");
-    });
+            .catch(() => alert("Failed to send OTP. Please try again."));
+    }).catch(() => alert("reCAPTCHA verification failed."));
 });
 
-// Logout
 logoutBtn.addEventListener('click', () => {
     auth.signOut().then(() => {
         loginSection.style.display = 'block';
         userSection.style.display = 'none';
         location.reload();
-    }).catch((error) => {
-        alert("Failed to logout. Please try again.");
-    });
+    }).catch(() => alert("Failed to logout. Please try again."));
 });
